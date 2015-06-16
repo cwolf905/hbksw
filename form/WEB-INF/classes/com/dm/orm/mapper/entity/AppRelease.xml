@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.AppReleaseMapper">
+
+	<sql id="selectSQL">
+		id,appType,version,releaseDate,releaseNote,url
+	</sql>
+	
+	<select id="countAppReleases" resultType="int" parameterType="AppRelease">
+		select
+			count(1)
+		from appReleases
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="appType != null and '' != appType">
+            <![CDATA[
+            	and appType = #{appType}
+            ]]>
+        </if>
+	</select>
+
+	<select id="findAppReleasesByPage" resultType="AppRelease" parameterType="AppRelease">
+		select
+			<include refid="selectSQL" />
+		from appReleases
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="appType != null and '' != appType">
+            <![CDATA[
+            	and appType=#{appType}
+            ]]>
+        </if>
+		order by id desc
+		limit #{pagestart}, #{pagesize}
+	</select>
+
+	<select id="getAppRelease" resultType="AppRelease" parameterType="int">
+		select
+			<include refid="selectSQL" />
+		from appReleases
+		where id = #{id}
+	</select>
+
+	<insert id="addAppRelease" parameterType="AppRelease">
+		insert into appReleases(
+			appType,version,releaseDate,releaseNote,url
+		)
+		values(
+			#{appType,jdbcType=VARCHAR},
+			#{version,jdbcType=VARCHAR},
+			#{releaseDate,jdbcType=TIMESTAMP},
+			#{releaseNote,jdbcType=VARCHAR},
+			#{url,jdbcType=VARCHAR}
+		)
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<update id="updateAppRelease" parameterType="AppRelease">
+		update appReleases set 
+			appType = #{appType,jdbcType=VARCHAR},
+			version = #{version,jdbcType=VARCHAR},
+			releaseNote = #{releaseNote,jdbcType=VARCHAR},
+			url = #{url,jdbcType=VARCHAR}
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteAppRelease" parameterType="int">
+		delete from appReleases where id = #{id}
+	</delete>
+</mapper>

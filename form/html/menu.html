@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>湖北招生考试手机客户端后台管理系统</title>
+	<link type="text/css" href="../css/former/main.css" rel="stylesheet">
+	<!--link type="text/css" href="../jquery/jquery-ui.css" rel="stylesheet"-->
+	<link type="text/css" href="../jquery/bootstrap.min.css" rel="stylesheet">
+	<script type="text/javascript" src="../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../jquery/json2.js"></script>
+	<script type="text/javascript" src="../jquery/jquery.cookie.js"></script>
+	<!--script type="text/javascript" src="../jquery/jquery-ui.js"></script-->
+	<script type="text/javascript" src="../jquery/bootstrap.min.js"></script>
+	
+	<script type="text/javascript" src="../dwr/engine.js"></script>
+	<script type="text/javascript" src="../dwr/util.js"></script>
+	<script type="text/javascript" src="../dwr/interface/AdminUserDS.js"></script>
+	
+	<script type="text/javascript" src="../js/y_func.js"></script>
+	<script type="text/javascript" src="../js/x_common.js"></script>
+	<script type="text/javascript" src="../js/x_menu.js"></script>
+<!--	<script type="text/javascript" src="../js/role/x_role.js"></script>-->
+    <style type="text/css">
+        .sidebar-menu {
+			border-right: 1px solid #e2e2e2;
+			border-top:1px solid #e2e2e2;
+			background-color: #206A86;
+        }
+		.menu-bar {
+			height: 60px;
+			line-height: 60px;
+			color:#fff;
+			background-color: #bd362f;
+			padding: 0;
+			font-size: 18px;
+			text-align: center;
+			font-family: "微软雅黑";
+			border-top-width: 1px;
+			border-bottom-width: 1px;
+			border-top-style: solid;
+			border-bottom-style: solid;
+			border-top-color:#fcb624;
+			border-bottom-color: #802420;
+	        }
+        .menu-first {
+			height: 45px;
+			line-height: 45px;
+			background-color: #588EAE;
+			border-bottom: 1px  solid #303030;
+			border-top: 1px solid #1a71ad;
+			padding: 0;
+			font-size: 18px;
+			color:#fff;
+			font-family: "微软雅黑";
+			font-weight: bold;
+			text-align: center;
+			background-image: url(images/mune-img**.gif);
+			background-repeat: no-repeat;
+			background-position: 15px 15px;
+        }
+        .menu-first:hover {
+            text-decoration: none;
+			background-color: #206A86;
+            color:#fefefe;
+			text-shadow:0px 0px 0px #000000;
+            border-bottom: 1px  solid #303030;
+			border-top: 1px solid #1a71ad;
+			background-image: url(images/mune-img**.gif);
+	        background-repeat: no-repeat;
+	        background-position: 15px 15px;
+        }
+        .menu-second li a {
+			font-size: 14px;
+			height: 45px;
+			line-height: 30px;
+			background-color: #206A86;
+			text-shadow:0px 0px 0px #000000;
+			color:#fefefe;
+			border-bottom:0px solid #a4b6c1;
+			text-align: center;
+			font-family:"微软雅黑";
+			background-image: url(images/menu-second**.gif);
+			background-repeat: no-repeat;
+			background-position: 25px 15px;
+        }
+        .menu-second li a:hover {
+			text-decoration: none;
+			background-color: #3c7c9a;
+			color:#fefefe;
+			text-shadow:0px 0px 0px #000000;
+			border-bottom: 0px solid #a4b6c1;
+			background-image: url(images/menu-second**.gif);
+			background-repeat: no-repeat;
+			background-position: 25px 15px;
+			margin: 2px;
+			padding: 0px;
+        }
+        .menu-second-selected {
+            background-color: #0081c2;
+            height: 45px;
+            line-height: 45px;
+           
+            border-bottom: 1px solid #a4b6c1;
+         
+            text-align: center;
+        }
+        /* 覆盖bootstrap的样式 */
+        .nav-list, .nav-list li a {
+            padding: 0px;
+            margin: 0px;
+        }
+    </STYLE>
+    <script type="text/javascript" defer="defer">
+        $(document).ready(function() {
+			initMenu();
+        });
+    </script>
+</head>
+<body style="background:#206A86;">
+<div class="row-fluid" style="width:199px">
+<div class="sidebar-menu" style="width:199px">
+	
+	<div id="adminMenu">
+		
+	</div>
+    
+	<div id="notAdminMenu">
+	<a href="#enquestionMenu" class="nav-header menu-first collapse enquestion" data-toggle="collapse">答疑</a>
+    <ul id="enquestionMenu" class="nav nav-list menu-second collapse">
+    	<li><a id="enquestiontodo" href="###" class="bbb">待处理问题</a></li>
+        <li><a id="enquestionlist" href="###" class="bbb">已处理问题</a></li>
+    </ul>
+    
+<!--    <a href="#enquestionMenu" class="nav-header menu-first collapse enquestion" data-toggle="collapse">招生答疑</a>-->
+<!--    <ul id="enquestionMenu" class="nav nav-list menu-second collapse">-->
+<!--    	<li><a id="enquestiontodo" href="###" class="bbb">待处理问题</a></li>-->
+<!--        <li><a id="enquestionlist" href="###" class="bbb">已处理问题</a></li>-->
+<!--    </ul>-->
+	</div>
+</div>
+</div>
+</body>
+</html>

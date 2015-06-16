@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>院校二维码</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<!--link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet"-->
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-ui.js"></script-->
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_college.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("college.info", initCollegeInfo);
+		});
+	</script>
+</head>
+	
+<body bgcolor="#FFFFFF" text="#000000">
+<p/>
+<table width="700" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#999999">
+    <tr> 
+    	<td class="tb-head">院校二维码</td>
+    </tr>
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<form id="frmCollege">
+	<input type="hidden" name="txtCid" id="txtCid" value=""/>
+<table width="100%" border="1" align="center" cellpadding="3" cellspacing="0" bordercolordark="#FFFFFF" bordercolorlight="#666666" class="tb-data">
+	<tr>
+		<td align="right" width="180">学校名称：</td>
+		<td><input type="text" name="txtSchoolName" id="txtSchoolName" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">分类：</td>
+		<td><input type="text" name="txtType1" id="txtType1" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">学校类别：</td>
+		<td><input type="text" name="txtType2" id="txtType2" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">省份：</td>
+		<td><input type="text" name="txtProvince" id="txtProvince" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">联系方式：</td>
+		<td><input type="text" name="txtTel" id="txtTel" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">主页：</td>
+		<td><input type="text" name="txtLink1" id="txtLink1" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">二维码内容：</td>
+		<td><input type="text" name="imgUrl" id="imgUrl" value="" readonly="true" size="60"/>&nbsp;</td>
+	</tr>
+	<tr id="trImgPath">
+		<td colspan="2" align="center">
+			<img name="imgPath" id="imgPath" src="" width="200px" height="200px"/>&nbsp;</td>
+	</tr>
+</table>
+</form>
+	    	<br>
+      	</td>
+    </tr>
+    <tr valign="top">
+    	<td class="tb-foot">
+			<button type="button" id="btnSubmit" onclick="">确认</button>
+			<button type="button" onclick="parent.removeTab('collegeinfo');">关 闭</button>
+		</td>
+    </tr>
+</table>
+<br id="footer">
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>编辑插件包</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<!--link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet"-->
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-ui.js"></script-->
+	
+	<script type="text/javascript" src="../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../dwr/util.js"></script>
+	<script type="text/javascript" src="../../dwr/interface/PluginDS.js"></script>
+	<script type="text/javascript" src="../../dwr/interface/PluginPackageDS.js"></script>
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_main.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_pluginpackage.js"></script>
+	<link type="text/css" href="../../jquery/uploadify/uploadify.css" rel="stylesheet" />
+	<script type="text/javascript" src="../../jquery/uploadify/jquery.uploadify.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("pluginPackage.add", initPluginPackageUpdate);
+		});
+	</script>
+</head>
+	
+<body>
+<p/>
+<table width="700" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#999999">
+	<tr> 
+    	<td class="tb-head">编辑插件包</td>
+    </tr>
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<form id="frmPluginPackage">
+	<input type="hidden" name="txtId" id="txtId" value=""/>
+<table width="100%" class="tb-data">
+	<tr>
+		<td align="right" width="180">名称：
+			<label class="isInput100" style="color:red">*</label></td>
+		<td><input type="text" name="txtName" id="txtName" value="" size="30"/>&nbsp;</td>
+	</tr>
+<!--	<tr>-->
+<!--		<td align="right" width="180">插件包类型：-->
+<!--			<label class="" style="color:red">*</label></td>-->
+<!--		<td>-->
+<!--		<select id="packType" name="packType">-->
+<!--			<option value="0" selected="">插件包</option>-->
+<!--			<option value="1">会员包</option>-->
+<!--		</select>-->
+<!--		&nbsp;-->
+<!--		</td>-->
+<!--	</tr>-->
+<!--	<tr id="vipPicture">-->
+<!--		<td align="right" width="180">会员勋章：-->
+<!--			<label class="isInput100" style="color:red">*</label></td>-->
+<!--		<td><input type="text" name="txtPicture" id="txtPicture" style='border-left:0;border-right:0; border-top:0; border-bottom: 0' readonly="readonly" value="" size="50"/>&nbsp;</td>-->
+<!--	</tr>-->
+<!--	<tr id="trJpg">-->
+<!--		<td align="right" width="180">上传会员勋章：</td>-->
+<!--		<td><input type="file" name="txtJpg" id="txtJpg" value="" size="30"/>&nbsp;-->
+<!--			<div id="divJpg"></div></td>-->
+<!--	</tr>-->
+	<tr id="">
+		<td align="right" width="180">是否收费：</td>
+		<td><input type="checkbox" name="isFee" id="isFee" size="30"/>&nbsp;
+	</tr>
+	<tr>
+		<td align="right" width="180">描述：
+			<label class="isTextarea255" style="color:red">*</label></td>
+		<td><textarea name="taDescription" id="taDescription" rows="3" cols="50"></textarea>&nbsp;</td>
+	</tr>
+</table>
+</form>
+	    	<br>
+      	</td>
+      	
+    </tr>
+    <tr valign="top">
+      	<td class="tb-foot">
+      		<button type="button" name="btnSubmit">确定</button>&nbsp;&nbsp;
+			<button type="button" onclick="parent.removeTab('pluginPackageUpdate');">关 闭</button>
+		</td>
+    </tr>
+</table>
+<br id="footer">
+</body>
+</html>

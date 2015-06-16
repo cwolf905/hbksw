@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>湖北招生考试手机客户端后台管理系统</title>
+	<link type="text/css" href="../css/former/main.css" rel="stylesheet">
+	<!--link type="text/css" href="../jquery/jquery-ui.css" rel="stylesheet"-->
+	<script type="text/javascript" src="../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../jquery/json2.js"></script>
+	<script type="text/javascript" src="../jquery/jquery.cookie.js"></script>
+	<!--script type="text/javascript" src="../jquery/jquery-ui.js"></script-->
+	
+	<script type="text/javascript" src="../js/y_func.js"></script>
+	<script type="text/javascript" src="../js/x_common.js"></script>
+	<style type="text/css">
+		html,body { height:100%; }
+	</style>
+	<script>
+		$(document).ready(function() {
+			$("#btnAdmin").click(function() {
+				window.location = "admin.html";
+			});
+			$("#btnTeacher1").click(function() {
+				window.location = "teacher1.html";
+			});
+			$("#btnTeacher2").click(function() {
+				window.location = "teacher2.html";
+			});
+		});
+	</script>
+</head>
+
+<body background="../css/former/images/bg_login.png">
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr><td>
+<table width="400" align="center" cellpadding="3" cellspacing="3">
+	<tr>
+		<td align="center">
+			<button style="width:180px;height:30px" type="button" name="btnAdmin" id="btnAdmin">管理员</button>
+		</td>
+	</tr>
+	<tr>
+		<td align="center">
+			<button style="width:180px;height:30px" type="button" name="btnTeacher1" id="btnTeacher1">院校答疑</button>
+		</td>
+	</tr>
+	<tr>
+		<td align="center">
+			<button style="width:180px;height:30px" type="button" name="btnTeacher2" id="btnTeacher2">招生答疑</button>
+		</td>
+	</tr>
+</table>
+	</td></tr>
+</table>
+</body>
+</html>

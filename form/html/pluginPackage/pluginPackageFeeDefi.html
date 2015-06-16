@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>新增组合包</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<!--link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet"-->
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-ui.js"></script-->
+	
+	<script type="text/javascript" src="../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../dwr/util.js"></script>
+	<script type="text/javascript" src="../../dwr/interface/PluginDS.js"></script>
+	<script type="text/javascript" src="../../dwr/interface/PluginPackageDS.js"></script>
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_main.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_pluginpackage.js"></script>
+	<link type="text/css" href="../../jquery/uploadify/uploadify.css" rel="stylesheet" />
+	<script type="text/javascript" src="../../jquery/uploadify/jquery.uploadify.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("pluginPackage.add", initPluginPackageFeeDefi);
+		});
+	</script>
+	<style>
+		.title{
+			margin:0 0 10px 20px;
+			font-size:14px;
+			font-weight:bold;
+		}
+		.packageName{
+			text-align:center;
+		}
+		p{
+			margin:0;
+			padding:0;
+		}
+	</style>
+</head>
+	
+<body>
+<p/>
+<table width="700" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#999999">
+	<tr> 
+    	<td class="tb-head">插件包收费定义</td>
+    </tr>   
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><p class="packageName"><a id="packageName1" ></a></p>
+<form id="frmPluginPackage">
+	<input type="hidden" name="txtId" id="txtId" value=""/>
+	
+	<div>
+		<table>
+			<tr>
+				<td>
+					<div style="width:750px; height:150px; overflow:auto; border:0px solid #000000;">
+						<!-- <a id="packageName1"></a>插件包 -->
+						<span class="title">包内插件</span>
+						<table width="90%" class="list-data">
+						    <thead><tr bgcolor="#cccccc">
+						    	<td align="center">编号</td>
+							    <td align="center">插件名称</td>
+								<td align="center" width="15%">描述</td>
+								<td align="center">是否收费</td>
+						     </tr></thead>
+						     <tbody id="showlists">
+						     </tbody>
+						     </table>
+     <table width="90%" class="list-data" id="showpages">
+						</table>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<div>
+						<!--<a id="packageName2"></a>插件包收费定义-->						
+						<span class="title">收费定义</span>
+						<div style="margin-left: 100px;">	
+							<div>
+								<input type="checkbox" id="buyAsForver" name="buyAsForver"/> 永久性购买
+								
+								<div style="margin-left: 50px;">
+									&nbsp;&nbsp;
+<!--									<input type="text" size="5" id="appleId" value=''/> -->
+								<!--何鹏	start	-->
+									<select id="buyAsForverPrice" name="buyAsForverPrice">
+											<option value='-1' selected="">--请选择价格--</option>
+									</select>
+                                <!--何鹏	end	    -->
+								</div>
+							</div>
+							<div>
+								<input type="checkbox" id="buyAsMonth" name="buyAsMonth" /> 按月购买 <span style="color: red" onclick="addBuyWayAsMonth()">+</span>
+								<div style="margin-left: 50px;" id="buyWayByMonth">
+									<div>
+							<!--<input type="text" size="2" name="buyWayMonth"/>个月<input type="text" size="5" name="buyWayMonthPrice"/>元-->
+							<!--<span style="color: red" class="byWayAsMonth" onclick="deleteBuyWayAsMonth(this)"> -->
+							<!--—</span>-->
+									</div>
+								</div>
+							</div>
+							<br/>
+							<div>
+								<input type="checkbox" id="buyAsTimes"/> 按次购买
+								<div style="margin-left: 50px;">
+									&nbsp;&nbsp;<!--<input type="text" size="5" id="buyAsTimesPrice"/>元-->
+									<!--何鹏	start	-->
+									<select id="buyAsTimesPrice" name="buyAsTimesPrice">
+											<option value='-1' selected="">--请选择价格--</option>
+									</select>
+                                <!--何鹏	end	    -->
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr align="center">
+				<td>
+					<div>
+						<button type="button" name="btnSubmit">添 加</button>&nbsp;&nbsp;
+						<button type="button" onclick="parent.removeTab('pluginPackageFeeDefi');">关 闭</button>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+</form>
+</table>
+<br id="footer">
+</body>
+</html>

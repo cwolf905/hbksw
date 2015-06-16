@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.PluginSaleStatisticsMapper">
+
+
+<!--根据销售金额排序--> 
+	<select id="findAllPluginSaleStatistics" resultType="PluginSaleStatistics" parameterType="PluginSaleStatistics">
+	   SELECT o.*,m.`mobileNo`,p.`name` AS pluginName,p.`pluginType`,p.`thirdProvideId`,pp.`name` AS pluginPackageName ,SUM(o.price)AS prices,COUNT(*) AS counts,tt.name AS thirdName
+	   	FROM `plugin_order` o 
+		LEFT JOIN mobileUser m ON(o.`userId` = m.`mobileId`) 
+		LEFT JOIN plugin p ON (o.`productId` = p.`id`)
+		
+		LEFT JOIN pluginPackage pp ON(o.`productId` = pp.`id`) 
+		LEFT JOIN thirdprovide tt ON(p.`thirdProvideId`=tt.`id`)
+		where 1=1
+		AND o.`status`=1
+		<if test="startTime != null and '' != startTime">
+		 <![CDATA[
+		 	and orderTime >= #{startTime}
+		 ]]>
+		</if>
+		<if test="endTime != null and '' != endTime and endTime.length()>7">
+		 <![CDATA[
+		 	and orderTime <= #{endTime}
+		 ]]>
+		</if>
+		GROUP BY o.productType , o.productId
+		ORDER BY prices DESC
+		limit #{pagestart}, #{pagesize}
+	</select>
+	
+<!--根据销售数量排序start	-->
+	<select id="findAllPluginSaleStatisticsOrderByCounts" resultType="PluginSaleStatistics" parameterType="PluginSaleStatistics">
+	   SELECT o.*,m.`mobileNo`,p.`name` AS pluginName,p.`pluginType`,p.`thirdProvideId`,pp.`name` AS pluginPackageName ,SUM(o.price)AS prices,COUNT(*) AS counts,tt.name AS thirdName
+	   	FROM `plugin_order` o 
+		LEFT JOIN mobileUser m ON(o.`userId` = m.`mobileId`) 
+		LEFT JOIN plugin p ON (o.`productId` = p.`id`)
+		
+		LEFT JOIN pluginPackage pp ON(o.`productId` = pp.`id`) 
+		LEFT JOIN thirdprovide tt ON(p.`thirdProvideId`=tt.`id`)
+		where 1=1
+		AND o.`status`=1
+		<if test="startTime != null and '' != startTime">
+		 <![CDATA[
+		 	and orderTime >= #{startTime}
+		 ]]>
+		</if>
+		<if test="endTime != null and '' != endTime and endTime.length()>7">
+			 <![CDATA[
+			 	and orderTime <= #{endTime}
+			 ]]>
+		</if><!--		GROUP BY p.`thirdProvideId`  -->
+		GROUP BY o.productType , o.productId
+		ORDER BY counts DESC
+		limit #{pagestart}, #{pagesize}
+</select>
+<!--根据销售数量排序end-->
+
+<!--根据销售量导出start-->
+	<select id="findAllPluginSaleStatisticsOrderByCountsExport" resultType="PluginSaleStatistics" parameterType="PluginSaleStatistics">
+	   SELECT o.*,m.`mobileNo`,p.`name` AS pluginName,p.`pluginType`,p.`thirdProvideId`,pp.`name` AS pluginPackageName ,SUM(o.price)AS prices,COUNT(*) AS counts,tt.name AS thirdName
+	   	FROM `plugin_order` o 
+		LEFT JOIN mobileUser m ON(o.`userId` = m.`mobileId`) 
+		LEFT JOIN plugin p ON (o.`productId` = p.`id`)
+		
+		LEFT JOIN pluginPackage pp ON(o.`productId` = pp.`id`) 
+		LEFT JOIN thirdprovide tt ON(p.`thirdProvideId`=tt.`id`)
+		where 1=1
+		AND o.`status`=1
+		<if test="startTime != null and '' != startTime">
+		 <![CDATA[
+		 	and orderTime >= #{startTime}
+		 ]]>
+		</if>
+			<if test="endTime != null and '' != endTime and endTime.length()>7">
+		 <![CDATA[
+		 	and orderTime <= #{endTime}
+		 ]]>
+		</if>
+		GROUP BY o.productType , o.productId  
+		ORDER BY counts DESC
+</select>
+<!--根据销售量导出end-->
+
+
+<!--根据销售金额导出start-->
+<select id="findAllPluginSaleStatisticsExport" resultType="PluginSaleStatistics" parameterType="PluginSaleStatistics">
+	   SELECT o.*,m.`mobileNo`,p.`name` AS pluginName,p.`pluginType`,p.`thirdProvideId`,pp.`name` AS pluginPackageName ,SUM(o.price)AS prices,COUNT(*) AS counts,tt.name AS thirdName
+	   	FROM `plugin_order` o 
+		LEFT JOIN mobileUser m ON(o.`userId` = m.`mobileId`) 
+		LEFT JOIN plugin p ON (o.`productId` = p.`id`)
+		
+		LEFT JOIN pluginPackage pp ON(o.`productId` = pp.`id`) 
+		LEFT JOIN thirdprovide tt ON(p.`thirdProvideId`=tt.`id`)
+		where 1=1
+		AND o.`status`=1
+		<if test="startTime != null and '' != startTime">
+		 <![CDATA[
+		 	and orderTime >= #{startTime}
+		 ]]>
+		</if>
+			<if test="endTime != null and '' != endTime and endTime.length()>7">
+		 <![CDATA[
+		 	and orderTime <= #{endTime}
+		 ]]>
+		</if>
+		GROUP BY o.productType , o.productId
+		ORDER BY prices DESC
+	</select>
+<!--根据销售金额导出end-->
+	
+	
+	
+	<select id="countPluginSaleStatistics" resultType="PluginSaleStatistics" parameterType="PluginSaleStatistics">
+		  SELECT o.*,m.`mobileNo`,p.`name` AS pluginName,p.`pluginType`,p.`thirdProvideId`,pp.`name` AS pluginPackageName ,SUM(o.price)AS prices,COUNT(*) AS counts,tt.name AS thirdName
+	   	FROM `plugin_order` o 
+		LEFT JOIN mobileUser m ON(o.`userId` = m.`mobileId`) 
+		LEFT JOIN plugin p ON (o.`productId` = p.`id`)
+		
+		LEFT JOIN pluginPackage pp ON(o.`productId` = pp.`id`) 
+		LEFT JOIN thirdprovide tt ON(p.`thirdProvideId`=tt.`id`)
+		where 1=1
+		AND o.`status`=1
+		<if test="startTime != null and '' != startTime">
+		 <![CDATA[
+		 	and orderTime >= #{startTime}
+		 ]]>
+		</if>
+		<if test="endTime != null and '' != endTime and endTime.length()>7">
+		 <![CDATA[
+		 	and orderTime <= #{endTime}
+		 ]]>
+		</if>
+		GROUP BY o.productType , o.productId
+		ORDER BY prices DESC
+	         
+	</select>
+
+
+</mapper>

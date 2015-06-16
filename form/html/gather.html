@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>湖北招生考试手机客户端后台管理系统</title>
+	<link type="text/css" href="../css/former/main.css" rel="stylesheet">
+	<link type="text/css" href="../jquery/jquery-ui.css" rel="stylesheet">
+	<script type="text/javascript" src="../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../jquery/json2.js"></script>
+	<script type="text/javascript" src="../jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../jquery/jquery-ui.js"></script>
+	
+	<script type="text/javascript" src="../dwr/interface/AdminUserDS.js"></script>
+	<script type="text/javascript" src="../dwr/engine.js"></script>
+	<script type="text/javascript" src="../dwr/util.js"></script>
+	
+	<script type="text/javascript" src="../js/y_func.js"></script>
+	<script type="text/javascript" src="../js/x_common.js"></script>
+	<script type="text/javascript" src="../js/x_main.js"></script>
+	<script type="text/javascript" src="../js/x_login.js"></script>
+	<style>
+		body{
+			font-family:"微软雅黑"；
+		}
+		#tabs {
+	margin-top: 0px;
+	background-color: #efefef;
+}
+		#tabs li .ui-icon-close { float: left; margin: 0.4em 0.2em 0 0; cursor: pointer; }
+	</style>
+	<script>
+		$(document).ready(function() {
+			initGather();
+			var height = $(document).height();
+			height -= 110;
+			height += "px";
+			$("#help").css({"height":height});
+		});
+	</script>
+</head>
+<body>
+<div id="divPassword" title="&nbsp;" style="display:none;">
+<table width="300" class="tb-data" style="margin-top: 2px; margin-left: 5px">
+    <tr> 
+    	<td colspan="2" style="color:red">
+      		<b>注意：</b><br>&nbsp;&nbsp;用户密码可以是数字<b>0-9</b>，大写字母<b>A-Z</b>和小写字母<b>a-z</b>组成，长度最少<b>六</b>位。每个人对自己的密码负责，注意保密，必要时请及时修改密码。
+		</td>
+    </tr>
+    <tr> 
+      	<td align="right" width="30%">原 密 码：</td>
+      	<td><input type="password" name="txtOldPass" id="txtOldPass" value=""></td>
+    </tr>
+    <tr> 
+      	<td align="right">新 密 码：</td>
+      	<td><input type="password" name="txtNewPass" id="txtNewPass" value=""></td>
+    </tr>
+    <tr> 
+      	<td align="right">确认密码：</td>
+     	<td><input type="password" name="txtNewPass2" id="txtNewPass2" value=""></td>
+    </tr>
+    <tr>
+      	<td align="center" colspan="2">
+			<button type="button" name="btnSubmit" id="btnSubmit">确定</button>
+    	</td>
+    </tr>
+</table>
+</div>
+
+<div id="tabs">
+	<ul>
+		<li><a href="#help">功能描述</a><span class="ui-icon ui-icon-close">Remove Tab</span></li>
+	</ul>
+<iframe id="help" name="help" src="help.html" frameborder="0" style="width:100%; height:450px; marginwidth:0; marginheight:0; scrolling:auto">
+</iframe>
+</div>
+</body>
+</html>

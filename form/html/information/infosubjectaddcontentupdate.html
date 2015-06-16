@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>专题内容编辑</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet">
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery-ui.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.ui.datepicker-zh-CN.js"></script>
+	
+	<link type="text/css" href="../../jquery/uploadify/uploadify.css" rel="stylesheet" />
+	<script type="text/javascript" src="../../jquery/uploadify/jquery.uploadify.js"></script>
+	
+	<script type="text/javascript" src="../../dwr/interface/InfoSubjectDS.js"></script>
+	<script type="text/javascript" src="../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../dwr/util.js"></script>
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_infosubject.js"></script>
+	
+	<script>
+		$(document).ready(function(){
+			checkUser("infosubjectaddcontent.update", initinfosubjectaddcontentupdate);
+		});
+	</script>
+</head>
+	
+<body>
+<p/>
+<table width="1000" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#999999">
+	<tr> 
+    	<td class="tb-head">专题内容编辑</td>
+    </tr>
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<form id="frmPluginPackage">
+	<input type="text" name="infosubid" id="infosubid" value=""/>
+<table width="100%" class="tb-data">
+	<tr>
+		<td align="right" width="180">标题：</td>
+		<td><input type="text" name="txtExamtypeIntro" id="txtExamtypeIntro" value="" size="30"/>&nbsp;</td>
+	</tr>
+	
+	<tr>
+		<td align="right" width="180">类型：</td>
+		<td><select name="selAdtype" id="selAdtype" ref="createSelObj"></select>
+	</tr>
+	
+	
+	
+	<tr>
+		<td align="right" width="180">内容：</td>
+		<td><input type="text" name="txtTitleIntro" id="txtTitleIntro" value="" size="30"/>&nbsp;</td>
+	</tr>
+</table>
+</form>
+	    	<br>
+      	</td>
+      	
+    </tr>
+    <tr valign="top">
+      	<td class="tb-foot">
+      		<button type="button" name="btnSubmit">确定</button>&nbsp;&nbsp;
+			<button type="button" onclick="parent.removeTab('infosubjectaddcontentupdate');">关 闭</button>
+		</td>
+    </tr>
+</table>
+<br id="footer">
+</body>
+</html>

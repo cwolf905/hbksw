@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>新增定时推送</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet">
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery-ui.js"></script>
+	
+	<script type="text/javascript" src="../../dwr/interface/PushTemplateDS.js"></script>
+	<script type="text/javascript" src="../../dwr/interface/PushSampleDS.js"></script>
+	<script type="text/javascript" src="../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../dwr/util.js"></script>
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_push.js"></script>
+	<script type="text/javascript" src="../../js/x_pushsample_pop.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("push.add", initPushAdd);
+		});
+	</script>
+</head>
+	
+<body>
+<p/>
+<table width="700" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#999999">
+	<tr> 
+    	<td class="tb-head">新增定时推送</td>
+    </tr>
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<form id="frmPush">
+	<input type="hidden" name="txtId" id="txtId" value=""/>
+<table width="100%" class="tb-data">
+	<tr>
+		<td align="right" width="180">推送类型：</td>
+		<td><select name="selPushtype" id="selPushtype" ref="createSelObj"></select>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">考试类型：</td>
+		<td><select name="selExamtype" id="selExamtype" ref="createSelObj"></select>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">时间点：</td>
+		<td><select name="selClock" id="selClock" ref="createSelObj"></select>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="25%">推送信息：
+			<label class="isTextarea255" style="color:red">*</label></td>
+		<td><textarea name="taMessage" id="taMessage" rows="4" cols="50"></textarea>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">或者选择一个模板：</td>
+		<td><button type="button" name="btnSample" id="btnSample">选 择</button>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="25%">信息格式说明：</td>
+		<td>分数推送有以下参数,XM,ZKZH,SFZH,KSH,KM1,KM2,KM3,KM4,TOT<br><br>
+			录取状态推送有以下参数,XM,KSZTMC,YXMC,PCMC,KLMC,ZYMC,TDYYMC,UPTIME<br><br>
+			这些参数都来自老系统的接口,在这里可以配置,但必须加上大括号<br><br>
+			比如{XM}格式,最终在提醒内容中会被替换为实际的姓名&nbsp;</td>
+	</tr>
+</table>
+</form>
+	    	<br>
+      	</td>
+    </tr>
+    <tr valign="top">
+      	<td class="tb-foot">
+      		<button type="button" name="btnSubmit" id="btnSubmit">添 加</button>&nbsp;&nbsp;
+			<button type="button" onclick="parent.removeTab('pushadd');">关 闭</button>
+		</td>
+    </tr>
+</table>
+
+<div id="divSample" title="&nbsp;" style="display:none;">
+<table width="700" class="list-data" style="margin-left: 5px">
+	<thead><tr bgcolor="#cccccc">
+		<td align="center">模板名称</td>
+		<td align="center">内容</td>
+		<td align="center">创建时间</td>
+     </tr></thead>
+     <tbody id="showlists">
+     </tbody>
+     </table>
+     <table width="90%" class="list-data" id="showpages">
+</table>
+</div>
+<div id="divTip" title="&nbsp;" style="display:none;">
+<table width="500" border="0" align="center" cellpadding="1" cellspacing="1" bgcolor="#999999">
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0" id="tdTip"></td>
+    </tr>
+</table>
+</div>
+<br id="footer">
+</body>
+</html>

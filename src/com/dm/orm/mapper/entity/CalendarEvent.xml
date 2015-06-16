@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.CalendarEventMapper">
+
+	<sql id="selectSQL">
+		id,examtype,title,description,img,timing,createtime,pluginId
+	</sql>
+	
+	<select id="countCalendarEvents" resultType="int" parameterType="CalendarEvent">
+		select
+			count(1)
+		from calendarevent
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="examtype != 0">
+            <![CDATA[
+            	and examtype = #{examtype}
+            ]]>
+        </if>
+        <if test="title != null and '' != title">
+            <![CDATA[
+            	and title like concat(concat('%', #{title}),'%')
+            ]]>
+        </if>
+	</select>
+
+	<select id="findCalendarEventsByPage" resultType="CalendarEvent" parameterType="CalendarEvent">
+		select
+			<include refid="selectSQL" />
+		from calendarevent
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="examtype != 0">
+            <![CDATA[
+            	and examtype = #{examtype}
+            ]]>
+        </if>
+        <if test="title != null and '' != title">
+            <![CDATA[
+            	and title like concat(concat('%', #{title}),'%')
+            ]]>
+        </if>
+		order by id desc
+		limit #{pagestart}, #{pagesize}
+	</select>
+	
+	<select id="findCalendarEvents" resultType="CalendarEvent" parameterType="CalendarEvent">
+		select
+			<include refid="selectSQL" />
+		from calendarevent
+		<![CDATA[
+		where timing >= #{starttime} and timing < #{endtime}
+		]]>
+	</select>
+
+	<select id="getCalendarEvent" resultType="CalendarEvent" parameterType="int">
+		select
+			<include refid="selectSQL" />
+		from calendarevent
+		where id = #{id}
+	</select>
+
+	<insert id="addCalendarEvent" parameterType="CalendarEvent">
+		insert into calendarevent(
+			examtype,title,description,img,timing,createtime,pluginId
+		)
+		values(
+			#{examtype,jdbcType=SMALLINT},
+			#{title,jdbcType=VARCHAR},
+			#{description,jdbcType=VARCHAR},
+			#{img,jdbcType=VARCHAR},
+			#{timing,jdbcType=TIMESTAMP},
+			#{createtime,jdbcType=TIMESTAMP},
+			#{pluginId,jdbcType=INTEGER}
+		)
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<update id="updateCalendarEvent" parameterType="CalendarEvent">
+		update calendarevent set 
+<!--			examtype = #{examtype,jdbcType=SMALLINT},-->
+			title = #{title,jdbcType=VARCHAR},
+			description = #{description,jdbcType=VARCHAR},
+			img = #{img,jdbcType=VARCHAR},
+			timing = #{timing,jdbcType=TIMESTAMP}
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteCalendarEvent" parameterType="int">
+		delete from calendarevent where id = #{id}
+	</delete>
+</mapper>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.ReviewCardMapper">
+
+	<sql id="selectSQL">
+		id,pluginid,title,content,sn,createtime
+	</sql>
+	
+	<select id="countReviewCards" resultType="int" parameterType="ReviewCard">
+		select
+			count(1)
+		from reviewcard
+		<![CDATA[
+			where pluginid = #{pluginid}
+		]]>
+	</select>
+
+	<select id="findAllReviewCards" resultType="ReviewCard" parameterType="ReviewCard">
+		select
+			<include refid="selectSQL" />
+		from reviewcard
+		<![CDATA[
+			where pluginid = #{pluginid}
+		]]>
+		order by sn
+	</select>
+
+	<select id="getReviewCard" resultType="ReviewCard" parameterType="int">
+		select
+			<include refid="selectSQL" />
+		from reviewcard
+		where id = #{id}
+	</select>
+
+	<insert id="addReviewCard" parameterType="ReviewCard">
+		insert into reviewcard(
+			pluginid,title,content,sn,createtime
+		)
+		select 
+			#{pluginid,jdbcType=INTEGER},
+			#{title,jdbcType=VARCHAR},
+			#{content,jdbcType=LONGVARCHAR},
+			sn,
+			#{createtime,jdbcType=TIMESTAMP}
+		from
+			(select ifnull(max(sn), 0)+1 as sn 
+			from reviewcard where pluginid=#{pluginid}) as t
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<update id="updateReviewCard" parameterType="ReviewCard">
+		update reviewcard set 
+			title = #{title,jdbcType=VARCHAR},
+			content = #{content,jdbcType=LONGVARCHAR}
+		where id = #{id}
+	</update>
+	
+	<update id="orderReviewCard" parameterType="ReviewCard">
+		update reviewcard set 
+			sn = #{sn,jdbcType=SMALLINT}
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteReviewCard" parameterType="int">
+		delete from reviewcard where id = #{id}
+	</delete>
+</mapper>

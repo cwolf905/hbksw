@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>新增考试安排</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet">
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery-ui.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.ui.datepicker-zh-CN.js"></script>
+	
+	<script type="text/javascript" src="../../dwr/interface/CalendarScheduleDS.js"></script>
+	<script type="text/javascript" src="../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../dwr/util.js"></script>
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_calendarschedule.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("calendarschedule.add", initCalendarScheduleAdd);
+		});
+	</script>
+</head>
+	
+<body>
+<p/>
+<table width="700" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#999999">
+	<tr> 
+    	<td class="tb-head">新增考试安排</td>
+    </tr>
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<form id="frmCalendarSchedule">
+	<input type="hidden" name="txtId" id="txtId" value=""/>
+<table width="100%" class="tb-data">
+<!--	<tr>-->
+<!--		<td align="right" width="180">考试类型：</td>-->
+<!--		<td><select name="selExamtype" id="selExamtype" ref="createSelObj"></select>-->
+<!--			<input type="hidden" name="txtExamtype" id="txtExamtype" value=""/>&nbsp;</td>-->
+<!--	</tr>-->
+	<tr>
+		<td align="right" width="180">名称：
+			<label class="isInput100" style="color:red">*</label></td>
+		<td><input type="text" name="txtName" id="txtName" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">内容：
+			<label class="isInput255" style="color:red">*</label></td>
+		<td><input type="text" name="txtContent" id="txtContent" value="" size="60"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">提醒时间：
+			<label class="isInput30" style="color:red">*</label></td>
+		<td><input type="text" name="txtTiming" id="txtTiming" value="" size="18"/>&nbsp;</td>
+	</tr>
+</table>
+</form>
+	    	<br>
+      	</td>
+    </tr>
+    <tr valign="top">
+      	<td class="tb-foot">
+      		<button type="button" name="btnSubmit" id="btnSubmit">添 加</button>&nbsp;&nbsp;
+			<button type="button" onclick="parent.removeTab('calendarscheduleadd');">关 闭</button>
+		</td>
+    </tr>
+</table>
+<br id="footer">
+</body>
+</html>

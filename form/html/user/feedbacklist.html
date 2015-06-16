@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>反馈意见列表</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet">
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery-ui.js"></script>
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_user.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("feedback.list", initFeedBackList);
+		});
+	</script>
+</head>
+	
+<body bgcolor="#FFFFFF" text="#000000">
+<p/>
+<table id="searchconds" width="90%" class="list-head">
+	<tr>
+		<td align="center">
+			插件名称：<input type="text" name="txtPluginName" id="txtPluginName" value="" size="12"/>&nbsp;
+			用户名：<input type="text" name="txtMobileNo" id="txtMobileNo" value="" size="12"/>&nbsp;
+			<button>搜 索</button>&nbsp;&nbsp;
+			<a href="###" onClick="doFeedBackAll()">查看全部</a>
+		</td>
+	</tr>
+</table>
+<table width="90%" class="list-data">
+	<thead><tr bgcolor="#f5f5f5">
+	    <td align="center">编号</td>
+		<td align="center">用户名</td>
+	    <td align="center">插件名称</td>
+	    <td align="center" width="30%">内容</td>
+	    <td align="center">反馈时间</td>
+     </tr></thead>
+     <tbody id="showlists">
+     </tbody>
+     </table>
+     <table width="90%" class="list-data" id="showpages">
+</table>
+
+<div id="divTip" title="&nbsp;" style="display:none;">
+<table width="500" border="0" align="center" cellpadding="1" cellspacing="1" bgcolor="#999999">
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0" id="tdTip"></td>
+    </tr>
+</table>
+</div>
+<br id="footer">
+</body>
+</html>

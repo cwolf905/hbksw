@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.ProductBuyWayMapper">
+	
+	<select id="getPricesByPrice" parameterType="Float" resultType="Pricess">
+		  select p.id ,p.price ,p.appleId from t_prices p where p.price = #{price}
+	</select>
+	
+	<insert id="definePluginPackFee">
+		insert into productbuyway(
+			productId,buyWay,price,productType,buyMonth,appleId
+		)
+		values(
+			#{productId,jdbcType=INTEGER},
+			#{buyWay,jdbcType=VARCHAR},
+			#{price,jdbcType=FLOAT},
+			#{productType,jdbcType=INTEGER},
+			#{buyMonth,jdbcType=INTEGER},
+			#{appleId,jdbcType=VARCHAR}
+		)
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			 select LAST_INSERT_ID() as value  
+		</selectKey>
+	</insert>
+	
+	<delete id="delectBuyWayASPluginPackage">
+		delete from productbuyway where productType = 0 and productId = #{id};
+	</delete>
+	
+	<delete id="delectBuyWayASPlugin">
+		delete from productbuyway where productType = 1 and productId = #{id};
+	</delete>
+	
+	<select id="getProductBuywayByPluginPackId" parameterType="Integer" resultType="ProductBuyWay">
+		select * from productbuyway where productType = 0 and productId = #{id}
+	</select>
+	
+	<select id="getProductBuywayByPluginId" parameterType="Integer" resultType="ProductBuyWay">
+		select * from productbuyway where productType = 1 and productId = #{id} order by id;
+	</select>
+<!--查询下拉框的钱	-->
+<select id="findPrices" parameterType="Pricess" resultType="Pricess">
+	    select p.id ,p.price ,p.appleId from t_prices p where 1=1
+</select>
+	
+</mapper>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>插件订单明细</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet">
+	
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery-ui.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.ui.datepicker-zh-CN.js"></script>
+	<script type="text/javascript" src="../../dwr/interface/PluginOrderInfoDS.js"></script>
+	<script type="text/javascript" src="../../My97DatePicker/WdatePicker.js"></script>
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	
+	<script type="text/javascript" src="../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../dwr/util.js"></script>
+	 
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_pluginOrderInfo.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("pluginOrderInfo.list", initPluginOrderInfoList);
+			
+		});
+		
+		function saveCode(obj) {  
+		
+			alert("导出EXCEL"); 
+			var tableid = "obj"; 
+			var curTbl = document.getElementById(tableid); 
+			var oXL = new ActiveXObject("Excel.Application"); 
+			try { 
+			oXL = GetObject("", "Excel.Application"); 
+			} catch (E) { 
+			try { 
+			oXL = new ActiveXObject("Excel.Application"); 
+			} catch (E2) { 
+			alert("请确认:\n1.安装Microsoft Excel.\n2.设置浏览器安全级别：Internet 选项=>安全=>自定义级别 \n \"将ActiveX控件启用\""); 
+			//return; 
+			} 
+			} 
+			// 创建AX对象excel 
+			
+			var oWB = oXL.Workbooks.Add(); 
+			// 获取workbook对象 
+			var oSheet = oWB.ActiveSheet; 
+			// 在此进行样式控制 
+			oSheet.Rows(1 + ":" + 1).RowHeight = 20;// 定义行高 
+			oSheet.Rows(2 + ":" + 2).RowHeight = 30; 
+			// 定义列宽 
+			oSheet.Columns('A:A').ColumnWidth = 5; 
+			oSheet.Columns('B:B').ColumnWidth = 10; 
+			oSheet.Columns('C:C').ColumnWidth = 15; 
+			oSheet.Columns('D:D').ColumnWidth = 15; 
+			oSheet.Columns('E:E').ColumnWidth = 20; 
+			oSheet.Columns('F:F').ColumnWidth = 12; 
+			oSheet.Columns('G:G').ColumnWidth = 15; 
+			oSheet.Columns('H:H').ColumnWidth = 15; 
+			oSheet.Columns('I:I').ColumnWidth = 15; 
+			oSheet.Columns('J:J').ColumnWidth = 15; 
+			oSheet.Columns('K:K').ColumnWidth = 15; 
+			oSheet.Columns('L:L').ColumnWidth = 15; 
+			oSheet.Columns('M:M').ColumnWidth = 5; 
+			oSheet.Columns('N:N').ColumnWidth = 5; 
+			oSheet.Columns('O:O').ColumnWidth = 15; 
+			
+			oSheet.Rows(1).HorizontalAlignment = 3; 
+			
+			var sel = document.body.createTextRange(); // 激活当前sheet 
+			sel.moveToElementText(curTbl); // 把表格中的内容移到TextRange中 
+			sel.select(); // 全选TextRange中内容 
+			sel.execCommand("Copy"); // 复制TextRange中内容 
+			oSheet.Paste(); // 粘贴到活动的EXCEL中 
+			oXL.Visible = true; // 设置excel可见属性 
+			oSheet.Application.Quit(); // 结束当前进程 
+			window.opener = null;
+}  
+	</script>
+</head>
+	
+<body bgcolor="#FFFFFF" text="#000000">
+<p/>
+<table id="searchconds" width="90%" class="list-head">
+	<tr>
+		<td align="center">
+			提供方：
+			 <!--<select list="" theme="simple" id="selExamtype" name="selExamtype" listKey="supplierId" listValue="supplierName" headerKey="" headerValue="-请选择--"></select>
+			-->
+			<select id="supplierSelect" name="supplierSelect">
+				<option value='-1' selected="">--全部--</option>
+			</select>
+			用户名：<input type="text" name="txtMobileNo" id="txtMobileNo" value="" size="12"/>&nbsp;
+			 起始日期：
+			<input name="startTime" type="text" value="" class=""  onclick='WdatePicker()' id="startTime"/>
+			截止日期：
+			<input name="endtTime" type="text" value="" class=""   onclick='WdatePicker()' id="endTime"/>
+			<button>搜 索</button>&nbsp;&nbsp;
+			<a href="###" onclick="doPluginOrderInfoAll()">查看全部</a>
+		</td>
+	</tr>
+</table>
+<table width="90%" class="list-data" id="tableExcel">
+	<thead><tr bgcolor="#cccccc">
+	    <td align="center">编号</td>
+	    <td align="center">提供方</td>
+		<td align="center">插件类型</td>
+		<td align="center">插件名</td>
+		<td align="center">购买日期</td>
+		<td align="center">是否是按包购买</td>
+	    <td align="center">购买用户</td>
+		<td align="center">购买价格</td>
+     </tr></thead>
+     <tbody id="showlists">
+     </tbody>
+     </table>
+     <table width="90%" class="list-data" id="showpages">
+     	<tr>
+     		<td colspan="5" align="left">
+     			&nbsp;&nbsp;
+     			<button type="button" onclick="exportPluginOrderInfosExcelList()">导出Excel</button>
+			</td>
+			<td align="right">
+			</td>
+		   <td id="totalPrice">
+		   </td>
+		</tr>
+</table>
+<br id="footer">
+</body>
+</html>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.InfoSubjectPictureMapper">
+
+	<sql id="selectSQL">
+		id,infoSubjectId,picture
+	</sql>
+	
+	<select id="countInfoSubjectPictures" resultType="int" parameterType="InfoSubjectPicture">
+		select
+			count(1)
+		from infosubjectpicture
+		<![CDATA[
+		where infoSubjectId = #{infoSubjectId}
+		]]>
+	</select>
+
+	<select id="findInfoSubjectPicturesByPage" resultType="InfoSubjectPicture" parameterType="InfoSubjectPicture">
+		select
+			<include refid="selectSQL" />
+		from infosubjectpicture
+		<![CDATA[
+		where infoSubjectId = #{infoSubjectId}
+		]]>
+		order by id
+		limit #{pagestart}, #{pagesize}
+	</select>
+	
+	<select id="findAllInfoSubjectPictures" resultType="InfoSubjectPicture" parameterType="InfoSubjectPicture">
+		select
+			<include refid="selectSQL" />
+		from infosubjectpicture
+		<![CDATA[
+		where infoSubjectId = #{infoSubjectId}
+		]]>
+		order by id
+	</select>
+
+	<select id="getInfoSubjectPicture" resultType="InfoSubjectPicture" parameterType="int">
+		select
+			<include refid="selectSQL" />
+		from infosubjectpicture
+		where id = #{id}
+	</select>
+
+	<insert id="addInfoSubjectPicture" parameterType="InfoSubjectPicture">
+		insert into infosubjectpicture(
+			infoSubjectId,picture
+		)
+		values(
+			#{infoSubjectId,jdbcType=INTEGER},
+			#{picture,jdbcType=VARCHAR}
+		)
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<update id="updateInfoSubjectPicture" parameterType="InfoSubjectPicture">
+		update infosubjectpicture set 
+			picture = #{picture,jdbcType=VARCHAR}
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteInfoSubjectPicture" parameterType="int">
+		delete from infosubjectpicture where id = #{id}
+	</delete>
+</mapper>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.AdminUserMapper">
+
+	<sql id="selectSQL">
+		adminid,loginname,password,truename,
+		powertype,regdate,logindate,loginip,logins,roleId
+	</sql>
+	
+<!--	<select id="collectionByYear" resultType="ChartData">-->
+<!--		SELECT COUNT(*) AS vertical , DATE_FORMAT(regdate, '%Y') AS horizontal -->
+<!--		FROM systemadminuser GROUP BY DATE_FORMAT(regdate, '%Y');-->
+<!--	</select>-->
+	
+	<select id="collectionByYear" resultType="ChartData">
+		SELECT COUNT(*) AS vertical , DATE_FORMAT(registerDate, '%Y') AS horizontal 
+		FROM mobileUser GROUP BY DATE_FORMAT(registerDate, '%Y');
+	</select>
+	
+	<select id="collectionByMonth" parameterType="Integer" resultType="ChartData">
+		SELECT COUNT(*) AS vertical , SUBSTR(registerDate, 6, 2) AS horizontal 
+		FROM  mobileUser WHERE registerDate IN 
+		(SELECT registerDate FROM mobileUser WHERE YEAR(registerDate) = #{year})
+ 		GROUP BY DATE_FORMAT(registerDate, '%Y-%m');
+
+	</select>
+	
+<!--	<select id="collectionByMonth" parameterType="Integer" resultType="ChartData">-->
+<!--		SELECT COUNT(*) AS vertical , SUBSTR(regdate, 6, 2) AS horizontal -->
+<!--		FROM  systemadminuser WHERE regdate IN -->
+<!--		(SELECT regdate FROM systemadminuser WHERE YEAR(regdate) = #{year})-->
+<!-- 		GROUP BY DATE_FORMAT(regdate, '%Y-%m');-->
+<!---->
+<!--	</select>-->
+	
+	<select id="countUsers" resultType="int" parameterType="AdminUser">
+		select
+			count(1)
+		from systemadminuser
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="loginname != null and '' != loginname">
+            <![CDATA[
+            	and loginname like concat(concat('%', #{loginname}),'%')
+            ]]>
+        </if>
+	</select>
+
+	<select id="findUsersByPage" resultType="AdminUser" parameterType="AdminUser">
+		select
+			<include refid="selectSQL" />
+		from systemadminuser
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="loginname != null and '' != loginname">
+            <![CDATA[
+            	and loginname like concat(concat('%', #{loginname}),'%')
+            ]]>
+        </if>
+        order by adminid
+		limit #{pagestart}, #{pagesize}
+	</select>
+	
+	<select id="getUserByLoginName" resultType="AdminUser" parameterType="java.lang.String">
+		select
+			<include refid="selectSQL" />
+		from systemadminuser
+		where loginname = #{loginname}
+	</select>
+
+	<select id="getUser" resultType="AdminUser" parameterType="int">
+		select
+			<include refid="selectSQL" />
+		from systemadminuser
+		where adminid = #{adminid}
+	</select>
+
+	<insert id="addUser" parameterType="AdminUser">
+		insert into systemadminuser(
+			loginname,password,truename,powertype,regdate,roleId
+		)
+		values(
+			#{loginname,jdbcType=VARCHAR},
+			#{password,jdbcType=VARCHAR},
+			#{truename,jdbcType=VARCHAR},
+			#{powertype,jdbcType=SMALLINT},
+			#{regdate,jdbcType=VARCHAR},
+			#{roleId,jdbcType=INTEGER}
+		)
+	</insert>
+	
+	<update id="updateUser" parameterType="AdminUser">
+		update systemadminuser set 
+			loginname = #{loginname,jdbcType=VARCHAR},
+			truename = #{truename,jdbcType=VARCHAR},
+			powertype = #{powertype,jdbcType=SMALLINT},
+			roleId = #{roleId,jdbcType=INTEGER}
+		where adminid = #{adminid}
+	</update>
+	
+	<update id="updateUserPassword" parameterType="AdminUser">
+		update systemadminuser set 
+			password = #{password,jdbcType=VARCHAR}
+		where adminid = #{adminid}
+	</update>
+	
+	<update id="loginUser" parameterType="AdminUser">
+		update systemadminuser set 
+			logindate = #{logindate,jdbcType=VARCHAR},
+			loginip = #{loginip,jdbcType=VARCHAR},
+			logins = #{logins,jdbcType=TINYINT}
+		where adminid = #{adminid}
+	</update>
+	
+	<delete id="deleteUser" parameterType="int">
+		delete from systemadminuser where adminid = #{adminid}
+	</delete>
+</mapper>

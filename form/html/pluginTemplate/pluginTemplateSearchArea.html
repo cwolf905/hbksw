@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>插件搜索标签区域定义</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<link type="text/css" href="../../css/former/choose.css" rel="stylesheet">
+	<link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet">
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery-ui.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.ui.datepicker-zh-CN.js"></script>
+	
+	<script type="text/javascript" src="../../dwr/interface/PluginDS.js"></script>
+	<script type="text/javascript" src="../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../dwr/util.js"></script>
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_pluginTemplate.js"></script>
+	<script type="text/javascript" src="../js/ui.core.js"></script>
+	<script type="text/javascript" src="../js/ui.sortable.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("plugin.list", initPluginTemplateSearchAreaList);
+		});
+	</script>
+	<style>
+		.tab1{
+			padding:0 !important;
+			margin:0 !important;
+		}
+		.tabEdit{
+			width:94% !important;
+			margin:10px 3% !important;
+			padding:0 !important;
+			height:300px !important;
+		}
+		.tabEdit2{
+			width:94% !important;
+			margin:10px 3% !important;
+			padding:0 !important;
+			height:200px !important;
+		}
+		.selectDiv{
+			width:100%;
+		}
+		.selectDiv p{
+			margin:0;
+			padding:5px 15px;
+			text-align:center;
+		}
+		.selectDiv p select {
+			margin-left:20px;
+			width:200px;
+		}
+		.selectDiv p input[type=text] {
+			margin-left:20px;
+			width:200px;
+			border:1px solid #ccc;
+			padding:0 !important;
+		}
+		button{
+			font-size:12px !important;
+		}
+	</style>
+</head>
+<body>
+	<div id="tab1" class="tabDiv2 tab1">
+		<table width="100%" class="list-data">
+		   	 <thead id="showHead">
+<!--			   	 	<td align="center">编号1</td>-->
+		   	 </thead>
+		     <tbody id="showLists">
+		     </tbody>
+	     </table>
+	     <table width="100%" class="list-data" id="showPages">
+	     	<tr>
+	     		<td colspan="12" align="left">
+					&nbsp;&nbsp;<button type="button" id="hrefCollegeSearchAreaAdd">新增搜索区域</button>
+					&nbsp;&nbsp;<button type="button" onclick="sortSearchAreaSubmit()" id="sortSearchAreaSubmit">保存院校Tab搜索区域排序</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div>
+		<input type="hidden" name="examType" id="examType" value=""/>
+		<input type="hidden" name="searchAreaId" id="searchAreaId" value=""/>
+		<input type="hidden" name="tabId" id="tabId" value=""/>
+	</div>
+	<div id="templateSearchAreaAdd" title="&nbsp;" style="display:none;" class="tabEdit2">
+		<form id="frmTemplateSearchAreaAdd">
+			<table width="100%" class="tb-data">
+				<tr>
+					<td align="right" width="180">标题：
+					<label class="isInput5" style="color:red">*</label></td>
+					<td><input type="text" name="searchAreaTitle" id="searchAreaTitle" value="" size="60"/>&nbsp;</td>
+				</tr>
+			 	<tr valign="top">
+			      	<td class="tb-foot" colspan="2">
+			      		<button type="button" onclick="searchAreaAddSubmit()" name="btnSearchAreaSubmit" id="btnSearchAreaSubmit">添 加</button>&nbsp;&nbsp;
+			      		<button type="button" onclick="searchAreaUpdateSubmit()" name="btnSearchAreaUpdate" id="btnSearchAreaUpdate">修改</button>&nbsp;&nbsp;
+						<button type="button" onclick="searchAreaClose()">关 闭</button>
+					</td>
+			    </tr>
+			</table>
+		</form>
+	</div>
+	<div id="searchAreaManage" title="&nbsp;" style="display:none;" class="tabEdit">
+		<form id="frmSearchAreaManage">
+<!--			<input type="hidden" name="txtId" id="txtId" value=""/>-->
+			<div id="widgetArea" class="selectDiv">
+			</div>
+			<div class="selectDiv">
+				<p>
+		      		<button type="button" name="btnSearchAreaManageSubmit" onclick="searchAreaManageSubmit()" id="btnSearchAreaManageSubmit">确定</button>&nbsp;&nbsp;
+					<button type="button" onclick="searchAreaManageClose()">关 闭</button>
+				</p>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

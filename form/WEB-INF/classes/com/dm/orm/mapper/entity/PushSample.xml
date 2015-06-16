@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.PushSampleMapper">
+
+	<sql id="selectSQL">
+		id,name,sample,createtime
+	</sql>
+	
+	<select id="countPushSamples" resultType="int" parameterType="PushSample">
+		select
+			count(1)
+		from pushsample
+	</select>
+
+	<select id="findPushSamplesByPage" resultType="PushSample" parameterType="PushSample">
+		select
+			<include refid="selectSQL" />
+		from pushsample
+		order by id desc
+		limit #{pagestart}, #{pagesize}
+	</select>
+
+	<select id="getPushSample" resultType="PushSample" parameterType="int">
+		select
+			<include refid="selectSQL" />
+		from pushsample
+		where id = #{id}
+	</select>
+
+	<insert id="addPushSample" parameterType="PushSample">
+		insert into pushsample(
+			name,sample,createtime
+		)
+		values (
+			#{name,jdbcType=VARCHAR},
+			#{sample,jdbcType=VARCHAR},
+			#{createtime,jdbcType=TIMESTAMP}
+		)
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<update id="updatePushSample" parameterType="PushSample">
+		update pushsample set 
+			name = #{name,jdbcType=VARCHAR},
+			sample = #{sample,jdbcType=VARCHAR}
+		where id = #{id}
+	</update>
+	
+	<delete id="deletePushSample" parameterType="int">
+		delete from pushsample where id = #{id}
+	</delete>
+</mapper>

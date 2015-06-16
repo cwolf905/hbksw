@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>定时推送列表</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<!--link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet"-->
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-ui.js"></script-->
+	
+	<script type="text/javascript" src="../../dwr/interface/PushTemplateDS.js"></script>
+	<script type="text/javascript" src="../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../dwr/util.js"></script>
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_push.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("push.list", initPushList);
+		});
+	</script>
+</head>
+	
+<body>
+<p/>
+<table id="searchconds" width="90%" class="list-head">
+	<tr>
+		<td align="center">请选择推送类型：
+			<select name="selPushtype" id="selPushtype" style="width:120px"></select>&nbsp;&nbsp;
+			<button>搜 索</button>&nbsp;&nbsp;
+			<a href="###" onclick="doPushAll()">查看全部</a>
+		</td>
+	</tr>
+</table>
+<table width="90%" class="list-data">
+    <thead><tr bgcolor="#cccccc">
+    	<td align="center">序号</td>
+    	<td align="center">推送类型</td>
+		<td align="center">考试类型</td>
+	    <td align="center">时间点</td>
+		<td align="center">推送消息</td>
+		<td align="center">操作</td>
+     </tr></thead>
+     <tbody id="showlists">
+     </tbody>
+     </table>
+     <table width="90%" class="list-data" id="showpages">
+     	<tr>
+     		<td colspan="12" align="left">
+     			&nbsp;&nbsp;<button type="button" onclick="hrefAdd()">新增定时推送</button>
+				&nbsp;&nbsp;<button type="button" onclick="hrefManage()">实时推送</button>
+				&nbsp;&nbsp;<button type="button" onclick="hrefPushSample()">推送模板管理</button>
+			</td>
+		</tr>
+</table>
+<br id="footer">
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>湖北招生考试手机客户端后台管理系统</title>
+	<link type="text/css" href="../css/former/main.css" rel="stylesheet">
+	<!--link type="text/css" href="../jquery/jquery-ui.css" rel="stylesheet"-->
+	<script type="text/javascript" src="../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../jquery/json2.js"></script>
+	<script type="text/javascript" src="../jquery/jquery.cookie.js"></script>
+	<!--script type="text/javascript" src="../jquery/jquery-ui.js"></script-->
+	
+	<script type="text/javascript" src="../js/y_func.js"></script>
+	<script type="text/javascript" src="../js/x_common.js"></script>
+	<script type="text/javascript" src="../js/x_header.js"></script>
+	<style type="text/css">
+		html, body{
+	height: 140px;
+	background-color: #e2e2e2;
+		}
+		.bar1 {
+	width: 100%;
+	height:77px;
+	background-image: url(../css/former/images/header-bg.png);
+	background-repeat: no-repeat;
+	background-color: #fefefe;
+	background-attachment: fixed;
+	background-position: 50px 10px;
+		}
+		.bar2 {
+	width: 100%;
+	height: 42px;
+	background-image: url(../css/former/images/bg_mid.png);
+	 
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #184552;
+	color: #5cb7ec;
+			}
+	</style>
+	<script>
+		$(document).ready(function() {
+			initHeader();
+		});
+	</script>
+</head>
+
+<body>
+<div class="bar1">
+	<div align="right" style="padding-top:45px; padding-right: 20px;">
+		<a href="###" onClick="hrefUpdateUserPassword()">
+			<img src="../css/former/images/edit.gif" style="vertical-align:middle;width:16px;"></img>
+				<span style="vertical-align:middle;">修改密码</span></a>&nbsp;&nbsp;&nbsp;&nbsp;
+				
+		<a href="###" onClick="doLogoutUser()">
+			<img src="../css/former/images/cancel.png" style="vertical-align:middle;"></img>
+				<span style="vertical-align:middle;">注销</span></a>&nbsp;&nbsp;&nbsp;&nbsp;
+				
+		<a href="###" onClick="doLogoutUser(true)">
+			<img src="../css/former/images/quit.png" style="vertical-align:middle;"></img>
+				<span style="vertical-align:middle;">退出</span></a>
+	</div><br/>
+</div>
+<div style="clear: both;"></div>
+<div class="bar2">
+<div style="float: left; padding-left: 50px; padding-top:12px;">
+		<span>当前用户：</span>
+		<span id="spnName">admin</span>
+		<span>，欢迎登录！</span>
+	</div>
+	<div style="float: right; padding-right: 20px; padding-top:12px;">
+		<span id="spnTime">&nbsp;</span>
+	</div>
+</div>
+</body>
+</html>

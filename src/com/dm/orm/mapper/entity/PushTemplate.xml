@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.PushTemplateMapper">
+
+	<sql id="selectSQL">
+		id,pushtype,examtype,clock,message,createtime
+	</sql>
+	
+	<select id="countPushTemplates" resultType="int" parameterType="PushTemplate">
+		select
+			count(1)
+		from pushtemplate
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="pushtype != 0">
+            <![CDATA[
+            	and pushtype = #{pushtype}
+            ]]>
+        </if>
+        <if test="examtype != 0">
+            <![CDATA[
+            	and examtype = #{examtype}
+            ]]>
+        </if>
+	</select>
+
+	<select id="findPushTemplatesByPage" resultType="PushTemplate" parameterType="PushTemplate">
+		select
+			<include refid="selectSQL" />
+		from pushtemplate
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="pushtype != 0">
+            <![CDATA[
+            	and pushtype = #{pushtype}
+            ]]>
+        </if>
+        <if test="examtype != 0">
+            <![CDATA[
+            	and examtype = #{examtype}
+            ]]>
+        </if>
+		order by id desc
+		limit #{pagestart}, #{pagesize}
+	</select>
+
+	<select id="getPushTemplate" resultType="PushTemplate" parameterType="int">
+		select
+			<include refid="selectSQL" />
+		from pushtemplate
+		where id = #{id}
+	</select>
+	
+	<select id="getPushTemplateByClock" resultType="PushTemplate" parameterType="PushTemplate">
+		select
+			<include refid="selectSQL" />
+		from pushtemplate
+		<![CDATA[
+			where id != #{id} and pushtype = #{pushtype} and clock = #{clock}
+		]]>
+	</select>
+
+	<insert id="addPushTemplate" parameterType="PushTemplate">
+		insert into pushtemplate(
+			pushtype,examtype,clock,message,createtime
+		)
+		values (
+			#{pushtype,jdbcType=SMALLINT},
+			#{examtype,jdbcType=SMALLINT},
+			#{clock,jdbcType=VARCHAR},
+			#{message,jdbcType=VARCHAR},
+			#{createtime,jdbcType=TIMESTAMP}
+		)
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<update id="updatePushTemplate" parameterType="PushTemplate">
+		update pushtemplate set 
+			pushtype = #{pushtype,jdbcType=SMALLINT},
+			examtype = #{examtype,jdbcType=SMALLINT},
+			clock = #{clock,jdbcType=VARCHAR},
+			message = #{message,jdbcType=VARCHAR}
+		where id = #{id}
+	</update>
+	
+	<delete id="deletePushTemplate" parameterType="int">
+		delete from pushtemplate where id = #{id}
+	</delete>
+</mapper>

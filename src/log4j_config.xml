@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+<appender name="debugLog" class="org.apache.log4j.RollingFileAppender">
+	<param name="File" value="${catalina.base}/log/Log4j_Debug.log" />
+	<param name="Threshold" value="DEBUG" />
+	<param name="Append" value="true"/>
+	<param name="MaxFileSize" value="100KB"/>
+	<param name="MaxBackupIndex" value="5"/>
+	<layout class="org.apache.log4j.PatternLayout">
+		<!-- <param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss.SSSSS} %6p- %m%n" /> -->
+		<param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss} %6p - %16C{1} %16M %m%n" />
+	</layout>
+	<filter class="org.apache.log4j.varia.LevelMatchFilter">
+		<param name="LevelToMatch" value="DEBUG"/>  
+		<param name="AcceptOnMatch" value="true"/>
+	</filter>
+	<filter class="org.apache.log4j.varia.DenyAllFilter"/>
+</appender>
+	
+<appender name="infoLog" class="org.apache.log4j.RollingFileAppender">
+	<param name="File" value="${catalina.base}/log/Log4j_Info.log" />
+	<param name="Threshold" value="INFO" />
+	<param name="Append" value="true"/>
+	<param name="MaxFileSize" value="100KB"/>
+	<param name="MaxBackupIndex" value="5"/>
+	<layout class="org.apache.log4j.PatternLayout">
+		<param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss.SSSSS} %6p - %C{1} %M %m%n" />
+	</layout>
+	<filter class="org.apache.log4j.varia.LevelMatchFilter">
+		<param name="LevelToMatch" value="INFO"/>  
+		<param name="AcceptOnMatch" value="true"/>
+	</filter>
+	<filter class="org.apache.log4j.varia.DenyAllFilter"/>
+</appender>
+
+<appender name="warnLog" class="org.apache.log4j.RollingFileAppender">
+	<param name="File" value="${catalina.base}/log/Log4j_Warn.log" />
+	<param name="Threshold" value="WARN" />
+	<param name="Append" value="true"/>
+	<param name="MaxFileSize" value="100KB"/>
+	<param name="MaxBackupIndex" value="5"/>
+	<layout class="org.apache.log4j.PatternLayout">
+		<param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss} %X{USERID} %6p - %m%n" />
+	</layout>
+	<filter class="org.apache.log4j.varia.LevelMatchFilter">
+		<param name="LevelToMatch" value="WARN"/>  
+		<param name="AcceptOnMatch" value="true"/>
+	</filter>
+	<filter class="org.apache.log4j.varia.DenyAllFilter"/>
+</appender>
+
+<appender name="errorLog" class="org.apache.log4j.RollingFileAppender">
+	<param name="File" value="${catalina.base}/log/Log4j_Error.log" />
+	<param name="Threshold" value="ERROR" />
+	<param name="Append" value="true"/>
+	<param name="MaxFileSize" value="100KB"/>
+	<param name="MaxBackupIndex" value="5"/>
+	<layout class="org.apache.log4j.PatternLayout">
+		<param name="ConversionPattern" value="%d{yyyy/MM/dd HH:mm:ss} %X{USERID} %6p - %m%n" />
+	</layout>
+	<filter class="org.apache.log4j.varia.LevelMatchFilter">
+		<param name="LevelToMatch" value="ERROR"/>  
+		<param name="AcceptOnMatch" value="true"/>
+	</filter>
+	<filter class="org.apache.log4j.varia.DenyAllFilter"/>
+</appender>
+
+<logger name="com.dm">
+	<level value="DEBUG" />
+    <appender-ref ref="debugLog" />
+    <appender-ref ref="infoLog" />
+    <appender-ref ref="warnLog" />
+    <appender-ref ref="errorLog" />
+</logger>
+<logger name="org.directwebremoting">
+	<level value="DEBUG" />
+    <appender-ref ref="debugLog" />
+    <appender-ref ref="infoLog" />
+    <appender-ref ref="warnLog" />
+    <appender-ref ref="errorLog" />
+</logger>
+<logger name="org.springframework">
+	<level value="DEBUG" />
+    <appender-ref ref="debugLog" />
+    <appender-ref ref="infoLog" />
+    <appender-ref ref="warnLog" />
+    <appender-ref ref="errorLog" />
+</logger>
+</log4j:configuration>

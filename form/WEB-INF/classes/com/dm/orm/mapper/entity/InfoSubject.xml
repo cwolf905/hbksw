@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.InfoSubjectMapper">
+
+	<sql id="selectSQL">
+		id,examtype,sid,title,iids,recommend,recommendtime,createtime,description
+	</sql>
+	
+	<select id="findAllInfoSubject" resultType="InfoSubject">
+		select * from infosubject
+	</select>
+	
+	<select id="countInfoSubjects" resultType="int" parameterType="InfoSubject">
+		select
+			count(1)
+		from infosubject
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="examtype != 0">
+            <![CDATA[
+            	and examtype = #{examtype}
+            ]]>
+        </if>
+		<if test="title != null and '' != title">
+            <![CDATA[
+            	and title like concat(concat('%', #{title}),'%')
+            ]]>
+        </if>
+	</select>
+
+	<select id="findInfoSubjectsByPage" resultType="InfoSubject" parameterType="InfoSubject">
+		select
+			<include refid="selectSQL" />
+		from infosubject
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="examtype != 0">
+            <![CDATA[
+            	and examtype = #{examtype}
+            ]]>
+        </if>
+		<if test="title != null and '' != title">
+            <![CDATA[
+            	and title like concat(concat('%', #{title}),'%')
+            ]]>
+        </if>
+		order by id desc
+		limit #{pagestart}, #{pagesize}
+	</select>
+
+	<select id="getInfoSubject" resultType="InfoSubject" parameterType="int">
+		select
+			<include refid="selectSQL" />
+		from infosubject
+		where id = #{id}
+	</select>
+
+	<insert id="addInfoSubject" parameterType="InfoSubject">
+		insert into infosubject(
+			examtype,sid,title,iids,createtime,description
+		)
+		values(
+			#{examtype,jdbcType=SMALLINT},
+			#{sid,jdbcType=SMALLINT},
+			#{title,jdbcType=VARCHAR},
+			#{iids,jdbcType=VARCHAR},
+			#{createtime,jdbcType=TIMESTAMP},
+			#{description,jdbcType=VARCHAR}
+		)
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<update id="updateInfoSubject" parameterType="InfoSubject">
+		update infosubject set 
+<!--			examtype = #{examtype,jdbcType=SMALLINT},-->
+			sid = #{sid,jdbcType=SMALLINT},
+			title = #{title,jdbcType=VARCHAR},
+			description = #{description,jdbcType=VARCHAR}
+		where id = #{id}
+	</update>
+	
+	<update id="manageInfoSubject" parameterType="InfoSubject">
+		update infosubject set 
+			iids = #{iids,jdbcType=VARCHAR}
+		where id = #{id}
+	</update>
+	
+	<update id="recommendInfoSubject" parameterType="InfoSubject">
+		update infosubject set 
+			recommend = #{recommend,jdbcType=TINYINT},
+			recommendtime = #{recommendtime,jdbcType=TIMESTAMP}
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteInfoSubject" parameterType="int">
+		delete from infosubject where id = #{id}
+	</delete>
+</mapper>

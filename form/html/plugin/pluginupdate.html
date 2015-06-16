@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>修改插件信息</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet">
+	<link type="text/css" href="../../css/former/plugin.css" rel="stylesheet">
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery-ui.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.ui.datepicker-zh-CN.js"></script>
+	
+	<link type="text/css" href="../../jquery/uploadify/uploadify.css" rel="stylesheet" />
+	<script type="text/javascript" src="../../jquery/uploadify/jquery.uploadify.js"></script>
+	
+	<script type="text/javascript" src="../../dwr/interface/PluginDS.js"></script>
+	<script type="text/javascript" src="../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../dwr/util.js"></script>
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_plugin.js"></script>
+	
+
+	<script>
+		$(document).ready(function(){
+			var id = getArgFromHref("id");
+
+			function initselecttype(data){
+				var typs = data.split("},{");
+				for (var i=0; i<typs.length; i++) {
+					var datas = typs[i].replace("[","");
+					var idandname = datas.split(",");
+					var allid = idandname[0];
+					var idstring = allid.replace("{","");
+					var p_ids = idstring.split(":");
+					var pid = p_ids[1];
+					var t_allname = idandname[1];
+					if(typeof(t_allname) == "undefined"){return;}
+					var namestring = t_allname.replace("{","");
+					var p_names = namestring.split(":");
+					var pname = p_names[1];
+					pname = pname.replace("}","");
+					pname = pname.replace("]","");
+					pname = pname.replace("\"","");
+					var name = pname.replace("\"","");
+					var atr = "<a id='c_n_"+pid+"' title='"+name+"' href='javascript:void(0);' onclick=\"notselecttype('"+pid+"','"+name+"')\" name=\"savetype\" categoryId=\""+pid+"\"><span>"+name+"</span><em></em></a>";
+					//var atr = "<input style='width:"+name.length*15+"px;' name=\"savetype\" class=\"n_ptype\" categoryId=\""+pid+"\" onclick=\"notselecttype('"+pid+"','"+name+"')\" id=c_n_"+pid+" value="+name+"></input>";
+					$("#saveplugintype").append(atr);
+				}
+			}
+
+			function initnotselecttype(data){
+				var typs = data.split("},{");
+				for (var i=0; i<typs.length; i++) {
+					var datas = typs[i].replace("[","");
+					var idandname = datas.split(",");
+					var allid = idandname[0];
+					var idstring = allid.replace("{","");
+					var p_ids = idstring.split(":");
+					var pid = p_ids[1];
+					var nt_allname = idandname[1];
+					if(typeof(nt_allname) == "undefined"){return;}
+					var namestring = nt_allname.replace("{","");
+					var p_names = namestring.split(":");
+					var pname = p_names[1];
+					pname = pname.replace("}","");
+					pname = pname.replace("]","");
+					pname = pname.replace("\"","");
+					var name = pname.replace("\"","");
+					var atr = "<a id='c_"+pid+"' title='"+name+"' href='javascript:void(0);' onclick=\"selecttype('"+pid+"','"+name+"')\"><span>"+name+"</span><em></em></a>";
+					//var atr = "<input style='width:"+name.length*15+"px;' onclick=\"selecttype('"+pid+"','"+name+"')\" class=\"ptype\" id=c_"+pid+" value="+name+"></input>";
+					//var atr = "<input onclick='select(this)' class='cateAdd' id="+name[1]+" value="+name[1]+" pluginCategoryNameAdd="+name[1]+" style='border-left:0;border-right:0; border-top:0; border-bottom: 0;float:left'/>";
+					$("#plugintype").append(atr);
+				}
+			}
+			
+			PluginDS.updatetypelist(id, function(data) {
+				if (data!=null) {
+					var alldata = data.split("#");
+					initselecttype(alldata[0]);
+					initnotselecttype(alldata[1]);
+				}
+			});
+
+			function initselectlabel(data){
+				var typs = data.split("},{");
+				for (var i=0; i<typs.length; i++) {
+					var datas = typs[i].replace("[","");
+					var idandname = datas.split(",");
+					var allid = idandname[0];
+					var idstring = allid.replace("{","");
+					var p_ids = idstring.split(":");
+					var pid = p_ids[1];
+					var c_allname = idandname[1];
+					if(typeof(c_allname) == "undefined"){return;}
+					var namestring = c_allname.replace("{","");
+					var p_names = namestring.split(":");
+					var pname = p_names[1];
+					pname = pname.replace("}","");
+					pname = pname.replace("]","");
+					pname = pname.replace("\"","");
+					var name = pname.replace("\"","");
+					var atr = "<a id='t_n_"+pid+"' title='"+name+"' href='javascript:void(0);' onclick=\"notselectlabel('"+pid+"','"+name+"')\" name=\"savelabel\" tagId=\""+pid+"\"><span>"+name+"</span><em></em></a>";
+					//var atr = "<input style='width:"+name.length*15+"px;' name=\"savelabel\" class=\"n_plabel\" tagId=\""+pid+"\" onclick=\"notselectlabel('"+pid+"','"+name+"')\" id=t_n_"+pid+" value="+name+"></input>";
+					$("#savepluginlabel").append(atr);
+				}
+			}
+			function initnotselectlabel(data){
+				var typs = data.split("},{");
+				for (var i=0; i<typs.length; i++) {
+					var datas = typs[i].replace("[","");
+					var idandname = datas.split(",");
+					var allid = idandname[0];
+					var idstring = allid.replace("{","");
+					var p_ids = idstring.split(":");
+					var pid = p_ids[1];
+					var nc_allname = idandname[1];
+					if(typeof(nc_allname) == "undefined"){return;}
+					var namestring = nc_allname.replace("{","");
+					var p_names = namestring.split(":");
+					var pname = p_names[1];
+					pname = pname.replace("}","");
+					pname = pname.replace("]","");
+					pname = pname.replace("\"","");
+					var name = pname.replace("\"","");
+					var atr = "<a id='t_"+pid+"' title='"+name+"' href='javascript:void(0);' onclick=\"selectlabel('"+pid+"','"+name+"')\"><span>"+name+"</span><em></em></a>";
+					//var atr = "<input style='width:"+name.length*15+"px;' onclick=\"selectlabel('"+pid+"','"+name+"')\" class=\"plabel\" id=t_"+pid+" value="+name+"></input>";
+					//var atr = "<input onclick='select(this)' class='cateAdd' id="+name[1]+" value="+name[1]+" pluginCategoryNameAdd="+name[1]+" style='border-left:0;border-right:0; border-top:0; border-bottom: 0;float:left'/>";
+					$("#pluginlabel").append(atr);
+				}
+			}
+
+			PluginDS.updatelabellist(id, function(data) {
+				if (data!=null) {
+					var alldata = data.split("#");
+					initselectlabel(alldata[0]);
+					initnotselectlabel(alldata[1]);
+				}
+			});
+			
+			checkUser("plugin.update", initPluginUpdate);
+		});
+	</script>
+</head>
+	
+<body>
+<p/>
+<table width="700" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#999999">
+	<tr> 
+    	<td class="tb-head">修改插件信息</td>
+    </tr>
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<form id="frmPlugin">
+	<input type="hidden" name="txtId" id="txtId" value=""/>
+<table width="100%" class="tb-data">
+	<tr>
+		<td align="right" width="180">名称：
+			<label class="isInput10" style="color:red">*</label></td>
+		<td><input type="text" name="txtName" id="txtName" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">是否是系统插件：</td>
+		<td id="tdIsdefault" name="tdIsdefault">
+			<input type="radio" id="default_yes" name="radIsdefault" value="1" />是
+			<input type="radio" id="default_no" name="radIsdefault" value="0"/>否
+		</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">是否收费：</td>
+		<td id="tdIsfee" name="tdIsfee">
+			<input type="radio" id="isfee_yes" name="radIsfee" value="1"/>是
+			<input type="radio" id="isfee_no" name="radIsfee" value="0"/>否
+		</td>
+	</tr>
+<!--	<tr id="trBegintime">-->
+<!--		<td align="right" width="180">生效时间：</td>-->
+<!--		<td><input type="text" name="txtBegintime" id="txtBegintime" value="" size="18"/>&nbsp;</td>-->
+<!--	</tr>-->
+	<tr>
+		<td align="right" width="180">是否是推荐插件：</td>
+		<td id="tdRecommend" name="tdRecommend">
+			<input type="radio" id="recommend_yes" name="radRecommend" value="1" />是
+			<input type="radio" id="recommend_no" name="radRecommend" value="0"/>否
+		</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">图标：</td>
+		<td><input type="text" name="txtImg" id="txtImg" value="" size="60"/>&nbsp;</td>
+	</tr>
+	<tr id="trJpg">
+		<td align="right" width="180">上传图标文件：</td>
+		<td><input type="file" name="txtJpg" id="txtJpg" value="" size="30"/>&nbsp;
+			<div id="divJpg"></div></td>
+	</tr>
+<!--	<tr>-->
+<!--		<td align="right" width="180">考试类型：</td>-->
+<!--		<td>-->
+<!--			<select id="dictExamTypeSelect"></select>-->
+<!--		</td>-->
+<!--	</tr>-->
+<!--	<tr>-->
+<!--		<td align="right" width="180">插件模版：</td>-->
+<!--		<td>-->
+<!--			<select id="pluginTemplateSelect"></select>-->
+<!--			<a onclick="addPluginTemplate()">添加模版内容</a>-->
+<!--		</td>-->
+<!--	</tr>-->
+	<tr>
+		<td align="right" width="180">类别：</td>
+		<td>
+			<div id="plugintype" class="default-tag tagbtn clearfix" align="left">
+				<input style='width:55px;color:blue;border-left:0;border-right:0; border-top:0; border-bottom: 0;float:left' value="未选类别：" />
+			</div>
+			<div id="saveplugintype" name="saveplugintype" class="plus-tag tagbtn clearfix">
+				<input style='width:55px;color:blue;border-left:0;border-right:0; border-top:0; border-bottom: 0;float:left' value="已选类别：" />
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">标签：</td>
+		<td align="left">
+			<div id="pluginlabel" class="default-tag tagbtn clearfix">
+				<input style='width:55px;color:blue;border-left:0;border-right:0; border-top:0; border-bottom: 0;float:left' value="未选标签：" />
+			</div>
+			<div id="savepluginlabel" name="savepluginlabel" class="plus-tag tagbtn clearfix">
+				<input style='width:55px;color:blue;border-left:0;border-right:0; border-top:0; border-bottom: 0;float:left' value="已选标签：" />
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">插件简介：</td>
+		<td><textarea name="taDescription" id="taDescription" rows="3" cols="50"></textarea></td>
+	</tr>
+<!--
+	<tr>
+		<td align="right" width="180">是否收费：</td>
+		<td id="tdCharge" name="tdCharge" ref="createRadObj" >&nbsp;</td>
+			rele="trFee;trChargeremark" relv="1"
+	</tr>
+	<tr>
+		<td align="right" width="180">提供商：
+			<label class="isInput255" style="color:red">*</label></td>
+		<td><input type="text" name="txtProvider" id="txtProvider" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr id="trFee">
+		<td align="right" width="180">收费金额：
+			<label class="isDouble" style="color:red"></label></td>
+		<td><input type="text" name="txtFee" id="txtFee" value="" size="18"/>&nbsp;元</td>
+	</tr>
+	<tr id="trChargeremark">
+		<td align="right" width="180">收费说明：
+			<label class="isTextarea255" style="color:red"></label></td>
+		<td><textarea name="taChargeremark" id="taChargeremark" rows="3" cols="50"></textarea></td>
+	</tr>
+	<tr id="trExpirydate">
+		<td align="right" width="180">失效时间：
+			<label class="isInput" style="color:red">*</label></td>
+		<td><input type="text" name="txtExpirydate" id="txtExpirydate" value="" size="18"/>&nbsp;</td>
+	</tr>
+-->
+</table>
+</form>
+	    	<br>
+      	</td>
+    </tr>
+    <tr valign="top">
+      	<td class="tb-foot">
+      		<button type="button" name="btnSubmit" id="btnSubmit">修 改</button>&nbsp;&nbsp;
+			<button type="button" onclick="parent.removeTab('pluginupdate');">关 闭</button>
+		</td>
+    </tr>
+</table>
+<br id="footer">
+</body>
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.RightsMapper">
+
+	<sql id="selectSQLRight">
+		resourceID,labelId,checked,delFlag,parentID,resourceCode,resourceDesc,resourceGrade,resourceName,resourceOrder,resourceType
+	</sql>
+	
+	<insert id="addRights" parameterType="Rights">
+		insert into rights 
+		(
+			labelId,parentID,delFlag,checked,resourceName,resourceGrade,resourceOrder
+		)
+		select 
+			#{labelId,jdbcType=VARCHAR},
+			#{parentID,jdbcType=INTEGER},
+			#{delFlag,jdbcType=VARCHAR},
+			#{checked,jdbcType=INTEGER},
+			#{resourceName,jdbcType=VARCHAR},
+			#{resourceGrade,jdbcType=INTEGER},
+			resourceOrder
+		from
+			(select ifnull(max(resourceOrder), 0)+1 as resourceOrder 
+			from rights) as t
+		<selectKey keyProperty="resourceID" resultType="int" order="AFTER">
+			select LAST_INSERT_ID() as value
+		</selectKey>
+	</insert>
+
+</mapper>

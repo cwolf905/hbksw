@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>专题资讯打包</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet">
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery-ui.js"></script>
+	
+	<script type="text/javascript" src="../../dwr/interface/InfoSubjectDS.js"></script>
+	<script type="text/javascript" src="../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../dwr/util.js"></script>
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_infosubject.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("infosubject.manage", initInfoSubjectManage);
+		});
+	</script>
+</head>
+	
+<body>
+<p/>
+<table width="700" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#999999">
+	<tr> 
+    	<td class="tb-head">专题资讯打包</td>
+    </tr>
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<form id="frmInfoSubject">
+	<input type="hidden" name="txtId" id="txtId" value=""/>
+	<input type="hidden" name="txtExamtype" id="txtExamtype" value=""/>
+	<!--input type="hidden" name="txtType" id="txtType" value=""/-->
+	<input type="hidden" name="txtSid" id="txtSid" value=""/>
+<table width="100%" class="tb-data">
+	<tr>
+		<td align="right" width="180">考试类型：</td>
+		<td><input type="text" name="txtExamtypeIntro" id="txtExamtypeIntro" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<!--tr>
+		<td align="right" width="180">资讯类型：</td>
+		<td><input type="text" name="txtTypeIntro" id="txtTypeIntro" value="" size="30"/>&nbsp;</td>
+	</tr-->
+	<tr id="trSid">
+		<td align="right" width="180">栏目：</td>
+		<td><input type="text" name="txtSidIntro" id="txtSidIntro" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">标题：</td>
+		<td><input type="text" name="txtTitleIntro" id="txtTitleIntro" value="" size="30"/>&nbsp;</td>
+	</tr>
+</table>
+</form>
+	    	<br>
+      	</td>
+    </tr>
+    <tr valign="top">
+      	<td class="tb-foot">
+      		<button type="button" name="btnSubmit" id="btnSubmit">保 存</button>&nbsp;&nbsp;
+			<button type="button" onclick="parent.removeTab('infosubjectmanage');">关 闭</button>
+		</td>
+    </tr>
+	<tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<table id="searchconds" width="100%" class="tb-data">
+	<tr>
+		<td align="center">请输入标题：
+			<input type="text" name="txtTitle" id="txtTitle" value="" size="12"/>&nbsp;&nbsp;
+			过滤：<select name="selSelected" id="selSelected" style="width:120px"></select>&nbsp;&nbsp;
+			<button>搜 索</button>&nbsp;&nbsp;
+			<a href="###" onclick="doInformationAll()">查看全部</a>
+		</td>
+	</tr>
+</table>
+<table id="tblInfo" width="100%" class="tb-data">
+	<thead><tr bgcolor="#cccccc">
+		<td align="center">
+			<input type="checkbox" id="chkFilter" style="border:0px; background-color:#cccccc" value=""/></td>
+	    <td align="center">标题</td>
+		<td align="center">创建时间</td>
+		<td align="center">内容</td>
+     </tr></thead>
+	 <tbody id="showlists">
+     </tbody>
+	 </table>
+     <table width="90%" class="list-data" id="showpages">
+</table>
+	    <br></td>
+    </tr>
+</table>
+
+<div id="divTip" title="&nbsp;" style="display:none;">
+<table width="500" border="0" align="center" cellpadding="1" cellspacing="1" bgcolor="#999999">
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0" id="tdTip"></td>
+    </tr>
+</table>
+</div>
+<br id="footer">
+</body>
+</html>

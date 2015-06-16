@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>新增第三方</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<!--link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet"-->
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-ui.js"></script-->
+	
+	<link type="text/css" href="../../jquery/uploadify/uploadify.css" rel="stylesheet" />
+	<script type="text/javascript" src="../../jquery/uploadify/jquery.uploadify.js"></script>
+	
+	<script type="text/javascript" src="../../dwr/interface/ThirdProvideDS.js"></script>
+	<script type="text/javascript" src="../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../dwr/util.js"></script>
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/thirdProvide/x_thirdProvide.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("thirdProvide.add", initThirdProvideAdd);
+		});
+	</script>
+</head>
+	
+<body>
+<p/>
+<table width="700" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#999999">
+	<tr> 
+    	<td class="tb-head">新增第三方</td>
+    </tr>
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<form id="frmThirdProvide">
+	<input type="hidden" name="txtId" id="txtId" value=""/>
+<table width="100%" class="tb-data">
+	<tr>
+		<td align="right" width="180">名称：<label class="isInput24" style="color:red">*</label></td>
+		<td><input type="text" name="txtName" id="txtName" value="" size="60"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">联系人：</td>
+		<td><input type="text" name="txtLinkname" id="txtLinkname" value="" size="60"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">电话：
+			<label class="isInput11" style="color:red">*</label></td>
+		<td id="phone"><input type="text" name="txtTelephone" id="txtTelephone" value="" size="60"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">邮箱：</td>
+		<td id="email"><input type="text" name="txtEmail" id="txtEmail" value="" size="30"/>&nbsp;
+	</tr>
+	<tr>
+		<td align="right" width="180">通讯地址：
+			<label class="isInput255" style="color:red">*</label></td>
+		<td><input type="text" name="txtPostalAddr" id="txtPostalAddr" value="" size="60"/>&nbsp;</td>
+	</tr>
+</table>
+
+    <tr valign="top">
+      	<td class="tb-foot">
+      		<button type="button" name="btnSubmit" id="btnSubmit">添 加</button>&nbsp;&nbsp;
+			<button type="button" onclick="parent.removeTab('thirdProvideAdd');">关 闭</button>
+		</td>
+    </tr>
+</table>
+<br id="footer">
+</body>
+</html>

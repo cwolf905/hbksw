@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>网站用户列表</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<!--link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet"-->
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-ui.js"></script-->
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_user.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("webuser.list", initWebUserList);
+		});
+	</script>
+</head>
+	
+<body>
+<p/>
+<table id="searchconds" width="90%" class="list-head">
+	<tr>
+		<td align="center">请输入登录名：
+			<input type="text" name="txtUserName" id="txtUserName" value="" size="12"/>&nbsp;
+			<select name="selIsBind" id="selIsBind" style="width:120px"></select>&nbsp;
+			<button>搜 索</button>&nbsp;&nbsp;
+			<a href="###" onclick="doWebUserAll()">查看全部</a>
+		</td>
+	</tr>
+</table>
+<table width="90%" class="list-data">
+    <thead><tr bgcolor="#cccccc">
+	    <td align="center">编号</td>
+		<td align="center">登录名</td>
+		<td align="center">邮箱</td>
+		<td align="center">注册日期</td>
+	    <td align="center">上次登录时间</td>
+	    <td align="center">上次登录IP</td>
+	    <td align="center">本次登录时间</td>
+	    <td align="center">本次登录IP</td>
+		<td align="center">失效日期</td>
+     </tr></thead>
+     <tbody id="showlists">
+     </tbody>
+     </table>
+     <table width="90%" class="list-data" id="showpages">
+</table>
+<br id="footer">
+</body>
+</html>

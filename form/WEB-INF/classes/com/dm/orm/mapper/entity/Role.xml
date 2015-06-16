@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.RoleMapper">
+
+	<sql id="selectSQL">
+		id,name,flag
+	</sql>
+	<sql id="selectSQLRight">
+		resourceID,labelId,checked,delFlag,parentID,resourceCode,resourceDesc,resourceGrade,resourceName,resourceOrder,resourceType
+	</sql>
+
+<!--	获取所有的角色-->
+	<select id="findAllRole" resultType="Role">
+		select * from role;
+	</select>
+	
+	<select id="countRoles" parameterType="Role" resultType="Integer">
+		select count(1) from role
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="name != null and '' != name">
+            <![CDATA[
+            	and name like concat(concat('%', #{name}),'%')
+            ]]>
+        </if>
+	</select>
+	
+	<select id="findRolesByPage" parameterType="Role" resultType="Role">
+		select 
+		<include refid="selectSQL" />
+		from role where 1 = 1
+		<if test="name != null and '' != name">
+            <![CDATA[
+            	and name like concat(concat('%', #{name}),'%')
+            ]]>
+        </if>
+		order by id desc
+		limit #{pagestart}, #{pagesize}
+	</select>
+	
+	<select id="getRole" parameterType="Integer" resultType="Role">
+		select 
+		<include refid="selectSQL"/>
+		from role where id = #{id}
+	</select>
+	
+	<select id="getRoleByName" parameterType="String" resultType="Role">
+		select 
+		<include refid="selectSQL"/>
+		from role where name = #{name}
+	</select>
+	
+	<insert id="addRole" parameterType="Role">
+		insert into role 
+		(name,flag)
+		values(
+			#{name,jdbcType=VARCHAR},
+			#{flag,jdbcType=INTEGER}
+		);
+	</insert>
+	
+	<update id="updateRole" parameterType="Role">
+		update role set
+		name = #{name,jdbcType=VARCHAR}
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteRole" parameterType="Integer">
+		delete from role where id = #{id}
+	</delete>
+	
+	<select id="findAllRights" resultType="Rights">
+		select * from rights where parentID = 0 and checked = 1;
+	</select>
+	
+	<select id="findRightsByRole" parameterType="Integer" resultType="Rights">
+		SELECT r.* FROM `rights` r JOIN role_rights rr ON (r.`resourceID` = rr.`rightId`)
+		where r.parentID = 0 and rr.roleId = #{roleId} and checked = 1
+	</select>
+	
+	<insert id="insertRoleRights" parameterType="RoleRights">
+		insert into role_rights
+		(roleId, rightId)
+		values(
+			#{roleid,jdbcType=INTEGER},
+			#{rightid,jdbcType=INTEGER})
+	</insert>
+	
+	<delete id="deleteRoleRight" parameterType="Integer">
+		delete from role_rights where roleid = #{roleId}
+	</delete>
+	
+	<select id="findChildrenByParent" parameterType="RoleRights" resultType="Rights">
+<!--		select * from rights where parentID = #{parentId}-->
+		SELECT * FROM rights r
+		RIGHT JOIN role_rights rr ON(r.`resourceID` = rr.`rightId`)
+		WHERE 1=1 and r.`parentID` = #{rightid}
+		and rr.`roleId` = #{roleid} and checked = 1
+	</select>
+	
+	<select id="findChildRight" parameterType="Integer" resultType="Rights">
+		select * from rights where parentID = #{rightId} and checked = 1
+	</select>
+
+</mapper>

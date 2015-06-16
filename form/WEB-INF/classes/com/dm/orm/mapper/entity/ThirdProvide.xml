@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.ThirdProvideMapper">
+
+<!--	<resultMap type="com.dm.orm.mapper.entity.ThirdProvide" id="result_thirdProvide">-->
+<!--		<result property="thirdProvideId" column="id"/>-->
+<!--		<result property="thirdProvideName" column="name"/>-->
+<!--		<result property="thirdProvideTele" column="telephone"/>-->
+<!--		<result property="thirdProvideEmail" column="email"/>-->
+<!--		<result property="initUserName" column="username" />-->
+<!--	</resultMap>-->
+<!--	-->
+
+	<sql id="selectSQL">
+		id,name,telephone,email,linkname,postalAddr,status
+	</sql>
+	
+	<delete id="deleteThirdProvide" parameterType="ThirdProvide">
+		delete from thirdprovide where id = #{id}
+	</delete>
+	
+	<insert id="addThirdProvide" parameterType="ThirdProvide">
+		insert into thirdprovide(
+			name,telephone,email,linkname,postalAddr
+		)
+		values(
+			#{name,jdbcType=VARCHAR},
+			#{telephone,jdbcType=VARCHAR},
+			#{email,jdbcType=VARCHAR},
+			#{linkname,jdbcType=VARCHAR},
+			#{postalAddr,jdbcType=VARCHAR}
+		)
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			 select LAST_INSERT_ID() as value  
+		</selectKey>
+	</insert>
+	
+	<select id="findAllThirdProvide" resultType="ThirdProvide" parameterType="ThirdProvide">
+		select 
+		<include refid="selectSQL" />
+		from thirdprovide where 1 = 1
+		<if test="name != null and '' != name">
+            <![CDATA[
+            	and name like concat(concat('%', #{name}),'%')
+            ]]>
+        </if>
+		order by id desc
+		limit #{pagestart}, #{pagesize}
+	</select>
+	
+	<select id="countThirdProvides" resultType="int" parameterType="ThirdProvide">
+		select count(1) from thirdprovide
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="name != null and '' != name">
+            <![CDATA[
+            	and name like concat(concat('%', #{name}),'%')
+            ]]>
+        </if>
+	</select>
+	
+	<update id="updateThirdProvide" parameterType="ThirdProvide">
+		update thirdprovide set 
+			name = #{name,jdbcType=VARCHAR},
+			telephone = #{telephone,jdbcType=VARCHAR},
+			email = #{email,jdbcType=VARCHAR},
+			linkname = #{linkname,jdbcType=VARCHAR},
+			postalAddr = #{postalAddr,jdbcType=VARCHAR}
+		where id = #{id}
+	</update>
+	
+	<select id="findThirdProvide" resultType="ThirdProvide" parameterType="int">
+		select  
+		<include refid="selectSQL" />
+		from thirdprovide
+		<![CDATA[
+		where id = #{id}
+		]]>
+	</select>
+	
+	<select id="selectPluginByThirdProvideId" parameterType="Integer" resultType="Plugin">
+		select * from plugin where thirdProvideId = #{thirdProvideId}
+	</select>
+	
+	<select id="findThirdProvideByName" parameterType="String" resultType="ThirdProvide">
+		select * from thirdprovide where name = #{name}
+	</select>
+	
+	<!-- 注销（启用）第三方 -->
+	<update id="updateThirdProvideStatus" parameterType="ThirdProvide">
+		<![CDATA[
+		update thirdprovide set 
+			status = #{status,jdbcType=INTEGER}
+		where id = #{id}
+		]]>
+	</update>
+</mapper>

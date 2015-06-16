@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.SignFlowStepMapper">
+
+	<sql id="selectSQL">
+		id,flowid,name,description,begintime,endtime,createtime
+	</sql>
+	
+	<select id="findAllFlowStepsIcon" resultType="FlowStepIcon" parameterType="FlowStepIcon">
+		select * from flowstepicon
+	</select>
+
+	<select id="findAllSignFlowSteps" resultType="SignFlowStep" parameterType="SignFlowStep">
+		select
+			s.*, f.`iconUrl`
+		from signflowstep s left join flowstepicon f
+		on (s.`iconId` = f.`id`)
+		<![CDATA[
+			where s.`flowid` = #{flowid}
+		]]>
+		order by begintime
+	</select>
+
+	<select id="getSignFlowStep" resultType="SignFlowStep" parameterType="int">
+		select
+			<include refid="selectSQL" />
+		from signflowstep
+		where id = #{id}
+	</select>
+
+	<insert id="addSignFlowStep" parameterType="SignFlowStep">
+		insert into signflowstep(
+			flowid,name,description,begintime,endtime,createtime,iconId
+		)
+		values(
+			#{flowid,jdbcType=INTEGER},
+			#{name,jdbcType=VARCHAR},
+			#{description,jdbcType=VARCHAR},
+			#{begintime,jdbcType=TIMESTAMP},
+			#{endtime,jdbcType=TIMESTAMP},
+			#{createtime,jdbcType=TIMESTAMP},
+			#{iconId,jdbcType=VARCHAR}
+		)
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<update id="updateSignFlowStep" parameterType="SignFlowStep">
+		update signflowstep set 
+			name = #{name,jdbcType=VARCHAR},
+			description = #{description,jdbcType=VARCHAR},
+			begintime = #{begintime,jdbcType=TIMESTAMP},
+			endtime = #{endtime,jdbcType=TIMESTAMP},
+			iconId = #{iconId,jdbcType=VARCHAR}
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteSignFlowStep" parameterType="int">
+		delete from signflowstep where id = #{id}
+	</delete>
+</mapper>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>院校列表</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet">
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery-ui.js"></script>
+	
+	<script type="text/javascript" src="../../dwr/interface/PopularCollegeDS.js"></script>
+	<script type="text/javascript" src="../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../dwr/util.js"></script>
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_college.js"></script>
+	<script type="text/javascript" src="../../js/x_college_pop.js"></script>
+	<style>
+		#sortable { list-style-type: none; margin: 0; padding: 0;margin-left:25px; }
+		#sortable li { 
+			margin: 3px 3px 3px 0; 
+			padding: 1px; 
+			float: left; 
+			width: 100px; 
+			height: 130px; 
+			font-size: 16px; 
+			text-align: center; 
+			overflow:hidden;
+			
+		}
+		.topDiv{height:20px;margin:5px 0;}
+		.bottomDiv{
+			vertical-align:middle;
+			height:100px;
+		}
+	</style>
+	<script>
+		$(document).ready(function(){
+			checkUser("college.order", initCollegeOrder);
+		});
+	</script>
+</head>
+	
+<body bgcolor="#FFFFFF" text="#000000">
+<p/>
+<div style="float: left; padding-left:100px">
+<!--	考试类型：<select name="selExamtype" id="selExamtype" style="width:80px"></select>&nbsp;-->
+</div>
+<div style="float: right; padding-right:100px">
+	<button id="btnAdd">添 加</button>&nbsp;&nbsp;
+	<button id="btnImport">保 存</button>&nbsp;&nbsp;
+</div>
+<div style="clear: both;"></div><br>
+<ul id="sortable"></ul>
+<div style="clear: both;"></div>
+
+<div id="divCollege" title="&nbsp;" style="display:none;">
+<table id="searchconds" width="700" class="list-head" style="margin-top: 2px; margin-left: 5px">
+	<tr>
+		<td align="center">请输入院校名称：
+			<input type="text" name="txtSchoolName" id="txtSchoolName" value="" size="12"/>&nbsp;&nbsp;
+<!--			考试类型：<select name="selT" id="selT" style="width:80px"></select>&nbsp;&nbsp;-->
+			<input type="hidden" id="selT" />
+			<button>搜 索</button>&nbsp;&nbsp;
+		</td>
+	</tr>
+</table>
+<table width="700" class="list-data" style="margin-left: 5px">
+	<thead><tr bgcolor="#cccccc">
+		<td align="center">院校名称</td>
+		<td align="center">分类</td>
+		<td align="center">学校类别</td>
+     </tr></thead>
+     <tbody id="showlists">
+     </tbody>
+     </table>
+     <table width="700" class="list-data" id="showpages" style="margin-left: 5px">
+</table>
+</div>
+<br id="footer">
+</body>
+</html>

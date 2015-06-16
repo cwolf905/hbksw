@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.ThirdProvideMemberMapper">
+
+<!--	<resultMap type="com.dm.orm.mapper.entity.ThirdProvide" id="result_thirdProvide">-->
+<!--		<result property="thirdProvideId" column="id"/>-->
+<!--		<result property="thirdProvideName" column="name"/>-->
+<!--		<result property="thirdProvideTele" column="telephone"/>-->
+<!--		<result property="thirdProvideEmail" column="email"/>-->
+<!--		<result property="initUserName" column="username" />-->
+<!--	</resultMap>-->
+<!--	-->
+
+	<update id="ResetThirdAdminPass" parameterType="Integer">
+		update t_member set MEMBER_PASSWORD="123456" where third_provideId=#{id} and MEMBER_NAME="admin"
+	</update>
+
+	<insert id="addThirdProvideMember" parameterType="ThirdProvideMember">
+		insert into t_member
+		(MEMBER_NAME, MEMBER_PASSWORD, MEMBER_PHONE, MEMBER_LASTLOGINTIME, MEMBER_COMPANY, MEMBER_ROLEID,MEMBER_EMAIL,USER_NAME,third_provideId)
+	    values(
+	    	#{memberName,jdbcType=VARCHAR},
+	    	#{memberPassword,jdbcType=VARCHAR},
+	    	#{memberPhone,jdbcType=VARCHAR},
+	    	#{memberLastLoginTime,jdbcType=VARCHAR},
+	    	#{memberCompany,jdbcType=VARCHAR},
+	    	#{memberRoleId,jdbcType=VARCHAR},
+	    	#{memberEmail,jdbcType=VARCHAR},
+	    	#{userName,jdbcType=VARCHAR},
+	    	#{thirdProvideId,jdbcType=VARCHAR}
+	    )
+	</insert>
+	
+</mapper>

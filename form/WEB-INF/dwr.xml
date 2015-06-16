@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN" 
+	"http://getahead.org/dwr/dwr20.dtd">
+
+<dwr>
+  <allow>
+  	<create creator="spring" javascript="AdminUserDS">
+    	<param name="beanName" value="adminUserBiz"/>
+    </create>
+    
+    <create creator="spring" javascript="PopularCollegeDS">
+    	<param name="beanName" value="popularCollegeBiz"/>
+    </create>
+    
+    <create creator="spring" javascript="AppReleaseDS">
+    	<param name="beanName" value="appReleaseBiz"/>
+    </create>
+    
+    <create creator="spring" javascript="PluginDS">
+    	<param name="beanName" value="pluginBiz"/>
+    </create>
+    
+    <create creator="spring" javascript="PluginPictureDS">
+    	<param name="beanName" value="pluginPictureBiz"/>
+    </create>
+    
+    <create creator="spring" javascript="PluginFeeDS">
+    	<param name="beanName" value="pluginFeeBiz"/>
+    </create>
+
+    <create creator="spring" javascript="PluginPackageDS">
+    	<param name="beanName" value="pluginPackageBiz"/>
+    </create>
+    
+    <create creator="spring" javascript="MobileAdNewDS">
+    	<param name="beanName" value="mobileAdNewBiz"/>
+    </create>
+    
+    <create creator="spring" javascript="InfoSubjectDS">
+    	<param name="beanName" value="infoSubjectBiz"/>
+    </create>
+    
+    <create creator="spring" javascript="CalendarTimerDS">
+    	<param name="beanName" value="calendarTimerBiz"/>
+    </create>
+    
+    <create creator="spring" javascript="CalendarEventDS">
+    	<param name="beanName" value="calendarEventBiz"/>
+    </create>
+    
+    <create creator="spring" javascript="CalendarEventrsDS">
+    	<param name="beanName" value="calendarEventrsBiz"/>
+    </create>
+    
+    <create creator="spring" javascript="CalendarScheduleDS">
+    	<param name="beanName" value="calendarScheduleBiz"/>
+    </create>
+    
+    <create creator="spring" javascript="SignFlowDS">
+    	<param name="beanName" value="signFlowBiz"/>
+    </create>
+    
+    <create creator="spring" javascript="SignFlowStepDS">
+    	<param name="beanName" value="signFlowStepBiz"/>
+    </create>
+    
+    <create creator="spring" javascript="SignFlowStepPolicyDS">
+    	<param name="beanName" value="signFlowStepPolicyBiz"/>
+    </create>
+    
+    <create creator="spring" javascript="ReviewPluginDS">
+    	<param name="beanName" value="reviewPluginBiz"/>
+    </create>
+    
+    <create creator="spring" javascript="ReviewCardDS">
+    	<param name="beanName" value="reviewCardBiz"/>
+    </create>
+	
+	<create creator="spring" javascript="PushSampleDS">
+    	<param name="beanName" value="pushSampleBiz"/>
+    </create>
+ 
+ 	<create creator="spring" javascript="PushTemplateDS">
+    	<param name="beanName" value="pushTemplateBiz"/>
+    </create>
+    
+    <create creator="spring" javascript="PushErrorDS">
+    	<param name="beanName" value="pushErrorBiz"/>
+    </create>
+    
+    <create creator="spring" javascript="ThirdProvideDS">
+    	<param name="beanName" value="thirdProvideBiz"/>
+    </create>
+    
+    <create creator="spring" javascript="PluginCategoryDS">
+    	<param name="beanName" value="pluginCategoryBiz"/>
+    </create>
+    
+    <create creator="spring" javascript="PluginTagDS">
+    	<param name="beanName" value="pluginTagBiz"/>
+    </create>
+      <!--插件订单列表    -->
+     <create creator="spring" javascript="PluginOrderInfoDS">
+    	<param name="beanName" value="pluginOrderInfoBiz"/>
+    </create>
+     <!--插件订单统计报表    -->
+     <create creator="spring" javascript="PluginOrderStatisticDs">
+    	<param name="beanName" value="pluginOrderStatisticBiz"/>
+    </create>
+     <!--插件销售排行    -->
+     <create creator="spring" javascript="PluginSaleStatisticsDS">
+    	<param name="beanName" value="pluginSaleStatisticsBiz"/>
+    </create>
+    <!--插件包订单统计报表   -->
+     <create creator="spring" javascript="pluginOrderPackageDs">
+    	<param name="beanName" value="pluginOrderPackageBiz"/>
+    </create>
+    
+    <create creator="spring" javascript="PluginIndexDS">
+    	<param name="beanName" value="pluginIndexBiz"/>
+    </create>
+     <create creator="spring" javascript="InformationDS">
+    	<param name="beanName" value="informationBiz"/>
+    </create>
+    
+  	<create creator="spring" javascript="AcademyNewsDS">
+    	<param name="beanName" value="academyNewsBiz"/>
+    </create>
+    
+    <create creator="spring" javascript="InfoSubjectPictureDS">
+    	<param name="beanName" value="infoSubjectPictureBiz"/>
+    </create>
+    <!-- add by wanglei for  -->
+    <create creator="spring" javascript="PushRegistDS">
+    	<param name="beanName" value="pushRegistBiz"/>
+    </create>
+     <!-- add by wanglei for  自定义客户端推送 -->
+    <create creator="spring" javascript="CustomPushDS">
+    	<param name="beanName" value="customPushBiz"/>
+    </create>
+    
+	<convert converter="bean" match="com.dm.orm.mapper.entity.AdminUser"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.PopularCollege"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.AppRelease"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.Plugin"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.PluginPicture"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.PluginFee"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.PluginPackage"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.MobileAdNew"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.InfoSubject"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.CalendarTimer"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.CalendarEvent"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.CalendarEventrs"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.CalendarSchedule"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.SignFlow"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.SignFlowStep"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.SignFlowStepPolicy"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.ReviewPlugin"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.ReviewCard"/>
+	<convert converter="bean" match="com.dm.orm.mapper.entity.PushSample"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.PushTemplate"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.PushError"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.ThirdProvide"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.PluginCategory"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.PluginTag"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.PluginTemplate"/>
+    <!--插件订单详细    -->
+    <convert converter="bean" match="com.dm.orm.mapper.entity.PluginOrderInfo"/>
+	<!--插件订单统计报表    -->
+	<convert converter="bean" match="com.dm.orm.mapper.entity.PluginOrderStatistic"/>
+	 <!--插件销售排行    -->
+	<convert converter="bean" match="com.dm.orm.mapper.entity.PluginSaleStatistics"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.ProductBuyWay"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.Role"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.Rights"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.RoleRights"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.PluginIndex"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.Pricess"/>
+    <convert converter="bean" match="org.jfree.chart.JFreeChart"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.FlowStepIcon"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.DictExamType"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.Information"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.InformationBack"/>
+    <!--专题内容编辑    -->
+    <convert converter="bean" match="com.dm.orm.mapper.entity.InfoSubjectContent"/>
+    
+     <!-- 院校咨询  -->
+    <convert converter="bean" match="com.dm.orm.mapper.entity.News"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.NewsBack"/>
+    
+    <convert converter="bean" match="com.dm.orm.mapper.entity.InfoSubjectPicture"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.InformationTab"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.CollegeTab"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.CollegeTabDefine"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.SearchWidgetGroup"/>
+    <convert converter="bean" match="com.dm.orm.mapper.entity.SearchWidget"/>
+   	<convert converter="bean" match="com.dm.orm.mapper.entity.College"/>
+   	<convert converter="bean" match="com.dm.orm.mapper.entity.UserJpushMapping"/>
+   	<convert converter="bean" match="com.dm.orm.mapper.entity.CustomPush"/>
+    
+    <convert match="com.dm.orm.biz.impl.BizException" converter="exception">
+        <param name="include" value="message,description"/>
+    </convert>
+    <convert converter="bean" match="java.lang.StackTraceElement"/>
+  </allow>
+</dwr>

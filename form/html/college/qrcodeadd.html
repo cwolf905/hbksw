@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>创建二维码</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet">
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery-ui.js"></script>
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_qrcode.js"></script>
+	<script type="text/javascript" src="../../js/x_college_pop.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("qrcode.add", initQRCodeAdd);
+		});
+	</script>
+</head>
+	
+<body>
+<p/>
+<table width="700" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#999999">
+    <tr> 
+    	<td class="tb-head">创建二维码</td>
+    </tr>
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<form id="frmQRCode">
+<table width="100%" class="tb-data">
+	<tr>
+		<td align="right" width="180">院校名称：</td>
+		<td><input type="text" name="txtCname" id="txtCname" value="" size="20"/>&nbsp;
+			<button type="button" name="btnBrowse" id="btnBrowse">点击此处得到院校编号</button></td>
+	</tr>
+	<tr>
+		<td align="right" width="180">院校编号：
+			<label class="isInput" style="color:red">*</label></td>
+		<td><input type="text" name="txtCid" id="txtCid" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">链接：
+			<label class="isInput100" style="color:red">*</label></td>
+		<td><input type="text" name="txtSchoolUrl" id="txtSchoolUrl" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr id="trImgPath" style="display:none;">
+		<td colspan="2" align="center">
+			<img name="imgPath" id="imgPath" src="" width="200px" height="200px"/>&nbsp;</td>
+	</tr>
+</table>
+</form>
+	    	<br>
+      	</td>
+    </tr>
+    <tr valign="top">
+      	<td class="tb-foot">
+      		<button type="button" name="btnSubmit" id="btnSubmit">添 加</button>&nbsp;&nbsp;
+			<button type="button" onclick="parent.removeTab('qrcodeadd');">关 闭</button>
+		</td>
+    </tr>
+</table>
+
+<div id="divCollege" title="&nbsp;" style="display:none;">
+<table id="searchconds" width="700" class="list-head" style="margin-top: 2px; margin-left: 5px">
+	<tr>
+		<td align="center">请输入院校名称：
+			<input type="text" name="txtSchoolName" id="txtSchoolName" value="" size="12"/>&nbsp;&nbsp;
+			考试类型：<select name="selT" id="selT" style="width:80px"></select>&nbsp;&nbsp;
+			<button>搜 索</button>&nbsp;&nbsp;
+			<a href="###" onclick="doCollegeAll()">查看全部</a>
+		</td>
+	</tr>
+</table>
+<table width="700" class="list-data" style="margin-left: 5px">
+	<thead><tr bgcolor="#cccccc">
+		<td align="center">院校名称</td>
+		<td align="center">分类</td>
+		<td align="center">学校类别</td>
+     </tr></thead>
+     <tbody id="showlists">
+     </tbody>
+     </table>
+     <table width="90%" class="list-data" id="showpages">
+</table>
+</div>
+<br id="footer">
+</body>
+</html>

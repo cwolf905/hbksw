@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>新增插件包</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<!--link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet"-->
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-ui.js"></script-->
+	
+	<script type="text/javascript" src="../../dwr/interface/PluginPackageDS.js"></script>
+	<script type="text/javascript" src="../../dwr/interface/PluginDS.js"></script>
+	<script type="text/javascript" src="../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../dwr/util.js"></script>
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_plugin.js"></script>
+	<link type="text/css" href="../../jquery/uploadify/uploadify.css" rel="stylesheet" />
+	<script type="text/javascript" src="../../jquery/uploadify/jquery.uploadify.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("pluginfee.add", initPluginFeeDefi);
+		});
+	</script>
+</head>
+	
+<body>
+<p/>
+<table width="700" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#999999">
+	<tr> 
+    	<td class="tb-head">插件收费定义</td>
+    </tr>
+    <tr valign="top">
+      	<td bgcolor="#f0f0f0">
+<form id="frmPluginFee">
+	<input type="hidden" name="txtId" id="txtId" value=""/>
+		<table>
+			<tr>
+				<td>
+					<div>
+						<div style="margin-left: 100px;">	
+							<div>
+								<input type="checkbox" id="buyAsForver" name="buyAsForver"/> 永久性购买
+								<div style="margin-left: 50px;">
+									&nbsp;&nbsp;<!--<input type="text" size="5" id="buyAsForverPrice"/>元-->
+									<select id ="buyAsForverPrice" name="buyAsForverPrice">
+										<option value="-1" selected="">--请选择价格--</option>
+									</select>
+									
+								</div>
+							</div>
+							<br/>
+							<div>
+								<input type="checkbox" id="buyAsMonth" name="buyAsMonth" /> 按月购买 <span style="color: red" onclick="addBuyWayAsMonth()">+</span>
+								<div style="margin-left: 50px;" id="buyWayByMonth">
+								</div>
+							</div>
+							<br/>
+							<div>
+								<input type="checkbox" id="buyAsTimes"/> 按次购买
+								<div style="margin-left: 50px;">
+								&nbsp;&nbsp;<!--	<input type="text" size="5" id="buyAsTimesPrice"/>元-->
+								<select id="buyAsTimesPrice" name="buyAsTimesPrice">
+									<option value="-1" selected="">--请选择价格--</option>
+								</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr align="center">
+				<td>
+							<br/>
+							<br/>
+					<div>
+						<button type="button" name="btnSubmit">添 加</button>&nbsp;&nbsp;
+						<button type="button" onclick="parent.removeTab('pluginfee');">关 闭</button>
+					</div>
+				</td>
+			</tr>
+		</table>
+</form>
+</td>
+</tr>
+</table>
+<br id="footer">
+</body>
+</html>

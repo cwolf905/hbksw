@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>新增自定义推送</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet">
+	<link type="text/css" href="../../css/former/plugin.css" rel="stylesheet">
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery-ui.js"></script>
+	
+    <script type="text/javascript" src="../../dwr/interface/CustomPushDS.js"></script>
+	<script type="text/javascript" src="../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../dwr/util.js"></script>
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_custompush.js"></script>
+	<link type="text/css" href="../../selfDefinedJs/kindeditor/themes/default/default.css" rel="stylesheet" />
+	<script type="text/javascript" src="../../selfDefinedJs/kindeditor/kindeditor-min.js"></script>
+	<script type="text/javascript" src="../../selfDefinedJs/kindeditor/lang/zh_CN.js"></script>
+	
+	<script>
+		$(document).ready(function(){
+			checkUser("custompush.update", initCustomPushUpdate);
+		});
+	</script>
+</head>
+	
+<body>
+<p/>
+<table width="1000" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#999999">
+	<tr> 
+    	<td class="tb-head">自定义资讯推送</td>
+    </tr>
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<form id="frmPush">
+	<input type="hidden" name="txtId" id="txtId" value=""/>
+<table width="100%" class="tb-data">
+	<tr>
+		<td align="right" width="180">推送标题：
+			<label class="isTextarea50" style="color:red">*</label></td>
+		<td><input name="title" id="title" style="width: 300px;" /> </td>
+	</tr>
+	<tr>
+		<td align="right" width="180">来源：
+			<label class="isTextarea50" style="color:red">*</label></td>
+		<td><input name="source" id="source" style="width: 300px;" /> </td>
+	</tr>
+	<tr>
+		<td align="right" width="180">推送类型：</td>
+		<td><select name="selPushtype" id="selPushtype" ref="createSelObj"></select>&nbsp;</td>
+	</tr>
+	<tr id="examTd">
+		<td align="right" width="180">考试类型：</td>
+		<td><select name="selExamtype" id="selExamtype" ref="createSelObj"></select>&nbsp;</td>
+	</tr>
+	
+	<tr id="collegeTd" style="display:none;"> 
+		<td align="right" width="180">院校ID：</td>
+		<td><input name="collegeId" id="collegeId" onkeydown="mykeydown()" onkeyup="mykeyup()" onkeypress="mykeypress()" /> &nbsp;</td>
+	</tr>
+	<tr > 
+		<td align="right" width="180">推送标签：</td>
+		<td id="pushTagTd">
+			<div id="infotype" class="default-tag tagbtn clearfix">
+				<input style='width:55px;color:blue;border-left:0;border-right:0; border-top:0; border-bottom: 0;float:left' value="未选类别：" />
+			</div>
+			<div id="saveinfotype" class="plus-tag tagbtn clearfix" name="saveplugintype">
+				<input style='width:55px;color:blue;border-left:0;border-right:0; border-top:0; border-bottom: 0;float:left' value="已选类别：" />
+			</div>
+		</td>
+		<td id="pushTagTd2" style="display:none;"><input name="pushTag2" id="pushTag2" readonly="readonly" style="width: 400px;" />&nbsp;</td>
+	</tr>
+	
+	<tr id="contentTd">
+		<td align="right" width="25%">推送内容：
+			<label class="isTextarea255" style="color:red">*</label></td>
+		<td><textarea name="content" id="content" rows="8" style="width:800px;"></textarea>&nbsp;</td>
+	</tr>
+	<!-- <tr id="contentTd2" style="display:none;">
+		<td align="right" width="25%">推送内容：
+			<label class="isTextarea255" style="color:red">*</label></td>
+		<td><textarea name="content2" id="content2" rows="8" style="width:800px;"></textarea>&nbsp;</td>
+	</tr> -->
+	
+</table>
+</form>
+	    	<br>
+      	</td>
+    </tr>
+    <tr valign="top">
+      	<td class="tb-foot">
+      		<button type="button" name="btnSubmit" id="btnSubmit">修 改</button>&nbsp;&nbsp;
+			<button type="button" onclick="parent.removeTab('custompushupdate');">关 闭</button>
+		</td>
+    </tr>
+</table>
+<br id="footer">
+</body>
+</html>

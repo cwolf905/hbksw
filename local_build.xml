@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." name="hbksy" default="jar">
+
+	<!-- 定义基本目录 -->
+	<property name="src" value="src">
+	</property>
+	<property name="lib1" value="form/WEB-INF/lib">
+	</property>
+	<property name="lib2" value="D:/tomcat7/lib">
+	</property>
+	<property name="classes" value="form/WEB-INF/classes">
+	</property>
+
+	<!-- seting classpath -->
+	<path id="classpath">
+		<fileset dir="${lib1}" includes="*.jar" />
+		<fileset dir="${lib2}" includes="servlet-api.jar" />
+	</path>
+
+	<!-- clean the compiled source files -->
+	<target name="clean" description="clean the compiled source files">
+		<delete dir="${classes}">
+		</delete>
+		<mkdir dir="${classes}">
+		</mkdir>
+	</target>
+	<!-- copy files to src dir -->
+	<target name="copy" depends="clean" description="copy files">
+		<copy todir="${classes}">
+			<fileset dir="${src}">
+				<exclude name="**/*.java" />
+				<include name="*.properties" />
+				<include name="*.xml" />
+				<include name="**/*.xml" />
+				<include name="**/*.*" />
+			</fileset>
+		</copy>
+	</target>
+	<!-- compile the resource files -->
+	<target name="compile" depends="copy" description="compile the source files">
+		<javac srcdir="${src}" destdir="${classes}" classpathref="classpath" includeantruntime="on" encoding="UTF-8" debug="true" />
+	</target>
+	<!-- build jar package -->
+	<target name="jar" depends="compile" description="jar">
+		<jar update="true" compress="true" jarfile="hbksw.jar">
+			<fileset dir="${classes}">
+				<include name="**/**" />
+				<include name="**" />
+			</fileset>
+		</jar>
+	</target>
+	<!--打成WAR包-->  
+    <target name="generwar" depends="compile">  
+        <echo message="generate war"/>  
+        <war destfile="${ant.project.name}.war" webxml="form/WEB-INF/web.xml" >  
+            <fileset dir="form" ></fileset>  
+            <lib dir="${lib1}"/>  
+            <classes dir="${classes}"/>  
+        </war>  
+    </target> 
+	<!--打源码包-->  
+    <target name="genersrc" depends="compile">  
+        <zip  destfile="${ant.project.name}_src.zip"   > 
+            <fileset dir=".">
+				<include name="**/**" />
+				<include name="**" /> 
+			</fileset>
+        </zip >  
+    </target> 
+	<!-- 使用FTP服务器-->
+	<target name="ftp" depends="generwar" description="ftp">
+		<ftp password="JJWhardworking" server="192.168.0.52" userid="root" depends="yes"
+			remotedir="/usr/local/tomcat/webapps/">
+			<fileset dir="." includes="hbksy_test.war">
+			</fileset>
+		</ftp>
+	</target>
+	<!-- 修改jar包权限
+	<target name="sshexec" depends="ftp" description="sshexec">
+	        <sshexec host="192.168.11.208" username="ecap" password="linkagebi" trust="true" 
+	        	command="cd /home/ecap/hadoop-2.4.0/share/hadoop/mapreduce;chmod 777 *.jar" />
+	</target>-->
+</project>

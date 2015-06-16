@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>报考流程步骤管理</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet">
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery-ui.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.ui.datepicker-zh-CN.js"></script>
+	
+	<script type="text/javascript" src="../../dwr/interface/SignFlowDS.js"></script>
+	<script type="text/javascript" src="../../dwr/interface/SignFlowStepDS.js"></script>
+	<script type="text/javascript" src="../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../dwr/util.js"></script>
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_signflow.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("signflow.manage", initSignFlowManage);
+		});
+	</script>
+</head>
+	
+<body>
+<p/>
+<table width="700" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#999999">
+	<tr> 
+    	<td class="tb-head">报考流程步骤管理</td>
+    </tr>
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<form id="frmSignFlow">
+	<input type="hidden" name="txtFlowid" id="txtFlowid" value=""/>
+<table width="100%" class="tb-data">
+	<tr>
+		<td align="right" width="180">考试类型：</td>
+		<td><input type="text" name="txtExamtype" id="txtExamtype" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">报考流程类别：</td>
+		<td><input type="text" name="txtFlowname" id="txtFlowname" value="" size="30"/>&nbsp;</td>
+	</tr>
+</table>
+</form>
+	    	<br>
+      	</td>
+    </tr>
+    <tr valign="top">
+      	<td class="tb-foot">
+      		<button type="button" name="btnSubmit">添 加 步 骤</button>&nbsp;&nbsp;
+			<button type="button" onclick="parent.removeTab('signflowmanage');">关 闭</button>
+		</td>
+    </tr>
+	<tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<table id="tblSignFlowStep" width="100%" class="tb-data">
+	<tr bgcolor="#cccccc">
+	    <td align="center">名称</td>
+		<td align="center" width="40%">描述</td>
+		<td align="center" width="20%">图标</td>
+		<td align="center">开始时间</td>
+		<td align="center">结束时间</td>
+		<td align="center">操作</td>
+     </tr>
+</table>
+	    	<br>
+      	</td>
+    </tr>
+	<tr valign="top">
+      	<td class="tb-foot">
+      		<button type="button" name="btnSubmit">添 加 步 骤</button>&nbsp;&nbsp;
+			<button type="button" onclick="parent.removeTab('signflowmanage');">关 闭</button>
+		</td>
+    </tr>
+</table>
+
+<div id="divSignFlowStep" title="&nbsp;" style="display:none;">
+<table width="100%" border="0" align="center" cellpadding="1" cellspacing="1" bgcolor="#999999">
+    <tr> 
+    	<td class="tb-head">添加步骤</td>
+    </tr>
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<form id="frmSignFlowStep">
+	<input type="hidden" name="txtId" id="txtId" value=""/>
+<table width="100%" class="tb-data">
+	<tr>
+		<td align="right" width="20%">名称：
+			<label class="isInput100" style="color:red">*</label></td>
+		<td><input type="text" name="txtName" id="txtName" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="20%">添加图标</td>
+		<td align="center">
+			<div id="showPic" style="float: left"></div>
+			<input type="button" onclick="hrefToAddPicIcon()" style="cursor:pointer;" value="选取图标"/>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" width="20%">描述：
+			<label class="isTextarea200" style="color:red">*</label></td>
+		<td><textarea name="taDescription" id="taDescription" rows="4" style="width:98%;resize:none;"></textarea>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="20%">开始时间：
+		<label class="isInput100" style="color:red">*</label></td>
+		<td><input type="text" name="txtBegintime" id="txtBegintime" value="" size="18"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="20%">结束时间：
+		<label class="isInput100" style="color:red">*</label></td>
+		<td><input type="text" name="txtEndtime" id="txtEndtime" value="" size="18"/>&nbsp;</td>
+	</tr>
+</table>
+</form>
+	    	<br>
+      	</td>
+    </tr>
+    <tr valign="top">
+      	<td class="tb-foot">
+			<button type="button" name="btnOK" id="btnOK">确 定</button>&nbsp;&nbsp;
+		</td>
+    </tr>
+</table>
+</div>
+
+<!--<input type="radio" name="flowStepIcon" value=""/>-->
+
+<div id="divAddPicIcon" title="&nbsp;" style="display:none;">
+<table width="420" border="0" align="center" cellpadding="1" cellspacing="1" bgcolor="#999999">
+    <tr> 
+    	<td class="tb-head">选择图标</td>
+    </tr>
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<form id="frmAddPicIcon">
+	<input type="hidden" name="txtId" id="txtId" value=""/>
+	<table width="100%" class="tb-data">
+		<thead>
+			<tr bgcolor="#cccccc">
+			    <td align="center">选择</td>
+				<td align="center" width="60%">图标</td>
+    	 	</tr>
+		</thead>
+		 <tbody id="showlists">
+	   	 </tbody>
+	</table>
+</form>
+	    	<br>
+      	</td>
+    </tr>
+    <tr valign="top">
+      	<td class="tb-foot">
+			<button type="button" name="btnAddPicIcon" id="btnAddPicIcon">确 定</button>&nbsp;&nbsp;
+		</td>
+    </tr>
+</table>
+</div>
+
+<br id="footer">
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>广告列表</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet">
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery-ui.js"></script>
+	
+	<script type="text/javascript" src="../../dwr/interface/MobileAdNewDS.js"></script>
+	<script type="text/javascript" src="../../dwr/interface/PluginDS.js"></script>
+	<script type="text/javascript" src="../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../dwr/util.js"></script>
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_mobileadnew.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("mobileadnew.list", initMobileAdNewList);
+		});
+	</script>
+</head>
+	
+<body>
+<p/>
+<table id="searchconds" width="90%" class="list-head">
+	<tr>
+		<td align="center">请选择关联插件：
+			<select name="selPluginid" id="selPluginid" style="width:120px"></select>&nbsp;
+			<button>搜 索</button>&nbsp;&nbsp;
+		</td>
+	</tr>
+</table>
+<table width="90%" class="list-data">
+    <thead><tr bgcolor="#cccccc">
+    	<td align="center">排序</td>
+    	<td align="center" width="8%">序号</td>
+		<td align="center">图片</td>
+		<td align="center">考试类型</td>
+		<td align="center">类型</td>
+		<td align="center">图片内容</td>
+		<td align="center">操作</td>
+     </tr></thead>
+     <tbody id="showlists">
+     </tbody>
+     </table>
+     <table width="90%" class="list-data" id="showpages">
+     	<tr>
+     		<td colspan="12" align="left">
+				&nbsp;&nbsp;<button type="button" onclick="hrefOrder()">保存广告排序</button>
+				&nbsp;&nbsp;<button type="button" onclick="hrefAdd()">新增广告</button>
+			</td>
+		</tr>
+</table>
+<br id="footer">
+<div id="divTip" title="&nbsp;" style="display:none;">
+<table width="500" border="0" align="center" cellpadding="1" cellspacing="1" bgcolor="#999999">
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0" id="tdTip"></td>
+    </tr>
+</table>
+</div>
+</body>
+</html>

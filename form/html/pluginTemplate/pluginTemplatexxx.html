@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>添加插件信息</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet">
+	<link type="text/css" href="../../css/former/plugin.css" rel="stylesheet">
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery-ui.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.ui.datepicker-zh-CN.js"></script>
+	
+	<link type="text/css" href="../../jquery/uploadify/uploadify.css" rel="stylesheet" />
+	<script type="text/javascript" src="../../jquery/uploadify/jquery.uploadify.js"></script>
+	
+	<script type="text/javascript"
+	src="../../jquery/fancybox/jquery.fancybox-1.3.4.js"></script>
+	<script type="text/javascript"
+	src="../../jquery/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+	
+	<script type="text/javascript" src="../../dwr/interface/PluginDS.js"></script>
+	<script type="text/javascript" src="../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../dwr/util.js"></script>
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_plugin.js"></script>
+	<!--<script type="text/javascript" src="../../js/plugin/plugin_add.js"></script>-->
+	
+
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			PluginDS.typelist(function(data) {
+				if (data!=null) {
+					var typs = data.split("},{");
+					for (var i=0; i<typs.length; i++) {
+						var datas = typs[i].replace("[","");
+						var idandname = datas.split(",");
+						var allid = idandname[0];
+						var idstring = allid.replace("{","");
+						var p_ids = idstring.split(":");
+						var pid = p_ids[1];
+						var allname = idandname[1];
+						var namestring = allname.replace("{","");
+						var p_names = namestring.split(":");
+						var pname = p_names[1];
+						pname = pname.replace("}","");
+						pname = pname.replace("]","");
+						pname = pname.replace("\"","");
+						var name = pname.replace("\"","");
+						var atr = "<a id='c_"+pid+"' title='"+name+"' href='javascript:void(0);' onclick=\"selecttype('"+pid+"','"+name+"')\"><span>"+name+"</span><em></em></a>";
+						//var atr = "<input style='width:"+name.length*15+"px;' onclick=\"selecttype('"+pid+"','"+name+"')\" class=\"ptype\" id=c_"+pid+" value="+name+"></input>";
+						//var atr = "<input onclick='select(this)' class='cateAdd' id="+name[1]+" value="+name[1]+" pluginCategoryNameAdd="+name[1]+" style='border-left:0;border-right:0; border-top:0; border-bottom: 0;float:left'/>";
+						$("#plugintype").append(atr);
+					}
+				}
+			});
+
+			PluginDS.labellist(function(data) {
+				if (data!=null) {
+					var typs = data.split("},{");
+					for (var i=0; i<typs.length; i++) {
+						var datas = typs[i].replace("[","");
+						var idandname = datas.split(",");
+						var allid = idandname[0];
+						var idstring = allid.replace("{","");
+						var p_ids = idstring.split(":");
+						var pid = p_ids[1];
+						var allname = idandname[1];
+						var namestring = allname.replace("{","");
+						var p_names = namestring.split(":");
+						var pname = p_names[1];
+						pname = pname.replace("}","");
+						pname = pname.replace("]","");
+						pname = pname.replace("\"","");
+						var name = pname.replace("\"","");
+						var atr = "<a id='t_"+pid+"' title='"+name+"' href='javascript:void(0);' onclick=\"selectlabel('"+pid+"','"+name+"')\"><span>"+name+"</span><em></em></a>";
+						//var atr = "<input style='width:"+name.length*15+"px;' onclick=\"selectlabel('"+pid+"','"+name+"')\" class=\"plabel\" id=t_"+pid+" value="+name+"></input>";
+						//var atr = "<input onclick='select(this)' class='cateAdd' id="+name[1]+" value="+name[1]+" pluginCategoryNameAdd="+name[1]+" style='border-left:0;border-right:0; border-top:0; border-bottom: 0;float:left'/>";
+						$("#pluginlabel").append(atr);
+					}
+				}
+			});
+
+			checkUser("plugin.add", initPluginAdd);
+		});
+	
+	</script>
+</head>
+	
+<body>
+<p/>
+<table width="700" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#999999">
+	<tr> 
+    	<td class="tb-head">添加插件信息</td>
+    </tr>
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<form id="addfrmPlugin">
+	<input type="hidden" name="txtId" id="txtId" value=""/>
+<table width="100%" class="tb-data">
+	<tr>
+		<td align="right" width="180">插件名称：
+			<label class="isInput100" style="color:red">*</label></td>
+		<td><input type="text" name="txtName" id="txtName" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">是否是系统插件：</td>
+		<td id="tdIsdefault" name="tdIsdefault">
+			<input type="radio" name="radIsdefault" value="1" />是
+			<input type="radio" name="radIsdefault" value="0" checked/>否
+		</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">是否收费：</td>
+		<td id="tdIsfee" name="tdIsfee">
+			<input type="radio" name="radIsfee" value="1" checked/>是
+			<input type="radio" name="radIsfee" value="0"/>否
+		</td>
+	</tr>
+	<tr id="trBegintime">
+		<td align="right" width="180">启动时间：</td>
+		<td><input type="text" name="txtBegintime" id="txtBegintime" value="" size="18"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">是否是推荐插件：</td>
+		<td id="tdRecommend" name="tdRecommend">
+			<input type="radio" name="radRecommend" value="1" />是
+			<input type="radio" name="radRecommend" value="0" checked/>否
+		</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">图片：</td>
+		<td><input type="text" name="txtImg" id="txtImg" value="" size="60"/>&nbsp;</td>
+	</tr>
+	<tr id="trJpg">
+		<td align="right" width="180">上传图片文件：</td>
+		<td><input type="file" name="txtJpg" id="txtJpg" value="" size="30"/>&nbsp;
+			<div id="divJpg"></div></td>
+	</tr>
+	<tr>
+		<td align="right" width="180">添加插件模版：</td>
+		<td>
+			<a onclick="addPluginTemplate()">添加</a>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">类别：</td>
+		<td>
+			<div id="plugintype" class="default-tag tagbtn clearfix">
+				<input style='width:55px;color:blue;border-left:0;border-right:0; border-top:0; border-bottom: 0;float:left' value="未选类别：" />
+			</div>
+			<div id="saveplugintype" class="plus-tag tagbtn clearfix" name="saveplugintype">
+				<input style='width:55px;color:blue;border-left:0;border-right:0; border-top:0; border-bottom: 0;float:left' value="已选类别：" />
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">标签：</td>
+		<td align="left">
+			<div id="pluginlabel" class="default-tag tagbtn clearfix">
+				<input style='width:55px;color:blue;border-left:0;border-right:0; border-top:0; border-bottom: 0;float:left' value="未选标签：" />
+			</div>
+			<div id="savepluginlabel" name="savepluginlabel" class="plus-tag tagbtn clearfix">
+				<input style='width:55px;color:blue;border-left:0;border-right:0; border-top:0; border-bottom: 0;float:left' value="已选标签：" />
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">插件简介：</td>
+		<td><textarea name="taDescription" id="taDescription" rows="3" cols="50"></textarea></td>
+	</tr>
+</table>
+</form>
+	    	<br>
+      	</td>
+    </tr>
+    <tr valign="top">
+      	<td class="tb-foot">
+      		<button type="button" name="btnSubmit" id="btnSubmit">添 加</button>&nbsp;&nbsp;
+			<button type="button" onclick="parent.removeTab('pluginnewadd');">关 闭</button>
+		</td>
+    </tr>
+</table>
+<br id="footer">
+</body>
+</html>

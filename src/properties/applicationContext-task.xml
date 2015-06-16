@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+
+	<bean name="quartzScheduler"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<!-- 必须，应用启动后 QuartzScheduler 再启动 -->
+		<property name="startupDelay" value="60" />
+		<!-- 普通触发器 ：触发器列表-->
+		<property name="triggers">
+			<list>
+				<ref local="scoreTrigger" /><!-- 高考分数推送 -->
+				<ref local="luquTrigger" /><!-- 录取状态推送 -->
+				<ref local="calendarEventTrigger" /><!-- 系统事件推送（提前一天） -->
+				<ref local="calendarTimerTrigger" /><!-- 倒计时推送（提前一天） -->
+				<ref local="teacherTrigger" /><!-- 教师推送（有新的问题时） -->
+				<ref local="pluginExpireNotifyTrigger" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- 配置触发器 -->
+	<bean id="scoreTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<!-- 执行定时任务的bean -->
+		<property name="jobDetail">
+			<ref bean="scoreTask" />
+		</property>
+		<property name="cronExpression">
+			<!-- 每天8,12,18时  -->
+			<value>0 0 6-22 * * ?</value>
+		</property>
+	</bean>
+	
+	<bean id="luquTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<!-- 执行定时任务的bean -->
+		<property name="jobDetail">
+			<ref bean="luquTask" />
+		</property>
+		<property name="cronExpression">
+			<!-- 每天8,12,18时  -->
+			<value>0 1 6-22 * * ?</value>
+		</property>
+	</bean>
+	
+	<bean id="calendarEventTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<!-- 执行定时任务的bean -->
+		<property name="jobDetail">
+			<ref bean="calendarEventTask" />
+		</property>
+		<property name="cronExpression">
+			<!-- 每天8,20时  -->
+<!--			<value>0 2 8,18 * * ?</value>-->
+			<value>0 0 8,20 * * ?</value>
+		</property>
+	</bean>
+	
+	<bean id="calendarTimerTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<!-- 执行定时任务的bean -->
+		<property name="jobDetail">
+			<ref bean="calendarTimerTask" />
+		</property>
+		<property name="cronExpression">
+			<!-- 每天8,20时  -->
+<!--			<value>0 3 8 * * ?</value>-->
+			<value>0 0 8,20 * * ?</value>
+		</property>
+	</bean>
+	
+	<bean id="teacherTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<!-- 执行定时任务的bean -->
+		<property name="jobDetail">
+			<ref bean="teacherTask" />
+		</property>
+		<property name="cronExpression">
+			<!-- 每天8,18时  -->
+			<value>0 4 8,18 * * ?</value>
+		</property>
+	</bean>
+	
+	
+	<bean id="pluginExpireNotifyTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<!-- 执行定时任务的bean -->
+		<property name="jobDetail">
+			<ref bean="pluginExpireNotifyTask" />
+		</property>
+		<property name="cronExpression">
+			<!--  每天12点 -->
+			<value>0 0 12 * * ?</value>
+		</property>
+	</bean>
+	
+	<!-- 配置执行定时任务的类和方法 -->
+	<bean id="scoreTask"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.dm.task.ScoreTask"></bean>
+		</property>
+		<property name="targetMethod">
+			<value>push</value>
+		</property>
+	</bean>
+	
+	<bean id="luquTask"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.dm.task.LuquTask"></bean>
+		</property>
+		<property name="targetMethod">
+			<value>push</value>
+		</property>
+	</bean>
+	
+	<bean id="calendarEventTask"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.dm.task.CalendarEventTask"></bean>
+		</property>
+		<property name="targetMethod">
+			<value>push</value>
+		</property>
+	</bean>
+	
+	<bean id="calendarTimerTask"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.dm.task.CalendarTimerTask"></bean>
+		</property>
+		<property name="targetMethod">
+			<value>push</value>
+		</property>
+	</bean>
+	
+	<bean id="teacherTask"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.dm.task.TeacherTask"></bean>
+		</property>
+		<property name="targetMethod">
+			<value>push</value>
+		</property>
+	</bean>
+	
+	<bean id="pluginExpireNotifyTask"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<bean class="com.dm.task.PluginExpireNotifyTask"></bean>
+		</property>
+		<property name="targetMethod">
+			<value>push</value>
+		</property>
+	</bean>
+	
+	
+</beans>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="hbksy_test"
+  id="myeclipse.1396595886062"
+  context-root="/hbksy_test"
+  j2ee-spec="5.0"
+  archive="hbksy_test.war">
+  <attributes>
+    <attribute name="webrootdir" value="/form" />
+  </attributes>
+</project-module>
+

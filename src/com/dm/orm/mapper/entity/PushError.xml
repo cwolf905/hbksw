@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.PushErrorMapper">
+
+	<sql id="selectSQL">
+		id,pushtype,context,addtime
+	</sql>
+	
+	<select id="countPushErrors" resultType="int" parameterType="PushError">
+		select
+			count(1)
+		from pusherror
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="pushtype != 0">
+            <![CDATA[
+            	and pushtype = #{pushtype}
+            ]]>
+        </if>
+	</select>
+
+	<select id="findPushErrorsByPage" resultType="PushError" parameterType="PushError">
+		select
+			<include refid="selectSQL" />
+		from pusherror
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="pushtype != 0">
+            <![CDATA[
+            	and pushtype=#{pushtype}
+            ]]>
+        </if>
+		order by id desc
+		limit #{pagestart}, #{pagesize}
+	</select>
+	
+	<select id="findAllPushErrors" resultType="PushError" parameterType="PushError">
+		select
+			<include refid="selectSQL" />
+		from pusherror
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="pushtype != 0">
+            <![CDATA[
+            	and pushtype=#{pushtype}
+            ]]>
+        </if>
+		order by id desc
+	</select>
+
+	<select id="getPushError" resultType="PushError" parameterType="int">
+		select
+			<include refid="selectSQL" />
+		from pusherror
+		where id = #{id}
+	</select>
+
+	<insert id="addPushError" parameterType="PushError">
+		insert into pusherror(
+			pushtype,context,addtime
+		)
+		values(
+			#{pushtype,jdbcType=TINYINT},
+			#{context,jdbcType=VARCHAR},
+			#{addtime,jdbcType=VARCHAR}
+		)
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<delete id="deletePushError" parameterType="int">
+		delete from pusherror where id = #{id}
+	</delete>
+</mapper>

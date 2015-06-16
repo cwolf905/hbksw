@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>反馈意见信息</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<!--link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet"-->
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-ui.js"></script-->
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_user.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("feedback.info", initFeedBackInfo);
+		});
+	</script>
+</head>
+	
+<body bgcolor="#FFFFFF" text="#000000">
+<p/>
+<table width="700" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#999999">
+    <tr> 
+    	<td class="tb-head">反馈意见信息</td>
+    </tr>
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<form id="frmFeedBack">
+	<input type="hidden" name="txtId" id="txtId" value=""/>
+<table width="100%" border="1" align="center" cellpadding="3" cellspacing="0" bordercolordark="#FFFFFF" bordercolorlight="#666666" class="tb-data">
+	<tr>
+		<td align="right" width="180">手机号码：</td>
+		<td><input type="text" name="txtUserId" id="txtUserId" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">插件名称：</td>
+		<td><input type="text" name="txtPluginName" id="txtPluginName" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">内容：</td>
+		<td><input type="text" name="txtContent" id="txtContent" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">反馈时间：</td>
+		<td><input type="text" name="txtCreatetime" id="txtCreatetime" value="" size="30"/>&nbsp;</td>
+	</tr>
+</table>
+</form>
+	    	<br>
+      	</td>
+    </tr>
+    <tr valign="top">
+      	<td class="tb-foot">
+			<button type="button" onclick="parent.removeTab('feedbackinfo');">关 闭</button>
+		</td>
+    </tr>
+</table>
+<br id="footer">
+</body>
+</html>

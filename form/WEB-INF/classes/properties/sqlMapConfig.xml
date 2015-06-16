@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<settings>
+		<!-- 禁用缓存，默认是true -->
+		<setting name="cacheEnabled" value="false" />
+		<!-- 配置默认的执行器，默认是SIMPLE -->
+		<setting name="defaultExecutorType" value="SIMPLE" />
+		<!-- JDBC type for null values，默认是OTHER -->
+		<setting name="jdbcTypeForNull" value="OTHER" />
+	</settings>
+	
+	<typeAliases>
+		<typeAlias alias="AdminUser" type="com.dm.orm.mapper.entity.AdminUser" />
+		<typeAlias alias="Role" type="com.dm.orm.mapper.entity.Role" />
+		<typeAlias alias="Rights" type="com.dm.orm.mapper.entity.Rights" />
+		<typeAlias alias="RoleRights" type="com.dm.orm.mapper.entity.RoleRights" />
+        <typeAlias alias="PopularCollege" type="com.dm.orm.mapper.entity.PopularCollege"/>
+        <typeAlias alias="AppRelease" type="com.dm.orm.mapper.entity.AppRelease"/>
+        <typeAlias alias="Plugin" type="com.dm.orm.mapper.entity.Plugin"/>
+        <typeAlias alias="PluginFee" type="com.dm.orm.mapper.entity.PluginFee"/>
+        <typeAlias alias="PluginPackage" type="com.dm.orm.mapper.entity.PluginPackage"/>
+        <typeAlias alias="PluginPicture" type="com.dm.orm.mapper.entity.PluginPicture"/>
+        <typeAlias alias="MobileAdNew" type="com.dm.orm.mapper.entity.MobileAdNew"/>
+        <typeAlias alias="InfoSubject" type="com.dm.orm.mapper.entity.InfoSubject"/>
+        <typeAlias alias="CalendarTimer" type="com.dm.orm.mapper.entity.CalendarTimer"/>
+        <typeAlias alias="CalendarEvent" type="com.dm.orm.mapper.entity.CalendarEvent"/>
+        <typeAlias alias="CalendarEventrs" type="com.dm.orm.mapper.entity.CalendarEventrs"/>
+        <typeAlias alias="CalendarSchedule" type="com.dm.orm.mapper.entity.CalendarSchedule"/>
+        <typeAlias alias="SignFlow" type="com.dm.orm.mapper.entity.SignFlow"/>
+        <typeAlias alias="SignFlowStep" type="com.dm.orm.mapper.entity.SignFlowStep"/>
+        <typeAlias alias="SignFlowStepPolicy" type="com.dm.orm.mapper.entity.SignFlowStepPolicy"/>
+        <typeAlias alias="ReviewPlugin" type="com.dm.orm.mapper.entity.ReviewPlugin"/>
+        <typeAlias alias="ReviewCard" type="com.dm.orm.mapper.entity.ReviewCard"/>
+        <typeAlias alias="PushSample" type="com.dm.orm.mapper.entity.PushSample"/>
+        <typeAlias alias="PushTemplate" type="com.dm.orm.mapper.entity.PushTemplate"/>
+        <typeAlias alias="PushError" type="com.dm.orm.mapper.entity.PushError"/>
+        <typeAlias alias="ThirdProvide" type="com.dm.orm.mapper.entity.ThirdProvide"/>
+        <typeAlias alias="ThirdProvideMember" type="com.dm.orm.mapper.entity.ThirdProvideMember"/> 
+ 		<typeAlias alias="PluginCategory" type="com.dm.orm.mapper.entity.PluginCategory"/>     
+        <typeAlias alias="PluginOrderInfo" type="com.dm.orm.mapper.entity.PluginOrderInfo"/>
+        <typeAlias alias="PluginOrderStatistic" type="com.dm.orm.mapper.entity.PluginOrderStatistic"/>
+        <typeAlias alias="PluginSaleStatistics" type="com.dm.orm.mapper.entity.PluginSaleStatistics"/> 
+        <typeAlias alias="PluginTag" type="com.dm.orm.mapper.entity.PluginTag"/>  
+        <typeAlias alias="ProductBuyWay" type="com.dm.orm.mapper.entity.ProductBuyWay"/>    
+        <typeAlias alias="PluginAndCategory" type="com.dm.orm.mapper.entity.PluginAndCategory"/>    
+        <typeAlias alias="PluginAndTag" type="com.dm.orm.mapper.entity.PluginAndTag"/>  
+        <typeAlias alias="PluginIndex" type="com.dm.orm.mapper.entity.PluginIndex"/>  
+        <typeAlias alias="Pricess" type="com.dm.orm.mapper.entity.Pricess"/>    
+        <typeAlias alias="ChartData" type="com.dm.core.io.ChartData"/>  
+        <typeAlias alias="PluginTemplate" type="com.dm.orm.mapper.entity.PluginTemplate"/>  
+        <typeAlias alias="FlowStepIcon" type="com.dm.orm.mapper.entity.FlowStepIcon"/>  
+        <typeAlias alias="DictExamType" type="com.dm.orm.mapper.entity.DictExamType"/>
+        <typeAlias alias="Information" type="com.dm.orm.mapper.entity.Information"/>
+        <typeAlias alias="InformationBack" type="com.dm.orm.mapper.entity.InformationBack"/> 
+        <typeAlias alias="News" type="com.dm.orm.mapper.entity.News"/>
+        <typeAlias alias="NewsBack" type="com.dm.orm.mapper.entity.NewsBack"/>
+        <typeAlias alias="InfoSubjectPicture" type="com.dm.orm.mapper.entity.InfoSubjectPicture"/>
+        <typeAlias alias="InfoSubjectContent" type="com.dm.orm.mapper.entity.InfoSubjectContent"/>
+        <typeAlias alias="UserJpushMapping" type="com.dm.orm.mapper.entity.UserJpushMapping"/>
+        <typeAlias alias="InformationTab" type="com.dm.orm.mapper.entity.InformationTab"/>
+        <typeAlias alias="PluginExpire" type="com.dm.orm.mapper.entity.PluginExpire"/>
+   		<typeAlias alias="CollegeTab" type="com.dm.orm.mapper.entity.CollegeTab"/>
+        <typeAlias alias="SearchWidgetGroup" type="com.dm.orm.mapper.entity.SearchWidgetGroup"/>
+        <typeAlias alias="CollegeTabDefine" type="com.dm.orm.mapper.entity.CollegeTabDefine"/>
+        <typeAlias alias="SearchWidget" type="com.dm.orm.mapper.entity.SearchWidget"/>
+        <typeAlias alias="College" type="com.dm.orm.mapper.entity.College"/>
+        <typeAlias alias="MobileUser" type="com.dm.orm.mapper.entity.MobileUser"/>
+        <typeAlias alias="CustomPush" type="com.dm.orm.mapper.entity.CustomPush"/>
+   	</typeAliases>
+
+	<mappers>
+		<mapper resource="com/dm/orm/mapper/entity/AdminUser.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/Role.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/Rights.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/PopularCollege.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/AppRelease.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/Plugin.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/PluginFee.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/PluginPackage.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/PluginPicture.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/MobileAdNew.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/InfoSubject.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/CalendarTimer.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/CalendarEvent.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/CalendarEventrs.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/CalendarSchedule.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/SignFlow.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/SignFlowStep.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/SignFlowStepPolicy.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/ReviewPlugin.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/ReviewCard.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/PushSample.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/PushTemplate.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/PushError.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/ThirdProvide.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/ThirdProvideMember.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/PluginCategory.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/PluginTag.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/PluginOrderInfo.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/PluginOrderStatistic.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/PluginOrderPackage.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/PluginSaleStatistics.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/ProductBuyWay.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/PluginIndex.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/Information.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/Academynews.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/InfoSubjectPicture.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/InfoSubjectContent.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/UserJpushMapping.xml" />
+		<mapper resource="com/dm/orm/mapper/entity/CustomPush.xml" />
+	</mappers>
+</configuration>

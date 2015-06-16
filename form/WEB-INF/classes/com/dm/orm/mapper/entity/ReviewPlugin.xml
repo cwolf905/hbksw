@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.ReviewPluginMapper">
+
+	<sql id="selectSQL">
+		id,name,img,type,begintime,endtime,createtime
+	</sql>
+	
+	<select id="countReviewPlugins" resultType="int" parameterType="ReviewPlugin">
+		select
+			count(1)
+		from reviewplugin
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="type != 0">
+            <![CDATA[
+            	and type = #{type}
+            ]]>
+        </if>
+		<if test="name != null and '' != name">
+            <![CDATA[
+            	and name like concat(concat('%', #{name}),'%')
+            ]]>
+        </if>
+	</select>
+
+	<select id="findReviewPluginsByPage" resultType="ReviewPlugin" parameterType="ReviewPlugin">
+		select
+			<include refid="selectSQL" />
+		from reviewplugin
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="type != 0">
+            <![CDATA[
+            	and type = #{type}
+            ]]>
+        </if>
+		<if test="name != null and '' != name">
+            <![CDATA[
+            	and name like concat(concat('%', #{name}),'%')
+            ]]>
+        </if>
+		order by id desc
+		limit #{pagestart}, #{pagesize}
+	</select>
+
+	<select id="getReviewPlugin" resultType="ReviewPlugin" parameterType="int">
+		select
+			<include refid="selectSQL" />
+		from reviewplugin
+		where id = #{id}
+	</select>
+
+	<insert id="addReviewPlugin" parameterType="ReviewPlugin">
+		insert into reviewplugin(
+			name,img,type,begintime,endtime,createtime
+		)
+		values(
+			#{name,jdbcType=VARCHAR},
+			#{img,jdbcType=VARCHAR},
+			#{type,jdbcType=TINYINT},
+			#{begintime,jdbcType=TIMESTAMP},
+			#{endtime,jdbcType=TIMESTAMP},
+			#{createtime,jdbcType=TIMESTAMP}
+		)
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<update id="updateReviewPlugin" parameterType="ReviewPlugin">
+		update reviewplugin set 
+			name = #{name,jdbcType=VARCHAR},
+			img = #{img,jdbcType=VARCHAR},
+			type = #{type,jdbcType=TINYINT},
+			begintime = #{begintime,jdbcType=TIMESTAMP},
+			endtime = #{endtime,jdbcType=TIMESTAMP}
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteReviewPlugin" parameterType="int">
+		delete from reviewplugin where id = #{id}
+	</delete>
+</mapper>

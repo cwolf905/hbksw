@@ -1,0 +1,236 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>湖北招生考试手机客户端后台管理系统</title>
+	<link type="text/css" href="../css/former/main.css" rel="stylesheet">
+	<!--link type="text/css" href="../jquery/jquery-ui.css" rel="stylesheet"-->
+	<link type="text/css" href="../jquery/bootstrap.min.css" rel="stylesheet">
+	<script type="text/javascript" src="../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../jquery/json2.js"></script>
+	<script type="text/javascript" src="../jquery/jquery.cookie.js"></script>
+	<!--script type="text/javascript" src="../jquery/jquery-ui.js"></script-->
+	<script type="text/javascript" src="../jquery/bootstrap.min.js"></script>
+	
+	<script type="text/javascript" src="../js/y_func.js"></script>
+	<script type="text/javascript" src="../js/x_common.js"></script>
+	<script type="text/javascript" src="../js/x_menu.js"></script>
+    <style type="text/css">
+        .sidebar-menu {
+	border-right: 1px solid #e2e2e2;
+	border-top:1px solid #e2e2e2;
+	background-color: #333333;
+        }
+		.menu-bar {
+	height: 60px;
+	line-height: 60px;
+	color:#fcb6b4;
+	background-color: #bd362f;
+	padding: 0;
+	font-size: 18px;
+	text-align: center;
+	font-family: "微软雅黑";
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	border-top-style: solid;
+	border-bottom-style: solid;
+	border-top-color:#fcb624
+	border-bottom-color: #802420;
+	        }
+        .menu-first {
+	height: 45px;
+	line-height: 45px;
+	background-color: #464646;
+	border-bottom: 1px  solid #303030;
+	border-top: 1px solid #5c5c5c;
+	padding: 0;
+	font-size: 16px;
+	color:#a4a4a4;
+	font-family: "微软雅黑";
+	font-weight: normal;
+	text-align: center;
+	background-image: url(images/mune-img**.gif);
+	background-repeat: no-repeat;
+	background-position: 15px 15px;
+        }
+        .menu-first:hover {
+            text-decoration: none;
+			background-color: #333333;
+            color:#fefefe;
+			text-shadow:0px 0px 0px #000000;
+           border-bottom: 1px  solid #303030;
+	border-top: 1px solid #5c5c5c;
+			background-image: url(images/mune-img**.gif);
+	        background-repeat: no-repeat;
+	        background-position: 15px 15px;
+        }
+        .menu-second li a {
+	font-size: 14px;
+	height: 45px;
+	line-height: 30px;
+	background-color: #333333;
+	text-shadow:0px 0px 0px #000000;
+	color:#fefefe;
+	border-bottom:0px solid #a4b6c1;
+	text-align: center;
+	background-image: url(images/menu-second**.gif);
+	background-repeat: no-repeat;
+	background-position: 25px 15px;
+        }
+        .menu-second li a:hover {
+	text-decoration: none;
+	background-color: #5c5c5c;
+	color:#fefefe;
+	text-shadow:0px 0px 0px #000000;
+	border-bottom: 0px solid #a4b6c1;
+	background-image: url(images/menu-second**.gif);
+	background-repeat: no-repeat;
+	background-position: 25px 15px;
+	margin: 2px;
+	padding: 0px;
+        }
+        .menu-second-selected {
+            background-color: #0081c2;
+            height: 45px;
+            line-height: 45px;
+           
+            border-bottom: 1px solid #a4b6c1;
+         
+            text-align: center;
+        }
+        /* 覆盖bootstrap的样式 */
+        .nav-list, .nav-list li a {
+            padding: 0px;
+            margin: 0px;
+        }
+    </STYLE>
+    <script>
+        $(document).ready(function() {
+			initMenu();
+        });
+    </script>
+</head>
+<body>
+<div class="row-fluid" style="width:199px">
+<div class="sidebar-menu" style="width:199px">
+	<span class="nav-header menu-bar">功能菜单</span>
+	<a href="#userMenu" class="nav-header menu-first collapse user" data-toggle="collapse">会员管理</a>
+    <ul id="userMenu" class="nav nav-list menu-second collapse">
+    	<li><a id="webuserlist" href="###" class="bbb">网站用户列表</a></li>
+        <li><a id="mobileuserlist" href="###" class="bbb">手机用户列表</a></li>
+		<li><a id="feedbacklist" href="###" class="bbb">反馈意见列表</a></li>
+    </ul>
+    
+<!--    插件包管理-->
+    <a href="#pluginPackageMenu" class="nav-header menu-first collapse pluginPackage" data-toggle="collapse">插件包管理</a>
+	<ul id="pluginPackageMenu" class="nav nav-list menu-second collapse">
+		<li><a id="pluginPackageList" href="###" class="bbb">插件包列表</a></li>
+        <li><a id="pluginPackageAdd" href="###" class="bbb">新增组合包</a></li>
+    </ul>
+    
+    <!--第三方提供商-->
+    <a href="#thirdProvideMenu" class="nav-header menu-first collapse thirdProvide" data-toggle="collapse">第三方提供商管理*</a>
+	<ul id="thirdProvideMenu" class="nav nav-list menu-second collapse">
+        <li><a id="thirdProvideList" href="###" class="bbb">第三方列表</a></li>
+		<li><a id="thirdProvideAdd" href="###" class="bbb">新增第三方</a></li>
+<!--        <li><a id="thirdProvideUpdate" href="###" class="bbb">编辑提供商</a></li>-->
+<!--		<li><a id="thirdProvideResetPass" href="###" class="bbb">重置密码</a></li>-->
+    </ul>
+    <!--    插件类别-->
+    <a href="#pluginCategoryMenu" class="nav-header menu-first collapse pluginCategory" data-toggle="collapse">插件类别管理*</a>
+	<ul id="pluginCategoryMenu" class="nav nav-list menu-second collapse">
+        <li><a id="pluginCategoryList" href="###" class="bbb">插件类别列表</a></li>
+		<li><a id="pluginCategoryAdd" href="###" class="bbb">新增插件类别</a></li>
+    </ul>
+     <!--    插件标签-->
+    <a href="#pluginTagMenu" class="nav-header menu-first collapse pluginTag" data-toggle="collapse">插件标签管理*</a>
+	<ul id="pluginTagMenu" class="nav nav-list menu-second collapse">
+        <li><a id="pluginTagList" href="###" class="bbb">插件标签列表</a></li>
+		<li><a id="pluginTagAdd" href="###" class="bbb">新增插件标签</a></li>
+    </ul>
+    
+    
+    <a href="#teacherMenu" class="nav-header menu-first collapse teacher" data-toggle="collapse">教师管理</a>
+    <ul id="teacherMenu" class="nav nav-list menu-second collapse">
+    	<li><a id="teacherlist" href="###" class="bbb">教师列表</a></li>
+        <li><a id="teacheradd" href="###" class="bbb">新增教师</a></li>
+    </ul>
+	<a href="#enquestionMenu" class="nav-header menu-first collapse enquestion" data-toggle="collapse">招生答疑</a>
+    <ul id="enquestionMenu" class="nav nav-list menu-second collapse">
+    	<li><a id="enquestiontodo" href="###" class="bbb">待处理问题</a></li>
+        <li><a id="enquestionlist" href="###" class="bbb">已处理问题</a></li>
+    </ul>
+    <a href="#questionMenu" class="nav-header menu-first collapse question" data-toggle="collapse">院校答疑</a>
+    <ul id="questionMenu" class="nav nav-list menu-second collapse">
+    	<li><a id="questiontodo" href="###" class="bbb">待处理问题</a></li>
+        <li><a id="questionlist" href="###" class="bbb">已处理问题</a></li>
+    </ul>
+	<a href="#comquestionMenu" class="nav-header menu-first collapse comquestion" data-toggle="collapse">常见问题</a>
+    <ul id="comquestionMenu" class="nav nav-list menu-second collapse">
+    	<li><a id="comquestionlist" href="###" class="bbb">常见问题列表</a></li>
+        <li><a id="comquestionadd" href="###" class="bbb">新增常见问题</a></li>
+    </ul>
+	<a href="#collegeMenu" class="nav-header menu-first collapse college" data-toggle="collapse">院校管理</a>
+	<ul id="collegeMenu" class="nav nav-list menu-second collapse">
+        <li><a id="collegelist" href="###" class="bbb">院校列表</a></li>
+		<li><a id="collegeorder" href="###" class="bbb">推荐院校管理</a></li>
+		<li><a id="qrcodelist" href="###" class="bbb">二维码列表</a></li>
+    </ul>
+    
+	<a href="#pluginMenu" class="nav-header menu-first collapse plugin" data-toggle="collapse">插件管理</a>
+	<ul id="pluginMenu" class="nav nav-list menu-second collapse">
+        <li><a id="pluginlist" href="###" class="bbb">插件列表</a></li>
+        <li><a id="pluginnewadd" href="###" class="bbb">新增插件</a></li>
+        <li><a id="pluginStatuslist" href="###" class="bbb">待发布插件列表</a></li>
+        <li><a id="pluginStatuslist1" href="###" class="bbb">待下架插件列表</a></li>
+		<li><a id="pluginpackagelist" href="###" class="bbb">组合包列表</a></li>
+        <li><a id="pluginpackageadd" href="###" class="bbb">新增组合包</a></li>
+		<li><a id="mobileadnewlist" href="###" class="bbb">广告列表</a></li>
+		<li><a id="mobileadnewadd" href="###" class="bbb">新增广告</a></li>
+    </ul>
+	<a href="#informationMenu" class="nav-header menu-first collapse information" data-toggle="collapse">资讯管理</a>
+	<ul id="informationMenu" class="nav nav-list menu-second collapse">
+        <li><a id="informationlist" href="###" class="bbb">资讯列表</a></li>
+		<li><a id="infosubjectlist" href="###" class="bbb">专题列表</a></li>
+		<li><a id="infosubjectadd" href="###" class="bbb">新增专题</a></li> 
+		<li><a id="pushlist" href="###" class="bbb">定时推送列表</a></li>
+		<li><a id="pusherrorlist" href="###" class="bbb">推送日志查看</a></li>
+    </ul>
+	
+	<a href="#calendarMenu" class="nav-header menu-first collapse calendar" data-toggle="collapse">考试日历管理</a>
+	<ul id="calendarMenu" class="nav nav-list menu-second collapse">
+        <li><a id="calendartimerlist" href="###" class="bbb">倒计时列表</a></li>
+		<li><a id="calendartimeradd" href="###" class="bbb">新增倒计时</a></li>
+        <li><a id="calendareventlist" href="###" class="bbb">系统事件列表</a></li>
+		<li><a id="calendareventadd" href="###" class="bbb">新增系统事件</a></li>
+		<li><a id="calendarschedulelist" href="###" class="bbb">考试安排列表</a></li>
+		<li><a id="calendarscheduleadd" href="###" class="bbb">新增考试安排</a></li>
+    </ul>
+	<a href="#signflowMenu" class="nav-header menu-first collapse signflow" data-toggle="collapse">报考流程管理</a>
+	<ul id="signflowMenu" class="nav nav-list menu-second collapse">
+        <li><a id="signflowlist" href="###" class="bbb">报考流程类别列表</a></li>
+        <li><a id="signflowadd" href="###" class="bbb">新增报考流程类别</a></li>
+    </ul>
+	<a href="#reviewMenu" class="nav-header menu-first collapse review" data-toggle="collapse">复习备考管理</a>
+	<ul id="reviewMenu" class="nav nav-list menu-second collapse">
+        <li><a id="reviewpluginlist" href="###" class="bbb">复习备考插件列表</a></li>
+		<li><a id="reviewpluginadd" href="###" class="bbb">新增复习备考插件</a></li>
+    </ul>
+	
+	<a href="#releaseMenu" class="nav-header menu-first collapse release" data-toggle="collapse">版本管理</a>
+	<ul id="releaseMenu" class="nav nav-list menu-second collapse">
+        <li><a id="releaselist" href="###" class="bbb">版本列表</a></li>
+        <li><a id="releaseadd" href="###" class="bbb">新增版本</a></li>
+    </ul>
+    <a href="#pluginOrderMenu" class="nav-header menu-first collapse release" data-toggle="collapse">插件报表管理</a>
+	  <ul id="pluginOrderMenu" class="nav nav-list menu-second collapse">
+        <li><a id="pluginOrderInfo" href="###" class="bbb">插件订单明细</a></li>
+        <li><a id="pluginOrderStatistic" href="###" class="bbb">插件名订单统计报表</a></li>
+         <li><a id="pluginOrderPackage" href="###" class="bbb">插件包订单统计报表</a></li>
+        <li><a id="pluginSaleStatistics" href="###" class="bbb">插件销售排行统计</a></li>
+    </ul>
+</div>
+</div>
+</body>
+</html>

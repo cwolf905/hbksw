@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.PluginMapper">
+
+	<sql id="selectSQL">
+		id,name,description,img,isfee,favor,isdefault,begintime,expirydate,recommend,examtype,pluginType,pluginStatus,templateId 	
+	</sql>
+	
+	<select id="findPluginByName" parameterType="String" resultType="Plugin">
+		select * from plugin where name = #{name}
+	</select>
+	
+	<delete id="deleteRightByPluginId" parameterType="Integer">
+		delete from rights where delFlag = #{id}
+	</delete>
+	
+	<delete id="deletePluginById" parameterType="Integer">
+		delete from plugin where id = #{id}
+	</delete>
+	
+	<select id="findAllExpirePlugin" parameterType="PluginExpire" resultType="pluginExpire">
+		<![CDATA[
+			SELECT u.`userId` userId,u.`pluginid` pluginid,p.`name` pluginName,
+			c.`registration_id` registrationId
+			FROM userPluginMapping   u
+			LEFT JOIN `plugin` p ON u.`pluginid` = p.`id`
+			LEFT JOIN userjpushmapping c ON u.`userId` = c.`userId`
+			WHERE u.`expirydate` >=  #{startTime} and  u.`expirydate`  <= #{endTime}
+		 ]]>
+	</select>
+	
+	<select id="findPluginByExamTypeAndTemplateId" parameterType="Plugin" resultType="plugin">
+		select * from plugin where 1=1 and examtype = #{examtype} and templateId = #{templateId}
+	</select>
+	
+	<select id="findAllDictExamType" resultType="DictExamType">
+		select * from dict_examtype
+	</select>
+	
+	<select id="findAllPluginTemplate" resultType="PluginTemplate">
+		select * from plugintemplate where flag = 0
+	</select>
+	
+	<select id="countPlugins" resultType="int" parameterType="Plugin">
+		select
+			count(1)
+		from plugin
+		<![CDATA[
+		where 1 = 1 
+		]]>
+		<if test="name != null and '' != name">
+            <![CDATA[
+            	and name like concat(concat('%', #{name}),'%')
+            ]]>
+        </if>
+        <if test="examtype != 0">
+            <![CDATA[
+            	and examtype = #{examtype}
+            ]]>
+        </if>
+        <if test="pluginStatus != 9">
+            <![CDATA[
+            	and pluginStatus = #{pluginStatus}
+            ]]>
+        </if>
+	</select>
+
+	<select id="findPluginsByPage" resultType="Plugin" parameterType="Plugin">
+		select
+			<include refid="selectSQL" />,tp.name as provider  
+		from plugin
+		left join thirdprovide tp on thirdProvideId = tp.id 
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="name != null and '' != name">
+            <![CDATA[
+            	and name like concat(concat('%', #{name}),'%')
+            ]]>
+        </if>
+        <if test="examtype != 0">
+            <![CDATA[
+            	and examtype = #{examtype}
+            ]]>
+        </if>
+        <if test="pluginStatus != 9">
+            <![CDATA[
+            	and pluginStatus = #{pluginStatus}
+            ]]>
+        </if>
+		 order by id desc
+		limit #{pagestart}, #{pagesize}
+	</select>
+
+	<select id="pluginsByPage" resultType="Plugin" parameterType="Plugin">
+		select p.*,tp.name as provider from plugin p
+		left join thirdprovide tp on p.thirdProvideId = tp.id 
+		<![CDATA[
+		where 1 = 1 
+		]]>
+		<if test="name != null and '' != name">
+            <![CDATA[
+            	and p.name like concat(concat('%', #{name}),'%')
+            ]]>
+        </if>
+        <if test="examtype != 0">
+            <![CDATA[
+            	and p.examtype = #{examtype}
+            ]]>
+        </if>
+        <if test="pluginStatus != 9">
+            <![CDATA[
+            	and p.pluginStatus = #{pluginStatus}
+            ]]>
+        </if>
+		 order by p.id desc
+		limit #{pagestart}, #{pagesize}
+	</select>
+	
+	<select id="findAllPlugins" resultType="Plugin" parameterType="Plugin">
+		select
+			<include refid="selectSQL" />
+		from plugin
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="name != null and '' != name">
+            <![CDATA[
+            	and name like concat(concat('%', #{name}),'%')
+            ]]>
+        </if>
+        <if test="examtype != 0">
+            <![CDATA[
+            	and examtype = #{examtype}
+            ]]>
+        </if>
+		order by id
+	</select>
+	<select id="findAllReleasePlugins" resultType="Plugin" parameterType="Plugin">
+		select
+			<include refid="selectSQL" />
+		from plugin
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="name != null and '' != name">
+            <![CDATA[
+            	and name like concat(concat('%', #{name}),'%')
+            ]]>
+        </if>
+        <if test="examtype != 0">
+            <![CDATA[
+            	and examtype = #{examtype}
+            ]]>
+        </if>
+        and pluginStatus >=5 
+		order by id
+	</select>
+
+	<select id="getPlugin" resultType="Plugin" parameterType="int">
+		select
+			<include refid="selectSQL" />
+		from plugin
+		where id = #{id}
+	</select>
+	<select id="getReleasePlugin" resultType="Plugin" parameterType="int">
+		select
+			<include refid="selectSQL" />
+		from plugin
+		where id = #{id}
+		and pluginStatus >=5
+	</select>
+
+	<insert id="addPlugin" parameterType="Plugin">
+		insert into plugin(
+			name,description,img,isdefault,begintime,recommend,isfee,pluginStatus,templateId,examtype
+		)
+		values(
+			#{name,jdbcType=VARCHAR},
+			#{description,jdbcType=VARCHAR},
+			#{img,jdbcType=VARCHAR},
+			#{isdefault,jdbcType=INTEGER},
+			#{begintime,jdbcType=TIMESTAMP},
+			#{recommend,jdbcType=INTEGER},
+			#{isfee,jdbcType=INTEGER},
+			#{pluginStatus,jdbcType=INTEGER},
+			#{templateId,jdbcType=VARCHAR},
+			#{examtype,jdbcType=INTEGER}
+		)
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID() as value
+		</selectKey>
+	</insert>
+	
+	<update id="updatePlugin" parameterType="Plugin">
+		update plugin set 
+			name = #{name,jdbcType=VARCHAR},
+			description = #{description,jdbcType=VARCHAR},
+			img = #{img,jdbcType=VARCHAR},
+			isdefault = #{isdefault,jdbcType=INTEGER},
+			isfee = #{isfee,jdbcType=INTEGER},
+			begintime = #{begintime,jdbcType=TIMESTAMP},
+			recommend = #{recommend,jdbcType=INTEGER}
+<!--			templateId = #{templateId,jdbcType=VARCHAR},-->
+<!--			examtype = #{examtype,jdbcType=INTEGER}-->
+		where id = #{id}
+	</update>
+	
+	<update id="defaultPlugin" parameterType="Plugin">
+		update plugin set 
+			isdefault = #{isdefault,jdbcType=INTEGER}
+		where id = #{id}
+	</update>
+	
+	<update id="recommendPlugin" parameterType="Plugin">
+		update plugin set 
+			recommend = #{recommend,jdbcType=INTEGER}
+		where id = #{id}
+	</update>
+	
+	<delete id="deletePlugin" parameterType="int">
+		delete from plugin where id = #{id}
+	</delete>
+	
+	<!--add gaoxiang-->
+	<select id="typelist" resultType="PluginCategory">
+		select m.id,m.name from plugincategory m order by orderId asc
+	</select>
+	
+	<select id="labellist" resultType="PluginTag">
+		select m.id,m.name from plugintag m order by orderId asc
+	</select>
+	
+	<update id="pluginStatus" parameterType="Plugin">
+		update plugin set 
+			pluginStatus = #{pluginStatus,jdbcType=INTEGER}
+		where id = #{id}
+	</update>
+	
+	<insert id="addPluginCategory" parameterType="PluginAndCategory">
+		insert into plugin_plugincategory(
+			pluginId,pluginCategoryId
+		)
+		values(
+			#{pluginId,jdbcType=INTEGER},
+			#{pluginCategoryId,jdbcType=INTEGER}
+		)
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID() as value
+		</selectKey>
+	</insert>
+	
+	<insert id="addPluginTag" parameterType="PluginAndTag">
+		insert into plugin_plugintag(
+			pluginId,pluginTagId
+		)
+		values(
+			#{pluginId,jdbcType=INTEGER},
+			#{pluginTagId,jdbcType=INTEGER}
+		)
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID() as value
+		</selectKey>
+	</insert>
+	
+	<select id="selecttypelist" resultType="PluginCategory" parameterType="int">
+		select m.id,m.name from plugincategory m left join plugin_plugincategory ppc on ppc.pluginCategoryId = m.id where ppc.pluginId = #{id}
+		order by orderId asc
+	</select>
+	
+	<select id="selectlabellist" resultType="PluginTag" parameterType="int">
+		select m.id,m.name from plugintag m left join plugin_plugintag ppt on ppt.pluginTagId = m.id where ppt.pluginId = #{id}
+		order by orderId asc
+	</select>
+	
+	<select id="notselecttypelist" resultType="PluginCategory" parameterType="int">
+		select pc.id, pc.name FROM plugincategory pc where pc.id 
+			not in (select m.id from plugincategory m left join plugin_plugincategory ppc on ppc.pluginCategoryId = m.id where ppc.pluginId = #{id})
+			order by orderId asc;
+	</select>
+	
+	<select id="notselectlabellist" resultType="PluginTag" parameterType="int">
+		select pt.id, pt.name FROM plugintag pt where pt.id 
+			not in (select m.id from plugintag m left join plugin_plugintag ppt on ppt.pluginTagId = m.id where ppt.pluginId = #{id})
+			order by orderId asc;
+	</select>
+	
+	<delete id="delPluginCategory" parameterType="int">
+		delete from plugin_plugincategory WHERE pluginId = #{id};
+	</delete>
+	
+	<delete id="delPluginTag" parameterType="int">
+		delete from plugin_plugintag WHERE pluginId = #{id};
+	</delete>
+	
+	<update id="pluginreview" parameterType="Plugin">
+		update plugin set 
+			pluginStatus = #{pluginStatus,jdbcType=INTEGER},
+			reviewmess = #{reviewmess,jdbcType=VARCHAR}
+		where id = #{id}
+	</update>
+	
+	<select id="getknowledgeread" resultType="Plugin" parameterType="int">
+		select p.name,tkr.READ_TITLE as readTitle,tkr.READ_CONTENT as readContent FROM t_review_knowledge trk
+		left join plugin p on p.id = trk.PLUGIN_ID
+		left join t_knowledge_read tkr on tkr.KNOWLEDGE_ID = trk.KNOWLEDGE_ID
+		where p.id = #{id}
+	</select>
+<!--	select distinct concat('A.',tce.OPTION_A, '          ','B.',tce.OPTION_B, '          ','C.',tce.OPTION_C, '          ','D.',tce.OPTION_D, '          ','E.',ifnull(tce.OPTION_E,' '), '          ','F.',ifnull(tce.OPTION_F,' ')) as optionA,-->
+<!--					tce.ANSWER as answer, p.name, tce.DESCRIPTION as title from t_choice_exercises tce -->
+<!--					left join t_review_knowledge trk on trk.KNOWLEDGE_ID = tce.KNOWLEDGE_ID-->
+<!--					left join plugin p on p.id = trk.PLUGIN_ID-->
+<!--					where p.id = #{id}-->
+	
+	<select id="getchoiceexercises" resultType="Plugin" parameterType="int">
+		select distinct tce.OPTION_A as optionA,tce.OPTION_B as optionB,tce.OPTION_C as optionC,
+		tce.OPTION_D as optionD,tce.OPTION_E as optionE,tce.OPTION_F as optionF,
+					tce.ANSWER as answer, p.name, tce.DESCRIPTION as title from t_choice_exercises tce 
+					left join t_review_knowledge trk on trk.KNOWLEDGE_ID = tce.KNOWLEDGE_ID
+					left join plugin p on p.id = trk.PLUGIN_ID
+					where p.id = #{id}
+	</select>
+	
+	<!-- 资讯tab页Huge -->
+	
+	<!-- 根据插件Id查询咨询tab页列表 -->
+	<select id="selectInformationTabListByPluginId" parameterType="int" resultType="InformationTab" >
+		<![CDATA[
+		SELECT it.*, de.name FROM informationtab it LEFT JOIN dict_examtype de ON(it.type = de.code) WHERE  it.pluginId = #{pluginId} order by it.tabid asc
+		]]>
+	</select>
+	
+	<!-- 添加资讯tab页 -->
+	<insert id="addInformationTab" parameterType="InformationTab">
+		<![CDATA[
+		insert into informationtab (tabname,iids,type,pluginId,tabid)
+		select
+			#{tabname,jdbcType=VARCHAR},
+			#{iids,jdbcType=VARCHAR},
+			#{type,jdbcType=INTEGER},
+			#{pluginId,jdbcType=INTEGER},
+			tabid
+		from
+			(select ifnull(max(tabid), 0)+1 as tabid 
+			from informationtab where pluginId = #{pluginId}) as t
+		]]>
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID() as value
+		</selectKey>
+	</insert>
+	
+	<!-- 修改咨询tab页 -->
+	<update id="updateInformationTab" parameterType="InformationTab">
+		update informationtab set 
+			tabname = #{tabname,jdbcType=VARCHAR},
+			iids = #{iids,jdbcType=VARCHAR}
+		where id = #{id}
+	</update>
+	
+	<!-- 删除资讯tab页 -->
+	<delete id="deleteInformationTab" parameterType="int">
+		delete from informationtab where id = #{id}
+	</delete>
+	
+	<select id="findInformationTab" parameterType="int" resultType="InformationTab">
+		select * from informationtab where id = #{id}
+	</select>
+	
+	
+	<!-- 院校tab页 Huge -->
+	<!-- 根据插件Id查询院校tab页列表 -->
+	<select id="selectCollegeTabListByPluginId" parameterType="int" resultType="CollegeTab">
+		<![CDATA[
+		select ct.*, de.name from collegetab ct LEFT JOIN dict_examtype de on (ct.collegetype = de.code) 
+		where ct.pluginId = #{pluginId} order by ct.tabindex asc
+		]]>
+	</select>
+	
+	<!-- 添加院校tab页信息 -->
+	<insert id="addCollegeTab" parameterType="CollegeTab">
+		<![CDATA[
+		insert into collegetab (tabname,parameter,listid,collegetype,pluginId,tabindex)
+		select
+			#{tabname,jdbcType=VARCHAR},
+			#{parameter,jdbcType=VARCHAR},
+			#{listid,jdbcType=VARCHAR},
+			#{collegetype,jdbcType=INTEGER},
+			#{pluginId,jdbcType=INTEGER},
+			tabindex
+		from
+			(select ifnull(max(tabindex), 0)+1 as tabindex 
+			from collegetab where pluginId = #{pluginId}) as t
+		]]>
+		<selectKey keyProperty="tabid" resultType="int" order="AFTER">
+			select LAST_INSERT_ID() as value
+		</selectKey>
+	</insert>
+	
+	<!-- 根据主键查找院校tab页信息 -->
+	<select id="selectCollegeTabById" parameterType="int" resultType="CollegeTab">
+		<![CDATA[
+		select ct.* from collegetab ct where ct.tabid = #{tabid} 
+		]]>
+	</select>
+	
+	<!-- 修改院校tab页信息 -->
+	<update id="updateCollegeTab" parameterType="CollegeTab">
+		update collegetab set 
+			tabname = #{tabname,jdbcType=VARCHAR},
+			parameter = #{parameter,jdbcType=VARCHAR},
+			listid = #{listid,jdbcType=VARCHAR}
+		where tabid = #{tabid}
+	</update>
+	
+	<!-- 删除院校tab页 -->
+	<delete id="deleteCollegeTab" parameterType="int">
+		delete from collegetab where tabid = #{tabid}
+	</delete>
+	
+	<!-- 根据院校tabid查询控件搜索区域 -->
+	<select id="selectSearchWidgetGroupListByTabId" parameterType="int" resultType="SearchWidgetGroup">
+		<![CDATA[
+		select swg.* from searchwidgetgroup swg where swg.tabid = #{tabid} order by orderid asc
+		]]>
+	</select>
+	
+	<!-- 添加搜索区域 -->
+	<insert id="addSearchWidgetGroup" parameterType="SearchWidgetGroup">
+		<![CDATA[
+		insert into searchwidgetgroup (title,tabid,textfield,combobox1,combobox2,combobox3,minbox,maxbox)
+		values(
+			#{title,jdbcType=VARCHAR},
+			#{tabid,jdbcType=INTEGER},
+			#{textfield,jdbcType=VARCHAR},
+			#{combobox1,jdbcType=VARCHAR},
+			#{combobox2,jdbcType=VARCHAR},
+			#{combobox3,jdbcType=VARCHAR},
+			#{minbox,jdbcType=VARCHAR},
+			#{maxbox,jdbcType=VARCHAR})
+		]]>
+		<selectKey keyProperty="swgid" resultType="int" order="AFTER">
+			select LAST_INSERT_ID() as value
+		</selectKey>
+	</insert>
+	
+	<!-- 根据主键查询搜索区域 -->
+	<select id="selectSearchWidgetGroupById" parameterType="int" resultType="SearchWidgetGroup">
+		<![CDATA[
+		select swg.* from searchwidgetgroup swg where swg.swgid = #{swgid} order by swg.orderid desc
+		]]>
+	</select>
+	
+	<!-- 修改搜索区域 -->
+	<update id="updateSearchWidgetGroup" parameterType="SearchWidgetGroup">
+		update searchwidgetgroup set 
+			title = #{title,jdbcType=VARCHAR}
+		where swgid = #{swgid}
+	</update>
+	
+	<!-- 删除搜索区域 -->
+	<delete id="deleteSearchWidgetGroup" parameterType="int">
+		delete from searchwidgetgroup where swgid = #{swgid}
+	</delete>
+	
+	<!-- 对搜索区域排序（只修改序号） -->
+	<update id="sortSearchWidgetGroup" parameterType="SearchWidgetGroup">
+		update searchwidgetgroup set 
+			orderid = #{orderid,jdbcType=INTEGER}
+		where swgid = #{swgid}
+	</update>
+	
+	<!-- 查询所有的院校tab参数列表 -->
+	<select id="selectAllCollegeTabDefine" resultType="CollegeTabDefine">
+		<![CDATA[
+		select * from collegetabdefine
+		]]>
+	</select>
+	
+	<!-- 根据主键查询院校tab参数列表 -->
+	<select id="selectCollegeTabDefineById" parameterType="int" resultType="CollegeTabDefine">
+		<![CDATA[
+		select * from collegetabdefine where id = #{id}
+		]]>
+	</select>
+	
+	<!-- 查询所有控件 -->
+	<select id="selectAllSearchWidget" resultType="SearchWidget">
+		<![CDATA[
+		select * from searchwidget
+		]]>
+	</select>
+	
+	<!-- 根据主键查询控件 -->
+	<select id="selectSearchWidgetById" parameterType="int" resultType="SearchWidget">
+		<![CDATA[
+		select * from searchwidget where swid = #{swid}
+		]]>
+	</select>
+	
+	<!-- 管理搜索区域 -->
+	<update id="manageSearchWidgetGroup" parameterType="SearchWidgetGroup">
+		update searchwidgetgroup set 
+			textfield = #{textfield,jdbcType=VARCHAR},
+			combobox1 = #{combobox1,jdbcType=VARCHAR},
+			combobox2 = #{combobox2,jdbcType=VARCHAR},
+			combobox3 = #{combobox3,jdbcType=VARCHAR},
+			minbox = #{minbox,jdbcType=VARCHAR},
+			maxbox = #{maxbox,jdbcType=VARCHAR}
+		where swgid = #{swgid}
+	</update>
+	
+	<!-- 对院校tab进行排序（只更新序号） -->
+	<update id="sortCollegeTab" parameterType="CollegeTab">
+		update collegetab set 
+			tabindex = #{tabindex,jdbcType=INTEGER}
+		where tabid = #{tabid}
+	</update>
+	
+	<!-- 对资讯tab页进行排序（只更新序号） -->
+	<update id="sortInformationTab" parameterType="InformationTab">
+		update informationtab set 
+			tabid = #{tabid,jdbcType=INTEGER}
+		where id = #{id}
+	</update>
+</mapper>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>手机用户列表</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<!--link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet"-->
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-ui.js"></script-->
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_user.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("mobileuser.list", initMobileUserList);
+		});
+	</script>
+</head>
+	
+<body bgcolor="#FFFFFF" text="#000000">
+<p/>
+<table id="searchconds" width="90%" class="list-head">
+	<tr>
+		<td align="center">请输入手机号码：
+			<input type="text" name="txtMobileNo" id="txtMobileNo" value="" size="12"/>&nbsp;
+			<button>搜 索</button>&nbsp;&nbsp;
+			<a href="###" onClick="doMobileUserAll()">查看全部</a>
+		</td>
+	</tr>
+</table>
+<table width="90%" class="list-data">
+	<thead><tr bgcolor="#f5f5f5">
+	    <td align="center">编号</td>
+		<td align="center">手机号码</td>
+	    <td align="center">手机型号</td>
+	    <td align="center">注册日期</td>
+	    <td align="center">上次登录日期</td>
+	    <td align="center">用户编号</td>
+	    <td align="center">IMEI</td>
+		<td align="center">MID</td>
+     </tr></thead>
+     <tbody id="showlists">
+     </tbody>
+     </table>
+     <table width="90%" class="list-data" id="showpages">
+</table>
+<br id="footer">
+</body>
+</html>

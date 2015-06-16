@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd"
+	default-autowire="byName" default-lazy-init="true">
+	
+	<!-- 属性文件读入 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:properties/config.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 配置DataSource数据源 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName"><value>${jdbc.driverClassName}</value></property>
+		<property name="url"><value>${jdbc.url}</value></property>
+		<property name="username"><value>${jdbc.username}</value></property>
+		<property name="password"><value>${jdbc.password}</value></property>
+		<property name="initialSize" value="6"></property>
+		<property name="maxActive" value="50"></property>
+		<property name="maxIdle" value="5"></property>
+		<property name="minIdle" value="5"></property>
+		<property name="poolPreparedStatements" value="true" />
+		<property name="defaultAutoCommit" value="true"></property>
+		<!-- 运行判断连接超时任务的时间间隔，单位为毫秒，默认为-1 -->
+		<property name="timeBetweenEvictionRunsMillis" value="30000"></property>
+		<!-- 连接的超时时间-->
+		<property name="minEvictableIdleTimeMillis" value="30000"></property>
+		<!-- 心跳检查 -->
+		<property name="testWhileIdle" value="true"></property>
+		<property name="validationQuery" value="select 1"></property>
+	</bean>
+	
+	<!-- 配置SqlSessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:properties/sqlMapConfig.xml" />
+	</bean>
+	
+	<!-- 事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 声明事务规则 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+	    <tx:attributes>
+			<!--
+			<tx:method name="beforeUpdate*" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="count*" propagation="SUPPORTS" read-only="false" />
+			<tx:method name="find*" propagation="SUPPORTS" read-only="false" /> 
+			<tx:method name="get*" propagation="SUPPORTS" read-only="false" />
+			 -->
+	        <tx:method name="add*" propagation="REQUIRED" rollback-for="Exception" />
+			<tx:method name="update*" propagation="REQUIRED" rollback-for="Exception" />
+	        <tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception" />
+	        <tx:method name="apply*" propagation="REQUIRED" rollback-for="Exception" />
+	        <tx:method name="*" propagation="SUPPORTS" read-only="false" />
+	    </tx:attributes>
+	</tx:advice>
+
+	<!-- 强制CGLIB代理 -->
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+	
+	<!-- 事务管理的层次,这里控制在业务层 -->
+	<aop:config>
+		<aop:pointcut id="pc" expression="execution(public * com.dm.orm.biz.impl.*BizImpl.*(..))"/>
+		<aop:advisor pointcut-ref="pc" advice-ref="txAdvice"/>
+	</aop:config>
+    
+    <!-- 配置RestTemplate -->
+    <!--Http client Factory-->
+    <bean id="httpClientFactory"
+    	class="org.springframework.http.client.SimpleClientHttpRequestFactory">
+    	<property name="connectTimeout" value="30000" />
+    	<property name="readTimeout" value="30000" />
+    </bean>
+
+    <!--RestTemplate-->
+    <bean id="restTemplate"
+    	class="org.springframework.web.client.RestTemplate">
+    	<constructor-arg ref="httpClientFactory" />
+    </bean>
+
+    <!-- 使用annotation自动注入bean -->
+    <context:component-scan base-package="com.dm.orm.biz.impl"/>
+</beans>

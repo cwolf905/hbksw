@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>湖北招生考试手机客户端后台管理系统</title>
+	
+	<!--link type="text/css" href="../jquery/jquery-ui.css" rel="stylesheet"-->
+	<script type="text/javascript" src="../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../jquery/json2.js"></script>
+	<script type="text/javascript" src="../jquery/jquery.cookie.js"></script>
+	<!--script type="text/javascript" src="../jquery/jquery-ui.js"></script-->
+	
+	<script type="text/javascript" src="../dwr/interface/AdminUserDS.js"></script>
+	<script type="text/javascript" src="../dwr/engine.js"></script>
+	<script type="text/javascript" src="../dwr/util.js"></script>
+	
+	<script type="text/javascript" src="../js/y_func.js"></script>
+	<script type="text/javascript" src="../js/x_common.js"></script>
+	<script type="text/javascript" src="../js/x_login.js"></script>
+    <style type="text/css">
+        html, body {
+            height: 100%;
+        }
+		input {
+			color: #9c9d9f;
+            font-size: 18px;
+            width: 90%;
+            padding: 4px;
+        }        
+        button {
+            font-size: 24px;
+            color: #FFF;
+            cursor: pointer;
+        }
+        .tb-login {
+            text-shadow: 0px 0.5px 0px #64cceb;
+            background-image: url(../css/former/images/loginbg.png);
+            background-repeat: no-repeat;
+        }        
+        .tb-login tr td img {
+            margin-top: 190px;
+            margin-left: 85px;
+        }        
+        .td-input-img-bg01 {
+        	background-color: #ccc;
+            background-image: url(images/login-admin.png);
+        }        
+        .td-input-img-bg02 {
+        	background-color: #ccc;
+            background-image: url(images/login-pass.png);
+        }         
+        .td-input-img-bg03 {
+        	background-color: #ccc;
+            background-image: url(images/login-key.png);
+        }
+		.td-input {
+            background-color: #efefef;
+            color: #c0bebe;
+			text-align: center;
+        }
+		.td-btn {
+            background-color: #4ca2ea;
+			color: #FFF;
+			font-family: "微软雅黑";
+            font-size: 24px;
+            border-width: 0;
+            border-color: #4ca2ea;
+			text-align: center;
+        }
+		.InputYes {
+            background-color: #eee;
+            border: 1px solid #efefef;
+			font-family: "微软雅黑";
+            font-size: 20px;
+        }      
+        .InputNo {
+            background-color: #eee;
+            border: 1px solid #efefef;
+			font-family: "微软雅黑";
+            font-size: 20px;
+        }
+		.unchanged {
+            background-color: #3e4148;
+            border: 0;
+			text-align: center;
+        } 
+        .code {
+            background-color: #efefef;
+			color:#9c9d9f;
+            font-family: Arial;
+			font-size: 18px;
+            font-style: normal;
+			font-weight: bolder;
+            border: 0;
+            letter-spacing: 3px;
+			text-align: center;
+        }
+    </style>
+	<script>
+		$(document).ready(function() {
+			initLogin("admin");
+		}).keydown(function() {
+			if (event.keyCode == 13) {
+				checkInput(sysAdminUser);
+			}
+		});
+	</script>
+</head>
+
+<body background="../css/former/images/bg_login.png">
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td align="center">
+<table width="686" border="0" cellpadding="0" cellspacing="0" class="tb-login">
+    <tr>
+        <td width="270" height="365">
+<!--            <img width="100" height="100" src="images/qrcode.png" border="0"/>&nbsp;-->
+        </td>
+        <td width="420" height="365">
+<table width="420" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td width="35" height="95">&nbsp;</td>
+        <td width="53" height="95">&nbsp;</td>
+        <td width="259" height="95" colspan="3">&nbsp;</td>
+        <td width="28" height="95">&nbsp;</td>
+    </tr>
+    <tr>
+        <td height="53">&nbsp;</td>
+        <td height="53" class="td-input-img-bg01">&nbsp;</td>
+        <td height="53" colspan="3" class="td-input">
+            <input type="text" class="InputNo" name="txtName" id="txtName" onmouseup="onmouseupFn(event);" value="管理员" size="15"/>
+        </td>
+        <td height="53">&nbsp;</td>
+    </tr>
+    <tr>
+        <td height="15">&nbsp;</td>
+        <td height="15">&nbsp;</td>
+        <td height="15" colspan="3">&nbsp;</td>
+        <td height="15">&nbsp;</td>
+    </tr>
+    <tr>
+        <td height="53">&nbsp;</td>
+        <td height="53" class="td-input-img-bg02">&nbsp;</td>
+        <td height="53" colspan="3" class="td-input">
+            <input type="password" name="txtPass" id="txtPass" value="" size="15"/>
+        </td>
+        <td height="53">&nbsp;</td>
+    </tr>
+    <tr>
+        <td height="15">&nbsp;</td>
+        <td height="15">&nbsp;</td>
+        <td height="15" colspan="3">&nbsp;</td>
+        <td height="15">&nbsp;</td>
+    </tr>
+    <tr>
+        <td height="53">&nbsp;</td>
+        <td height="53" class="td-input-img-bg03">&nbsp;</td>
+        <td width="125" height="43" class="td-input">
+            <input type="text" name="txtCode" id="txtCode" size="4"/></td>
+        <td width="9">&nbsp;</td>
+        <td width="125" align="center" class="td-input">
+            <input type="text" class="unchanged" name="checkCode" id="checkCode" onClick="createCode()" size="4" readonly/></td>
+        <td height="53">&nbsp;</td>
+    </tr>
+	<tr>
+        <td height="23">&nbsp;</td>
+        <td height="23">&nbsp;</td>
+        <td height="23" colspan="3">&nbsp;</td>
+        <td height="23">&nbsp;</td>
+    </tr>
+    <tr>
+        <td height="43">&nbsp;</td>
+        <td height="43">&nbsp;</td>
+        <td height="43" colspan="3" class="td-btn">
+            <button type="button" class="td-btn" style="width:50%" name="btnAdmin" id="btnAdmin">
+              	  登&nbsp;&nbsp;录
+            </button></td>
+        <td height="43">&nbsp;</td>
+    </tr>
+    <tr>
+        <td height="47">&nbsp;</td>
+        <td height="47">&nbsp;</td>
+        <td height="47" colspan="3">&nbsp;</td>
+        <td height="47">&nbsp;</td>
+    </tr>
+</table>
+        </td>
+    </tr>
+</table>
+        </td>
+    </tr>
+</table>
+</html>

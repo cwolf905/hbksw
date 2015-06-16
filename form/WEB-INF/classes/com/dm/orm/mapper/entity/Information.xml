@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.InformationMapper">
+
+	<sql id="selectSQL">
+		iid,title,subTitle,titleColor,infoRemark,author,source,browse,inforOrder,inforCheck,
+		keyword,addtime,content,cid,involveCid,img,newsLink,commend,commendTime,push
+	</sql>
+	
+	<sql id="selectSqlBack">
+		id,informationId,title,content,pushTitle,contentAudit,pushTitleAudit
+	</sql>
+	
+	<select id="findInformationTabByInformationId" resultType="InformationTab">
+		select * from informationtab where iids in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">  
+  			#{item}  
+ 		</foreach>  
+	</select>
+	<select id="findInformationTabByCid" parameterType="int" resultType="InformationTab">
+		select * from informationtab where FIND_IN_SET(#{cid},iids)  
+	</select>
+	
+	<select id="countInfomationContentAudit" parameterType="InformationBack" resultType="int">
+		select count(1) from information_back where 1 = 1
+		<if test="title != null and '' != title">
+            <![CDATA[
+            	and title like concat(concat('%', #{title}),'%')
+            ]]>
+        </if>
+	</select>
+	
+	<select id="findInfomationContentAuditByPage" parameterType="InformationBack" resultType="InformationBack">
+		select * from information_back where 1 = 1
+		<if test="title != null and '' != title">
+            <![CDATA[
+            	and title like concat(concat('%', #{title}),'%')
+            ]]>
+        </if>
+	</select>
+	
+	<select id="findInformationBackByInfomationId" parameterType="int" resultType="InformationBack">
+		select * from information_back where informationId = #{informationId}
+	</select>
+	
+	<update id="informationContentAudit" parameterType="InformationBack">
+		update information_back set
+		contentAudit = #{contentAudit}
+		where informationId = #{informationId}
+	</update>
+	
+	<update id="informationPushTitleAudit" parameterType="InformationBack">
+		update information_back set
+		pushTitleAudit = #{pushTitleAudit}
+		where informationId = #{informationId}
+	</update>
+	
+	<insert id="addInformationBack" parameterType="InformationBack">
+		insert into information_back(
+			informationId,title,content,pushTitle,contentAudit,pushTitleAudit,topStatus,topTime
+			)
+		values(
+			#{informationId,jdbcType=INTEGER},
+			#{title,jdbcType=VARCHAR},
+			#{content,jdbcType=LONGVARCHAR},
+			#{pushTitle,jdbcType=VARCHAR},
+			#{contentAudit,jdbcType=INTEGER},
+			#{pushTitleAudit,jdbcType=INTEGER},
+			#{topStatus,jdbcType=INTEGER},
+			#{topTime,jdbcType=TIMESTAMP}
+		) 
+	</insert>
+	
+	<select id="findInformationBackById" parameterType="int" resultType="InformationBack">
+		select * from information_back where id=#{id}
+	</select>
+		
+	<update id="updateInformationBack" parameterType="InformationBack">
+		update information_back set
+			title = #{title,jdbcType=VARCHAR},
+			content = #{content,jdbcType=LONGVARCHAR},
+			pushTitle = #{pushTitle,jdbcType=VARCHAR},
+			contentAudit = #{contentAudit,jdbcType=INTEGER},
+			pushTitleAudit = #{pushTitleAudit,jdbcType=INTEGER},
+			topStatus = #{topStatus,jdbcType=INTEGER},
+			topTime = #{topTime,jdbcType=TIMESTAMP}
+		where id = #{id}
+	</update>
+	
+	<select id="findInformationById" parameterType="int" resultType="Information">
+		select * from information where iid = #{id}
+	</select>
+	
+</mapper>

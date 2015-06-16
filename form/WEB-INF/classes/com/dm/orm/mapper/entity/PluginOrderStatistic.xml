@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.PluginOrderStatisticMapper">
+
+	<select id="findAllPluginOrderStatistic" resultType="PluginOrderStatistic" parameterType="PluginOrderStatistic">
+	    SELECT o.*,m.`mobileNo`,p.`name` AS pluginName,p.`pluginType`,p.`thirdProvideId`,SUM(o.price)AS prices,COUNT(*) AS counts
+	   	FROM `plugin_order` o 
+		LEFT JOIN mobileUser m ON(o.`userId` = m.`mobileId`) 
+		LEFT JOIN plugin p ON (o.`productId` = p.`id`)
+		
+		LEFT JOIN pluginPackage pp ON(o.`productId` = pp.`id`)  
+		where 1=1
+		AND o.productType =1
+		AND o.`status`=1
+		<if test="startTime != null and '' != startTime">
+		 <![CDATA[
+		 	and orderTime >= #{startTime}
+		 ]]>
+		</if>
+		<if test="endTime != null and '' != endTime">
+		 <![CDATA[
+		 	and orderTime <= #{endTime}
+		 ]]>
+		</if>
+		<if test="thirdProvideId != null and -1 != thirdProvideId">
+			and thirdProvideId = #{thirdProvideId}
+		</if>
+		<if test="pluginNameId != null and -1 != pluginNameId">
+			and p.id = #{pluginNameId}
+		</if>
+		
+		GROUP BY o.productType , o.productId
+		order by orderId desc
+<!--		<if test="pagestart != null and '' != pagestart and pagesize != null and '' != pagesize">-->
+			limit #{pagestart}, #{pagesize}
+<!--		</if>-->
+	</select>
+	
+	<select id="countPluginOrderStatistics" resultType="int" parameterType="PluginOrderStatistic">
+	    SELECT count(1) FROM `plugin_order` o 
+		LEFT JOIN mobileUser m ON(o.`userId` = m.`mobileId`) 
+		LEFT JOIN plugin p ON (o.`productId` = p.`id`)
+		LEFT JOIN pluginPackage pp ON(o.`productId` = pp.`id`)
+		where 1 = 1
+		AND o.productType =1
+		AND o.`status`=1
+		<if test="startTime != null and '' != startTime">
+		 <![CDATA[
+		 	and orderTime >= #{startTime}
+		 ]]>
+		</if>
+		<if test="endTime != null and '' != endTime">
+		 <![CDATA[
+		 	and orderTime <= #{endTime}
+		 ]]>
+		</if>
+		<if test="thirdProvideId != null and -1 != thirdProvideId">
+			and thirdProvideId = #{thirdProvideId}
+		</if>
+		<if test="pluginNameId != null and -1 != pluginNameId">
+			and p.id = #{pluginNameId}
+		</if>
+      GROUP BY o.productType , o.productId
+	</select>
+
+<!--查询第三方名称	-->
+    <select id="findAllThrirdProvideList" resultType="ThirdProvide" parameterType="ThirdProvide">
+	         select id,name from thirdprovide where 1=1
+	</select>
+<!--查询插件名称	-->
+	<select id="findAllPluginNameList" resultType="Plugin" parameterType="Plugin">
+	         select id,name from plugin where 1=1
+	</select>
+	
+<!-- 查询总金额 -->	
+<select id="pluginPricetotal" resultType="PluginOrderStatistic" parameterType="PluginOrderStatistic">
+	    SELECT o.*,m.`mobileNo`,p.`name` AS pluginName,p.`pluginType`,p.`thirdProvideId` ,SUM(o.price)AS prices,COUNT(*) AS counts
+	   	FROM `plugin_order` o 
+		LEFT JOIN mobileUser m ON(o.`userId` = m.`mobileId`) 
+		LEFT JOIN plugin p ON (o.`productId` = p.`id`)
+		
+		LEFT JOIN pluginPackage pp ON(o.`productId` = pp.`id`)  
+		where 1=1
+		AND o.productType =1
+		AND o.`status`=1
+		<if test="startTime != null and '' != startTime">
+		 <![CDATA[
+		 	and orderTime >= #{startTime}
+		 ]]>
+		</if>
+		<if test="endTime != null and '' != endTime">
+		 <![CDATA[
+		 	and orderTime <= #{endTime}
+		 ]]>
+		</if>
+		<if test="thirdProvideId != null and -1 != thirdProvideId">
+			and thirdProvideId = #{thirdProvideId}
+		</if>
+		<if test="pluginNameId != null and -1 != pluginNameId">
+			and p.id = #{pluginNameId}
+		</if>
+		
+		GROUP BY o.productType , o.productId
+	</select>
+
+</mapper>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.PluginOrderInfoMapper">
+
+<!--	<sql id="selectSQL">-->
+<!--		orderId,orderNo,orderTime,pluginType-->
+<!--	</sql>-->
+	<select id="collectionByYearAndMonth" parameterType="Map" resultType="ChartData">
+		SELECT SUM(price) AS vertical, tp.`name` AS horizontalStr FROM `plugin_order` o 
+		LEFT JOIN plugin p ON (o.`productId` = p.`id`)
+		LEFT JOIN thirdprovide tp ON (p.`thirdProvideId` = tp.`id`)
+		WHERE o.`status`=1 
+		<if test="year != null and '' != year">
+			AND YEAR(orderTime) = #{year}
+		</if>
+		<if test="month != null and '' != month">
+			AND MONTH(orderTime) = #{month}
+		</if>
+		  AND thirdProvideId > 0
+		GROUP BY thirdProvideId;
+	</select>
+
+	<select id="collectionByMonth" parameterType="Map" resultType="ChartData">
+		SELECT SUM(price) AS vertical,SUBSTR(orderTime, 6, 2) AS horizontal FROM `plugin_order` o 
+		LEFT JOIN plugin p ON (o.`productId` = p.`id`)
+		WHERE o.`status`=1 AND thirdProvideId = #{thirdProvideId} AND YEAR(orderTime) = #{year} 
+		GROUP BY DATE_FORMAT(orderTime, '%Y-%m');
+	</select>
+	
+	<select id="collectionByYear" parameterType="Integer" resultType="ChartData">
+		SELECT SUM(price) AS vertical,DATE_FORMAT(orderTime, '%Y') AS horizontal FROM `plugin_order` o 
+		LEFT JOIN plugin p ON (o.`productId` = p.`id`)
+		WHERE 1 = 1 AND o.`status`=1 AND thirdProvideId = #{thirdProvideId} 
+		GROUP BY DATE_FORMAT(orderTime, '%Y');
+	</select>
+
+	<select id="findAllPluginOrderInfoByPage" resultType="PluginOrderInfo" parameterType="PluginOrderInfo">
+	   	SELECT o.*,m.`mobileNo`,p.`name` AS pluginName,p.`pluginType`,p.`thirdProvideId`,pp.`name` AS pluginPackageName ,th.`name` as thirdName FROM `plugin_order` o 
+		LEFT JOIN mobileUser m ON(o.`userId` = m.`mobileId`) 
+		LEFT JOIN plugin p ON (o.`productId` = p.`id`)
+		LEFT JOIN pluginPackage pp ON(o.`productId` = pp.`id`) 
+		LEFT JOIN thirdprovide th ON(th.`id`=p.`thirdProvideId`)
+		where 1 = 1
+		AND o.`status`=1
+		<if test="userId != null and '' != userId">
+		 <![CDATA[
+           	and o.userId like concat(concat('%', #{userId}),'%')
+           ]]>
+		</if>
+		<if test="startTime != null and '' != startTime">
+		 <![CDATA[
+		 	and orderTime >= #{startTime}
+		 ]]>
+		</if>
+		<if test="endTime != null and '' != endTime">
+		 <![CDATA[
+		 	and orderTime <= #{endTime}
+		 ]]>
+		</if>
+		<if test="thirdProvideId != null and -1 != thirdProvideId">
+			and thirdProvideId = #{thirdProvideId}
+		</if>
+		order by orderId desc
+		limit #{pagestart}, #{pagesize}
+	</select>
+	
+	<select id="findAllPluginOrderInfo" resultType="PluginOrderInfo" parameterType="PluginOrderInfo">
+	   	SELECT o.*,m.`mobileNo`,p.`name` AS pluginName,p.`pluginType`,p.`thirdProvideId`,pp.`name` AS pluginPackageName  FROM `plugin_order` o 
+		LEFT JOIN mobileUser m ON(o.`userId` = m.`mobileId`) 
+		LEFT JOIN plugin p ON (o.`productId` = p.`id`)
+		LEFT JOIN pluginPackage pp ON(o.`productId` = pp.`id`) 
+		
+		WHERE 1 = 1
+		AND o.`status`=1
+		<if test="userId != null and '' != userId">
+		 <![CDATA[
+           	and o.userId like concat(concat('%', #{userId}),'%')
+           ]]>
+		</if>
+		<if test="startTime != null and '' != startTime">
+		 <![CDATA[
+		 	and orderTime >= #{startTime}
+		 ]]>
+		</if>
+		<if test="endTime != null and '' != endTime">
+		 <![CDATA[
+		 	and orderTime <= #{endTime}
+		 ]]>
+		</if>
+		<if test="thirdProvideId != null and -1 != thirdProvideId">
+			and thirdProvideId = #{thirdProvideId}
+		</if>
+		order by orderId desc
+	</select>
+	
+	<select id="countPluginOrderInfos" resultType="int" parameterType="PluginOrderInfo">
+	    SELECT count(1) FROM `plugin_order` o 
+		LEFT JOIN mobileUser m ON(o.`userId` = m.`mobileId`) 
+		LEFT JOIN plugin p ON (o.`productId` = p.`id`)
+		LEFT JOIN pluginPackage pp ON(o.`productId` = pp.`id`)
+		where 1 = 1
+		AND o.`status`=1
+		<if test="userId != null and '' != userId">
+		 <![CDATA[
+           	and o.userId like concat(concat('%', #{userId}),'%')
+           ]]>
+		</if>
+		<if test="startTime != null and '' != startTime">
+		 <![CDATA[
+		 	and orderTime >= #{startTime}
+		 ]]>
+		</if>
+		<if test="endTime != null and '' != endTime">
+		 <![CDATA[
+		 	and orderTime <= #{endTime}
+		 ]]>
+		</if>
+		<if test="thirdProvideId != null and -1 != thirdProvideId">
+			and thirdProvideId = #{thirdProvideId}
+		</if>
+		
+	</select>
+<!--查询第三方名称	-->
+    <select id="findAllThrirdProvideList" resultType="ThirdProvide" parameterType="ThirdProvide">
+	         select id,name from thirdprovide where 1=1
+	</select>
+	
+	
+	
+</mapper>

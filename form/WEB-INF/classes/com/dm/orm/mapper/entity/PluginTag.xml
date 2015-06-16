@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.PluginTagMapper">
+	
+	<sql id="selectSQL">
+		name,description
+	</sql>
+	
+	<select id="selectPluginTagByName" parameterType="String" resultType="PluginTag">
+		select m.* from plugintag m where m.name = #{name}
+	</select>
+	
+	<select id="countPluginTags" parameterType="PluginTag" resultType="int">
+		select count(1) from plugintag
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="name != null and '' != name">
+            <![CDATA[
+            	and name like concat(concat('%', #{name}),'%')
+            ]]>
+        </if>
+	</select>
+	
+	<select id="findAllPluginTags" parameterType="PluginTag" resultType="PluginTag">
+		select 
+		id,name,description
+		from plugintag where 1 = 1
+		<if test="name != null and '' != name">
+            <![CDATA[
+            	and name like concat(concat('%', #{name}),'%')
+            ]]>
+        </if>
+		order by orderId asc
+<!--		limit #{pagestart}, #{pagesize}-->
+	</select>
+	
+		<insert id="addPluginTag" parameterType="PluginTag">
+		insert into plugintag(
+		<include refid="selectSQL"/>
+		)
+		values(
+			#{name,jdbcType=VARCHAR},
+			#{description,jdbcType=VARCHAR}
+		)
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			 select LAST_INSERT_ID() as value  
+		</selectKey>
+	</insert>
+	
+	<update id="updatePluginTag" parameterType="PluginTag">
+		update plugintag set
+			name = #{name,jdbcType=VARCHAR},
+			description = #{description,jdbcType=VARCHAR}
+			where id = #{id}
+	</update>
+	
+	<delete id="deletePluginTag" parameterType="PluginTag">
+		delete from plugintag where id = #{id}
+	</delete>
+	
+	<select id="findPluginTag" parameterType="int" resultType="PluginTag">
+		select m.* from plugintag m where m.id = #{id}
+	</select>
+	
+	<update id="orderPluginTag" parameterType="PluginTag">
+		update plugintag set 
+			orderId = #{orderId,jdbcType=INTEGER}
+		where id = #{id}
+	</update>
+</mapper>

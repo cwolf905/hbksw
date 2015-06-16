@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.AcademynewsMapper">
+
+	<sql id="selectSQL">
+		iid,title,subTitle,titleColor,infoRemark,author,source,browse,inforOrder,inforCheck,
+		keyword,addtime,content,cid,involveCid,img,newsLink,commend,commendTime,push
+	</sql>
+	
+	<sql id="selectSqlBack">
+		id,newsId,title,content,pushTitle,contentAudit,pushTitleAudit
+	</sql>
+	
+	<select id="findCollegeId" parameterType="Integer" resultType="College">
+		select * from college where cid = #{id}
+	</select>
+	
+<!--	<select id="findCollegeTabByInformationId" parameterType="Integer" resultType="CollegeTab">-->
+<!--		select * from informationTab where iids in (#{informationId})-->
+<!--	</select>-->
+	
+	<select id="findNewsBackByInfomationId" parameterType="Integer" resultType="NewsBack">
+		select * from news_back where newsId = #{newsId}
+	</select>
+	
+	<update id="newsContentAudit" parameterType="NewsBack">
+		update news_back set
+		contentAudit = #{contentAudit}
+		where id = #{id}
+	</update>
+	
+	<update id="newsPushTitleAudit" parameterType="NewsBack">
+		update news_back set
+		pushTitleAudit = #{pushTitleAudit}
+		where id = #{id}
+	</update>
+	
+	<insert id="addNewsBack" parameterType="NewsBack">
+		insert into news_back(
+			newsId,title,content,pushTitle,contentAudit,pushTitleAudit,topStatus,topTime
+			)
+		values(
+			#{newsId,jdbcType=INTEGER},
+			#{title,jdbcType=VARCHAR},
+			#{content,jdbcType=LONGVARCHAR},
+			#{pushTitle,jdbcType=VARCHAR},
+			#{contentAudit,jdbcType=INTEGER},
+			#{pushTitleAudit,jdbcType=INTEGER},
+			#{topStatus,jdbcType=INTEGER},
+			#{topTime,jdbcType=TIMESTAMP}
+		) 
+	</insert>
+	
+	<select id="findNewsBackById" parameterType="Integer" resultType="NewsBack">
+		select * from news_back where id=#{id}
+	</select>
+		
+	<update id="updateNewsBack" parameterType="NewsBack">
+		update news_back set
+			title = #{title,jdbcType=VARCHAR},
+			content = #{content,jdbcType=LONGVARCHAR},
+			pushTitle = #{pushTitle,jdbcType=VARCHAR},
+			contentAudit = #{contentAudit,jdbcType=INTEGER},
+			pushTitleAudit = #{pushTitleAudit,jdbcType=INTEGER},
+			topStatus = #{topStatus,jdbcType=INTEGER},
+			topTime = #{topTime,jdbcType=TIMESTAMP}
+		where newsId = #{newsId}
+	</update>
+	
+	<select id="findNewsById" parameterType="Integer" resultType="News">
+		select * from news where nid = #{nid}
+	</select>
+	
+	<select id="countacademynews" parameterType="News" resultType="int">
+		SELECT count(1) 
+		FROM news n 
+		LEFT JOIN news_back nb 
+		ON(n.`nid` = nb.`newsId`)
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="title != null">
+            <![CDATA[
+            	and n.`title` like concat(concat('%', #{title}),'%')
+            ]]>
+        </if>
+        <if test="contentAudit != null">
+            <![CDATA[
+            	and nb.`contentAudit` = #{contentAudit}
+            ]]>
+        </if>
+        <if test="pushTitleAudit != null">
+            <![CDATA[
+            	and nb.`pushTitleAudit` = #{pushTitleAudit}
+            ]]>
+        </if>
+        <if test="t != 0">
+            <![CDATA[
+            	and n.`t` = #{t}
+            ]]>
+        </if>
+	</select>
+	
+	<select id="findNewsBackByNewsId" parameterType="Integer" resultType="NewsBack">
+		select * from news_back where newsId = #{newsId}
+	</select>
+	
+	<select id="findacademynewsByPage" resultType="News" parameterType="News">
+		select * from (SELECT n.*,
+		nb.`id` AS newBackId,nb.`content` AS editContent, nb.`pushTitle`,nb.`contentAudit`,nb.`topStatus`,nb.`topTime`,nb.`pushTitleAudit`
+		FROM news n 
+		LEFT JOIN news_back nb 
+		ON(n.`nid` = nb.`newsId`)
+		<![CDATA[
+		where 1 = 1 and nb.`topStatus` = 1
+		]]>
+        order by nb.`topTime` desc) AS AA
+        UNION 
+        select * from (SELECT n.*,
+        nb.`id` AS newBackId,nb.`content` AS editContent, nb.`pushTitle`,nb.`contentAudit`,nb.`topStatus`,nb.`topTime`,nb.`pushTitleAudit`
+		FROM news n 
+		LEFT JOIN news_back nb 
+		ON(n.`nid` = nb.`newsId`)
+		<![CDATA[
+		where 1 = 1 
+		]]>
+        order by n.`addTime` desc) AS BB
+        <![CDATA[
+		where 1 = 1
+		]]>
+		<if test="title != null">
+            <![CDATA[
+            	and title like concat(concat('%', #{title}),'%')
+            ]]>
+        </if>
+         <if test="contentAudit != null">
+            <![CDATA[
+            	and contentAudit = #{contentAudit}
+            ]]>
+        </if>
+        <if test="pushTitleAudit != null">
+            <![CDATA[
+            	and pushTitleAudit = #{pushTitleAudit}
+            ]]>
+        </if>
+        <if test="t != 0">
+            <![CDATA[
+            	and t = #{t}
+            ]]>
+        </if>
+		limit #{pagestart}, #{pagesize}
+	</select>
+	
+	
+	<select id="findNewsBackByAcademynews" parameterType="Integer" resultType="NewsBack">
+		select * from news_back where newsId = #{newsId}
+	</select>
+	
+	<select id="findAcademynewsById" parameterType="Integer" resultType="News">
+		select * from news where nid = #{nid}
+	</select>
+	
+	<select id="findnewsBackBynId" parameterType="Integer" resultType="NewsBack">
+		select * from news_back where newsId = #{newsId}
+	</select>
+	<insert id="addAcademynewsBack" parameterType="NewsBack">
+		insert into news_back(
+			newsId,title,content,pushTitle,contentAudit,pushTitleAudit,topStatus,topTime
+			)
+		values(
+			#{newsId,jdbcType=INTEGER},
+			#{title,jdbcType=VARCHAR},
+			#{content,jdbcType=LONGVARCHAR},
+			#{pushTitle,jdbcType=VARCHAR},
+			#{contentAudit,jdbcType=INTEGER},
+			#{pushTitleAudit,jdbcType=INTEGER},
+			#{topStatus,jdbcType=INTEGER},
+			#{topTime,jdbcType=TIMESTAMP}
+		) 
+	</insert>	
+	<update id="updateAcademynewsBack" parameterType="NewsBack">
+		update news_back set
+			title = #{title,jdbcType=VARCHAR},
+			content = #{content,jdbcType=LONGVARCHAR}
+		where newsId = #{newsId}
+	</update>
+	<insert id="addAcademynewsBacktop" parameterType="NewsBack">
+		insert into news_back(
+				newsId,topStatus
+			)
+		values(
+			#{newsId,jdbcType=INTEGER},
+			#{topStatus,jdbcType=INTEGER}
+		)
+	</insert>
+	<update id="updateAcademynewsBacktop" parameterType="NewsBack">
+		update news_back set
+			topStatus = #{topStatus,jdbcType=INTEGER}
+		where newsId = #{newsId}
+	</update>
+	<update id="academynewsContentAudit" parameterType="NewsBack">
+		update news_back set
+		contentAudit = #{contentAudit}
+		where newsId = #{newsId}
+	</update>
+	<update id="academynewsPushTitleAudit" parameterType="NewsBack">
+		update news_back set
+		pushTitleAudit = #{pushTitleAudit}
+		where newsId = #{newsId}
+	</update>
+	<select id="countacademynewsaudit" resultType="int">
+		select
+			count(1)
+		from news_back
+		<![CDATA[
+		where 1 = 1
+		]]>
+	</select>
+	
+	<select id="findacademynewsauditByPage" resultType="NewsBack" parameterType="NewsBack">
+		select
+			*
+		from news_back
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="title != null">
+            <![CDATA[
+            	and title like concat(concat('%', #{title}),'%')
+            ]]>
+        </if>
+        order by newsId
+		limit #{pagestart}, #{pagesize}
+	</select>
+	
+</mapper>

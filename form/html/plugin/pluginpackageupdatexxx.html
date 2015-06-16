@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>修改组合包信息</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<!--link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet"-->
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-ui.js"></script-->
+	
+	<script type="text/javascript" src="../../dwr/interface/PluginPackageDS.js"></script>
+	<script type="text/javascript" src="../../dwr/interface/PluginDS.js"></script>
+	<script type="text/javascript" src="../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../dwr/util.js"></script>
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_pluginpackage.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("pluginpackage.update", initPluginPackageUpdate);
+		});
+	</script>
+</head>
+	
+<body>
+<p/>
+<table width="700" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#999999">
+	<tr> 
+    	<td class="tb-head">修改组合包信息</td>
+    </tr>
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<form id="frmPluginPackage">
+	<input type="hidden" name="txtId" id="txtId" value=""/>
+<table width="100%" class="tb-data">
+	<tr>
+		<td align="right" width="180">名称：
+			<label class="isInput100" style="color:red">*</label></td>
+		<td><input type="text" name="txtName" id="txtName" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">描述：
+			<label class="isTextarea255" style="color:red">*</label></td>
+		<td><textarea name="taDescription" id="taDescription" rows="3" cols="50"></textarea>&nbsp;</td>
+	</tr>
+</table>
+</form>
+	    	<br>
+      	</td>
+    </tr>
+    <tr valign="top">
+      	<td class="tb-foot">
+      		<button type="button" name="btnSubmit">修 改</button>&nbsp;&nbsp;
+			<button type="button" onclick="parent.removeTab('pluginpackageupdate');">关 闭</button>
+		</td>
+    </tr>
+	<tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<table id="tblPlugin" width="100%" class="tb-data">
+	<tr bgcolor="#cccccc">
+		<td align="center">选择</td>
+	    <td align="center">关联插件名称</td>
+		<td align="center" width="20%">描述</td>
+		<td align="center">是否收费</td>
+		<!--
+		<td align="center" width="20%">收费说明</td>
+		-->
+		<td align="center">点赞数</td>
+		<td align="center">系统插件</td>
+		<td align="center" width="7%">生效时间</td>
+		<td align="center" width="7%">失效时间</td>
+		<td align="center">已推荐</td>
+     </tr>
+</table>
+	    	<br>
+      	</td>
+    </tr>
+	<tr valign="top">
+      	<td class="tb-foot">
+      		<button type="button" name="btnSubmit">修 改</button>&nbsp;&nbsp;
+			<button type="button" onclick="parent.removeTab('pluginpackageupdate');">关 闭</button>
+		</td>
+    </tr>
+</table>
+<br id="footer">
+</body>
+</html>

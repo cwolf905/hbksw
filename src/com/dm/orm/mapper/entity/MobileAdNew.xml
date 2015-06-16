@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.MobileAdNewMapper">
+
+	<sql id="selectSQL">
+		id,examtype,adtype,pluginid,img,value,adorder
+	</sql>
+	
+	<update id="setBroadAdvertise" parameterType="int">
+<!--		update mobileAdNew set-->
+<!--		pluginid = 0-->
+<!--		select -->
+<!--			adorder-->
+<!--		from-->
+<!--			(select ifnull(max(adorder), 0)+1 as adorder -->
+<!--			from mobileAdNew where pluginid=0 as t-->
+<!--		where id = #{id}-->
+		UPDATE mobileAdNew m 
+		INNER JOIN 
+		(SELECT IFNULL(MAX(adorder), 0)+1 AS adorder FROM mobileAdNew WHERE pluginid=0) AS t
+		SET 
+			m.adorder = t.adorder, 
+			m.pluginid = 0
+		WHERE id = #{id}
+	</update>
+
+	<select id="findAllMobileAdNews" resultType="MobileAdNew" parameterType="MobileAdNew">
+		select
+			<include refid="selectSQL" />
+		from mobileAdNew
+		<![CDATA[
+		where pluginid = #{pluginid}
+		]]>
+		<!-- modified by yanfulei 启动页广告加载类型 -->
+		<if test="adtype != null and '' != adtype">
+            <![CDATA[
+            	and adtype = #{adtype}
+            ]]>
+        </if>
+		order by adorder
+	</select>
+
+	<select id="getMobileAdNew" resultType="MobileAdNew" parameterType="int">
+		select
+			<include refid="selectSQL" />
+		from mobileAdNew
+		where id = #{id}
+	</select>
+
+	<insert id="addMobileAdNew" parameterType="MobileAdNew">
+		insert into mobileAdNew(
+			examtype,adtype,pluginid,img,value,adorder
+		)
+		select 
+			#{examtype,jdbcType=SMALLINT},
+			#{adtype,jdbcType=INTEGER},
+			#{pluginid,jdbcType=INTEGER},
+			#{img,jdbcType=VARCHAR},
+			#{value,jdbcType=VARCHAR},
+			adorder
+		from
+			(select ifnull(min(adorder), 0)-1 as adorder 
+			from mobileAdNew where pluginid=#{pluginid}) as t
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<update id="updateMobileAdNew" parameterType="MobileAdNew">
+		update mobileAdNew set 
+			examtype = #{examtype,jdbcType=SMALLINT},
+			adtype = #{adtype,jdbcType=INTEGER},
+			pluginid = #{pluginid,jdbcType=INTEGER},
+			img = #{img,jdbcType=VARCHAR},
+			value = #{value,jdbcType=VARCHAR}
+		where id = #{id}
+	</update>
+	<update id="updateMobileAdNewOrder" parameterType="int">
+		update mobileAdNew set 
+			adorder =  adorder+1
+		where pluginid = #{pluginid}
+	</update>
+	
+	<update id="orderMobileAdNew" parameterType="MobileAdNew">
+		update mobileAdNew set 
+			adorder = #{adorder,jdbcType=INTEGER}
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteMobileAdNew" parameterType="int">
+		delete from mobileAdNew where id = #{id}
+	</delete>
+</mapper>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+	
+	<!-- 通过扫描的模式，扫描所有继承SqlMapper的接口， 这样一个bean就可以了 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.dm.orm.mapper" />
+		<property name="markerInterface" value="com.dm.orm.mapper.ISqlMapper" />
+	</bean>
+	
+	<bean id="adminUserBiz" class="com.dm.orm.biz.impl.AdminUserBizImpl">
+		<property name="mapper" ref="adminUserMapper" />
+		<property name="roleMapper" ref="roleMapper" />
+	</bean>
+
+	<bean id="popularCollegeBiz" class="com.dm.orm.biz.impl.PopularCollegeBizImpl">
+		<property name="mapper" ref="popularCollegeMapper" />
+	</bean>
+	
+	<bean id="appReleaseBiz" class="com.dm.orm.biz.impl.AppReleaseBizImpl">
+		<property name="mapper" ref="appReleaseMapper" />
+	</bean>
+	
+	<bean id="pluginBiz" class="com.dm.orm.biz.impl.PluginBizImpl">
+		<property name="mapper" ref="pluginMapper" />
+		<property name="rightsMapper" ref="rightsMapper" />
+	</bean>
+	
+	<bean id="thirdProvideBiz" class="com.dm.orm.biz.impl.ThirdProvideBizImpl">
+		<property name="mapper" ref="thirdProvideMapper" />
+		<property name="memberMapper" ref="thirdProvideMemberMapper" />
+	</bean>
+	
+	<bean id="pluginFeeBiz" class="com.dm.orm.biz.impl.PluginFeeBizImpl">
+		<property name="mapper" ref="pluginFeeMapper" />
+	</bean>
+	
+	<bean id="pluginPictureBiz" class="com.dm.orm.biz.impl.PluginPictureBizImpl">
+		<property name="mapper" ref="pluginPictureMapper" />
+	</bean>
+	
+	<bean id="pluginPackageBiz" class="com.dm.orm.biz.impl.PluginPackageBizImpl">
+		<property name="mapper" ref="pluginPackageMapper" />
+		<property name="pluginMapper" ref="pluginMapper" />
+		<property name="buyWayMapper" ref="productBuyWayMapper" />
+	</bean>
+	
+	<bean id="mobileAdNewBiz" class="com.dm.orm.biz.impl.MobileAdNewBizImpl">
+		<property name="mapper" ref="mobileAdNewMapper" />
+		<property name="pluginMapper" ref="pluginMapper" />
+	</bean>
+	
+	<bean id="infoSubjectBiz" class="com.dm.orm.biz.impl.InfoSubjectBizImpl">
+		<property name="mapper" ref="infoSubjectMapper" />
+		<property name="infoSubjectContentMapper" ref="infoSubjectContentMapper" />
+	</bean>
+	
+	<bean id="calendarTimerBiz" class="com.dm.orm.biz.impl.CalendarTimerBizImpl">
+		<property name="mapper" ref="calendarTimerMapper" />
+	</bean>
+	
+	<bean id="calendarEventBiz" class="com.dm.orm.biz.impl.CalendarEventBizImpl">
+		<property name="mapper" ref="calendarEventMapper" />
+	</bean>
+	
+	<bean id="calendarEventrsBiz" class="com.dm.orm.biz.impl.CalendarEventrsBizImpl">
+		<property name="mapper" ref="calendarEventrsMapper" />
+	</bean>
+	
+	<bean id="calendarScheduleBiz" class="com.dm.orm.biz.impl.CalendarScheduleBizImpl">
+		<property name="mapper" ref="calendarScheduleMapper" />
+	</bean>
+	
+	<bean id="signFlowBiz" class="com.dm.orm.biz.impl.SignFlowBizImpl">
+		<property name="mapper" ref="signFlowMapper" />
+	</bean>
+	
+	<bean id="signFlowStepBiz" class="com.dm.orm.biz.impl.SignFlowStepBizImpl">
+		<property name="mapper" ref="signFlowStepMapper" />
+	</bean>
+	
+	<bean id="signFlowStepPolicyBiz" class="com.dm.orm.biz.impl.SignFlowStepPolicyBizImpl">
+		<property name="mapper" ref="signFlowStepPolicyMapper" />
+	</bean>
+	
+	<bean id="reviewPluginBiz" class="com.dm.orm.biz.impl.ReviewPluginBizImpl">
+		<property name="mapper" ref="reviewPluginMapper" />
+		<property name="cardMapper" ref="reviewCardMapper" />
+	</bean>
+	
+	<bean id="reviewCardBiz" class="com.dm.orm.biz.impl.ReviewCardBizImpl">
+		<property name="mapper" ref="reviewCardMapper" />
+	</bean>
+	
+	<bean id="pushSampleBiz" class="com.dm.orm.biz.impl.PushSampleBizImpl">
+		<property name="mapper" ref="pushSampleMapper" />
+	</bean>
+	
+	<bean id="pushTemplateBiz" class="com.dm.orm.biz.impl.PushTemplateBizImpl">
+		<property name="mapper" ref="pushTemplateMapper" />
+	</bean>
+	
+	<bean id="pluginCategoryBiz" class="com.dm.orm.biz.impl.PluginCategoryBizImpl">
+		<property name="mapper" ref="pluginCategoryMapper" />
+	</bean>
+	
+	<bean id="pluginTagBiz" class="com.dm.orm.biz.impl.PluginTagBizImpl">
+		<property name="mapper" ref="pluginTagMapper" />
+	</bean>
+	
+	<bean id="pluginIndexBiz" class="com.dm.orm.biz.impl.PluginIndexBizImpl">
+		<property name="mapper" ref="pluginIndexMapper" />
+	</bean>
+	
+	<bean id="pushErrorBiz" class="com.dm.orm.biz.impl.PushErrorBizImpl">
+		<property name="mapper" ref="pushErrorMapper" />
+	</bean>
+   <!--订单详细列表-->
+   <bean id="pluginOrderInfoBiz" class="com.dm.orm.biz.impl.PluginOrderInfoBizImpl">
+		<property name="mapper" ref="pluginOrderInfoMapper" />
+	</bean>
+	<!--插件订单统计报表    -->
+   <bean id="pluginOrderStatisticBiz" class="com.dm.orm.biz.impl.PluginOrderStatisticBizImpl">
+		<property name="mapper" ref="pluginOrderStatisticMapper" />
+		<property name="pluginOrderInfoMapper" ref="pluginOrderInfoMapper" />
+	</bean>
+	<!--插件包订单统计报表    -->
+   <bean id="pluginOrderPackageBiz" class="com.dm.orm.biz.impl.PluginOrderPackageBizImpl">
+		<property name="mapper" ref="pluginOrderPackageMapper" />
+	</bean>
+	
+	<!--插件销售排行统计    -->
+   <bean id="pluginSaleStatisticsBiz" class="com.dm.orm.biz.impl.PluginSaleStatisticsBizImpl">
+		<property name="mapper" ref="pluginSaleStatisticsMapper" />
+	</bean>
+	
+	<bean id="informationBiz" class="com.dm.orm.biz.impl.InformationBizImpl">
+		<property name="mapper" ref="informationMapper" />
+	</bean>
+	
+	<bean id="academyNewsBiz" class="com.dm.orm.biz.impl.AcademynewsBizImpl">
+		<property name="mapper" ref="academynewsMapper" />
+	</bean>
+	
+	<bean id="infoSubjectPictureBiz" class="com.dm.orm.biz.impl.InfoSubjectPictureBizImpl">
+		<property name="mapper" ref="infoSubjectPictureMapper" />
+	</bean>
+	
+	<bean id="pushRegistBiz" class="com.dm.orm.biz.impl.PushRegistBizImpl">
+		<property name="mapper" ref="userJpushMappingMapper" />
+	</bean>
+	<bean id="customPushBiz" class="com.dm.orm.biz.impl.CustomPushBizImpl">
+		<property name="mapper" ref="customPushMapper" />
+	</bean>
+   
+</beans>

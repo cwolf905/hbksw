@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.PluginFeeMapper">
+
+	<sql id="selectSQL">
+		id,pluginid,androidfee,iosfee,chargeremark,begintime,expirydate
+	</sql>
+
+	<select id="findAllPluginFees" resultType="PluginFee" parameterType="PluginFee">
+		select
+			<include refid="selectSQL" />
+		from pluginFee
+		<![CDATA[
+			where pluginid = #{pluginid}
+		]]>
+		order by begintime
+	</select>
+
+	<select id="getPluginFee" resultType="PluginFee" parameterType="int">
+		select
+			<include refid="selectSQL" />
+		from pluginFee
+		where id = #{id}
+	</select>
+
+	<insert id="addPluginFee" parameterType="PluginFee">
+		insert into pluginFee(
+			pluginid,androidfee,iosfee,chargeremark,begintime,expirydate
+		)
+		values(
+			#{pluginid,jdbcType=INTEGER},
+			#{androidfee,jdbcType=DOUBLE},
+			#{iosfee,jdbcType=DOUBLE},
+			#{chargeremark,jdbcType=VARCHAR},
+			#{begintime,jdbcType=TIMESTAMP},
+			#{expirydate,jdbcType=TIMESTAMP}
+		)
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<update id="updatePluginFee" parameterType="PluginFee">
+		update pluginFee set 
+			androidfee = #{androidfee,jdbcType=DOUBLE},
+			iosfee = #{iosfee,jdbcType=DOUBLE},
+			chargeremark = #{chargeremark,jdbcType=VARCHAR},
+			begintime = #{begintime,jdbcType=TIMESTAMP},
+			expirydate = #{expirydate,jdbcType=TIMESTAMP}
+		where id = #{id}
+	</update>
+	
+	<delete id="deletePluginFee" parameterType="int">
+		delete from pluginFee where id = #{id}
+	</delete>
+</mapper>

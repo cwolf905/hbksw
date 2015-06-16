@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.SignFlowStepPolicyMapper">
+
+	<sql id="selectSQL">
+		id,stepid,title,content,picture,createtime
+	</sql>
+
+	<select id="findAllSignFlowStepPolicys" resultType="SignFlowStepPolicy" parameterType="SignFlowStepPolicy">
+		select
+			<include refid="selectSQL" />
+		from signflowsteppolicy
+		<![CDATA[
+			where stepid = #{stepid}
+		]]>
+		order by id
+	</select>
+
+	<select id="getSignFlowStepPolicy" resultType="SignFlowStepPolicy" parameterType="int">
+		select
+			<include refid="selectSQL" />
+		from signflowsteppolicy
+		where id = #{id}
+	</select>
+
+	<insert id="addSignFlowStepPolicy" parameterType="SignFlowStepPolicy">
+		insert into signflowsteppolicy(
+			stepid,title,content,picture,createtime
+		)
+		values(
+			#{stepid,jdbcType=INTEGER},
+			#{title,jdbcType=VARCHAR},
+			#{content,jdbcType=LONGVARCHAR},
+			#{picture,jdbcType=VARCHAR},
+			#{createtime,jdbcType=TIMESTAMP}
+		)
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<update id="updateSignFlowStepPolicy" parameterType="SignFlowStepPolicy">
+		update signflowsteppolicy set 
+			title = #{title,jdbcType=VARCHAR},
+			content = #{content,jdbcType=LONGVARCHAR},
+			picture = #{picture,jdbcType=VARCHAR}
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteSignFlowStepPolicy" parameterType="int">
+		delete from signflowsteppolicy where id = #{id}
+	</delete>
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.CalendarEventrsMapper">
+
+	<sql id="selectSQL">
+		id,eventid,title,rstype,rsvalue,createtime
+	</sql>
+
+	<select id="findAllCalendarEventrss" resultType="CalendarEventrs" parameterType="CalendarEventrs">
+		select
+			<include refid="selectSQL" />
+		from calendareventrs
+		<![CDATA[
+			where eventid = #{eventid}
+		]]>
+		order by id
+	</select>
+
+	<select id="getCalendarEventrs" resultType="CalendarEventrs" parameterType="int">
+		select
+			<include refid="selectSQL" />
+		from calendareventrs
+		where id = #{id}
+	</select>
+
+	<insert id="addCalendarEventrs" parameterType="CalendarEventrs">
+		insert into calendareventrs(
+			eventid,title,rstype,rsvalue,createtime
+		)
+		values(
+			#{eventid,jdbcType=INTEGER},
+			#{title,jdbcType=VARCHAR},
+			#{rstype,jdbcType=SMALLINT},
+			#{rsvalue,jdbcType=VARCHAR},
+			#{createtime,jdbcType=TIMESTAMP}
+		)
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<update id="updateCalendarEventrs" parameterType="CalendarEventrs">
+		update calendareventrs set 
+			title = #{title,jdbcType=VARCHAR},
+			rstype = #{rstype,jdbcType=SMALLINT},
+			rsvalue = #{rsvalue,jdbcType=VARCHAR}
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteCalendarEventrs" parameterType="int">
+		delete from calendareventrs where id = #{id}
+	</delete>
+</mapper>

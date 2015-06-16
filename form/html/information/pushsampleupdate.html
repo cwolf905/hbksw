@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>推送模板信息修改</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<!--link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet"-->
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-ui.js"></script-->
+	
+	<script type="text/javascript" src="../../dwr/interface/PushSampleDS.js"></script>
+	<script type="text/javascript" src="../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../dwr/util.js"></script>
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_pushsample.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("x_pushsample.update", initPushSampleUpdate);
+		});
+	</script>
+</head>
+	
+<body>
+<p/>
+<table width="700" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#999999">
+	<tr> 
+    	<td class="tb-head">推送模板信息修改</td>
+    </tr>
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<form id="frmPushSample">
+	<input type="hidden" name="txtId" id="txtId" value=""/>
+<table width="100%" class="tb-data">
+	<tr>
+		<td align="right" width="180">模板名称：
+			<label class="isInput50" style="color:red">*</label></td>
+		<td><input type="text" name="txtName" id="txtName" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="25%">内容：
+			<label class="isTextarea255" style="color:red">*</label></td>
+		<td><textarea name="taSample" id="taSample" rows="4" cols="50"></textarea>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="25%">模板格式说明：</td>
+		<td>分数推送有以下参数,XM,ZKZH,SFZH,KSH,KM1,KM2,KM3,KM4,TOT<br><br>
+			录取状态推送有以下参数,XM,KSZTMC,YXMC,PCMC,KLMC,ZYMC,TDYYMC,UPTIME<br><br>
+			这些参数都来自老系统的接口,在这里可以配置,但必须加上大括号<br><br>
+			比如{XM}格式,最终在提醒内容中会被替换为实际的姓名&nbsp;</td>
+	</tr>
+</table>
+</form>
+	    	<br>
+      	</td>
+    </tr>
+    <tr valign="top">
+      	<td class="tb-foot">
+      		<button type="button" name="btnSubmit" id="btnSubmit">修 改</button>&nbsp;&nbsp;
+			<button type="button" onclick="parent.removeTab('pushsampleupdate');">关 闭</button>
+		</td>
+    </tr>
+</table>
+<br id="footer">
+</body>
+</html>

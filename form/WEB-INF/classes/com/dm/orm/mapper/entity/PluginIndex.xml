@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.PluginIndexMapper">
+	
+	<sql id="selectSQL">
+		name,description,ids
+	</sql>
+	
+	<select id="selectPluginIndexByName" parameterType="String" resultType="PluginIndex">
+		select m.* from indextype m where m.name = #{name}
+	</select>
+	
+	<select id="countPluginIndexs" parameterType="PluginIndex" resultType="int">
+		select count(1) from indextype
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="name != null and '' != name">
+            <![CDATA[
+            	and name like concat(concat('%', #{name}),'%')
+            ]]>
+        </if>
+	</select>
+	
+	<select id="findAllPluginIndexs" parameterType="PluginIndex" resultType="PluginIndex">
+		select 
+		id,name,description
+		from indextype where 1 = 1
+		<if test="name != null and '' != name">
+            <![CDATA[
+            	and name like concat(concat('%', #{name}),'%')
+            ]]>
+        </if>
+		order by id desc
+<!--		limit #{pagestart}, #{pagesize}-->
+	</select>
+	
+		<insert id="addPluginIndex" parameterType="PluginIndex">
+		insert into indextype(
+		<include refid="selectSQL"/>
+		)
+		values(
+			#{name,jdbcType=VARCHAR},
+			#{description,jdbcType=VARCHAR},
+			#{ids,jdbcType=VARCHAR}
+		)
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			 select LAST_INSERT_ID() as value  
+		</selectKey>
+	</insert>
+	
+	<update id="updatePluginIndex" parameterType="PluginIndex">
+		update indextype set
+			name = #{name,jdbcType=VARCHAR},
+			description = #{description,jdbcType=VARCHAR},
+			ids = #{ids,jdbcType=VARCHAR}
+			where id = #{id}
+	</update>
+	
+	<delete id="deletePluginIndex" parameterType="PluginIndex">
+		delete from indextype where id = #{id}
+	</delete>
+	
+	<select id="findPluginIndex" parameterType="int" resultType="PluginIndex">
+		select m.* from indextype m where m.id = #{id}
+	</select>
+	
+</mapper>

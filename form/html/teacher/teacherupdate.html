@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>修改教师信息</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet">
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery-ui.js"></script>
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_teacher.js"></script>
+	<script type="text/javascript" src="../../js/x_college_pop.js"></script>
+	<script type="text/javascript" src="../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../dwr/util.js"></script>
+	<script type="text/javascript" src="../../dwr/interface/PluginDS.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("teacher.update", initTeacherUpdate);
+		});
+	</script>
+</head>
+	
+<body bgcolor="#FFFFFF" text="#000000">
+<p/>
+<table width="700" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#999999">
+    <tr> 
+    	<td class="tb-head">修改教师信息</td>
+    </tr>
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<form id="frmTeacher">
+	<input type="hidden" name="txtTeacherId" id="txtTeacherId" value=""/>
+	<input type="hidden" name="txtCid" id="txtCid" value=""/>
+<table width="100%" class="tb-data">
+	<tr>
+		<td align="right" width="180">姓名：
+			<label class="isInput100" style="color:red">*</label></td>
+		<td><input type="text" name="txtUserName" id="txtUserName" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">手机号码：
+			<label class="isMobileNo" style="color:red">*</label></td>
+		<td><input type="text" name="txtMobileNo" id="txtMobileNo" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">是否短信提醒：
+		</td>
+		<td><input type="checkbox" name="isSms" id="isSms" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">类型：</td>
+		<td id="tdTeacherType" name="tdTeacherType" ref="createRadObj">&nbsp;</td>
+	</tr>
+	<tr id="trExamtype">
+		<td align="right" width="180">考试类型：</td>
+		<td><select name="selT" id="selT" ref="createSelObj"></select>&nbsp;</td>
+	</tr>
+	<tr id="trCollege">
+		<td align="right" width="180">院校：
+			<label class="isInput" style="color:red">*</label></td>
+		<td><button type="button" name="btnBrowse" id="btnBrowse">浏 览</button>&nbsp;
+			<input type="text" name="txtCname" id="txtCname" value="" size="30"/></td>
+	</tr>
+	<tr>
+		<td align="right" width="180">角色：</td>
+		<td><select name="selRole" id="selRole" ref="createSelObj"></select>
+		<input type="hidden" name="txtRole" id="txtRole" value=""/>&nbsp;</td>
+	</tr>
+</table>
+</form>
+	    	<br>
+      	</td>
+    </tr>
+    <tr valign="top">
+      	<td class="tb-foot">
+      		<button type="button" name="btnSubmit" id="btnSubmit">修 改</button>&nbsp;&nbsp;
+			<button type="button" onclick="parent.removeTab('teacherupdate');">关 闭</button>
+		</td>
+    </tr>
+</table>
+
+<div id="divCollege" title="&nbsp;" style="display:none;">
+<table id="searchconds" width="700" class="list-head" style="margin-top: 2px; margin-left: 5px">
+	<tr>
+		<td align="center">请输入院校名称：
+			<input type="text" name="txtSchoolName" id="txtSchoolName" value="" size="12"/>&nbsp;&nbsp;
+			考试类型：<select name="selT" id="selT" style="width:80px"></select>&nbsp;&nbsp;
+			<button>搜 索</button>&nbsp;&nbsp;
+			<a href="###" onclick="doCollegeAll()">查看全部</a>
+		</td>
+	</tr>
+</table>
+<table width="700" class="list-data" style="margin-left: 5px">
+	<thead><tr bgcolor="#cccccc">
+		<td align="center">院校名称</td>
+		<td align="center">分类</td>
+		<td align="center">学校类别</td>
+     </tr></thead>
+     <tbody id="showlists">
+     </tbody>
+     <tfoot id="showpages">
+     </tfoot>
+</table>
+</div>
+<br id="footer">
+</body>
+</html>

@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>客户端推送列表</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet">
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery-ui.js"></script>
+	<script type="text/javascript" src="../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../dwr/util.js"></script>
+	<script type="text/javascript" src="../../dwr/interface/CustomPushDS.js"></script>
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_custompush.js"></script>
+	<script type="text/javascript" src="../../selfDefinedJs/kindeditor/kindeditor-min.js"></script>
+	<script type="text/javascript" src="../../selfDefinedJs/kindeditor/lang/zh_CN.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("cutompush.list", initCustomList);
+		});
+	</script>
+	<style>
+		.button{
+			font-size:12px !important;
+		}
+	</style>
+</head>
+	
+<body>
+<p/>
+<table id="searchconds" width="90%" class="list-head">
+	<tr>
+		<td align="center">请输入推送标题名称：
+			<input type="text" name="txtTitle" id="txtTitle" value="" size="12"/>&nbsp;
+			<button>搜 索</button>&nbsp;&nbsp;
+			<a href="###" onclick="doCustomAll()">查看全部</a>
+		</td>
+	</tr>
+</table>
+<table width="90%" class="list-data">
+    <thead><tr bgcolor="#cccccc">
+    	<td align="center">编号</td>
+		<td align="center">推送类型</td>
+		<td align="center">考试类别</td>
+	    <td align="center">标题</td>
+		<!--td align="center">子标题</td-->
+		<!--td align="center" width="15%">资讯说明</td-->
+<!--		<td align="center">作者</td>-->
+		<!--td align="center">来源</td-->
+		<td align="center" width="20%">创建时间</td>
+<!--		<td align="center" width="20%">内容</td>-->
+		<td align="center" width="7%">审核状态</td>
+		<!--td align="center">栏目</td-->
+<!--		<td align="center">焦点</td>-->
+		<!--td align="center">已推送</td-->
+		<td align="center" width="10%">操作</td>
+     </tr></thead>
+     
+     <tbody id="showlists">
+     </tbody>
+     </table>
+     <table width="90%" class="list-data" id="showpages">
+</table>
+<!-- 新增自定义推送功能 -->
+<table width="90%" class="list-data" id="showpages">
+     	<tr>
+     		<td colspan="12" align="left">
+				&nbsp;&nbsp;<button type="button" onclick="addCustomPush()">新增客户端推送</button>
+			</td>
+		</tr>
+</table>
+
+<div id="divPush" title="&nbsp;" style="display:none;">
+	<p style="text-align:center;"><input id="pushTitle" name="pushTitle" style="width: 400px"/></p><br/>
+	<p style="text-align:center;">
+		<button type="button" name="btnOK" id="btnOK" class="button">确 定</button>&nbsp;&nbsp;
+		<button type="button" name="btnCancle" id="btnCancle" class="button">取消</button>&nbsp;&nbsp;
+	</p>
+</div>
+<div id="divTip" title="&nbsp;" style="display:none;">
+
+</div>
+<br id="footer">
+</body>
+</html>

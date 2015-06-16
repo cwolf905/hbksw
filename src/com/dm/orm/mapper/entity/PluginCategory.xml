@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.PluginCategoryMapper">
+
+	<sql id="selectSQL">
+		id,name,description
+	</sql>
+	
+	<select id="selectPluginCategoryByName" parameterType="String" resultType="PluginCategory">
+		select m.* from plugincategory m where m.name = #{name}
+	</select>
+	
+	<select id="countPluginCategorys" parameterType="PluginCategory" resultType="int">
+		select count(1) from plugincategory
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="name != null and '' != name">
+            <![CDATA[
+            	and name like concat(concat('%', #{name}),'%')
+            ]]>
+        </if>
+	</select>
+	
+	<update id="orderPluginCategory" parameterType="PluginCategory">
+		update plugincategory set 
+			orderId = #{orderId,jdbcType=INTEGER}
+		where id = #{id}
+	</update>
+	
+	<select id="findAllPluginCategorys" parameterType="PluginCategory" resultType="PluginCategory">
+		select 
+		id,name,description
+		from plugincategory where 1 = 1
+		<if test="name != null and '' != name">
+            <![CDATA[
+            	and name like concat(concat('%', #{name}),'%')
+            ]]>
+        </if>
+		order by orderId asc
+<!--		limit #{pagestart}, #{pagesize}-->
+	</select>
+	
+	<insert id="addPluginCategory" parameterType="PluginCategory">
+		insert into plugincategory(
+		name,description
+		)
+		values(
+			#{name,jdbcType=VARCHAR},
+			#{description,jdbcType=VARCHAR}
+		)
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			 select LAST_INSERT_ID() as value  
+		</selectKey>
+	</insert>
+	
+	<update id="updatePluginCategory" parameterType="PluginCategory">
+		update plugincategory set
+			name = #{name,jdbcType=VARCHAR},
+			description = #{description,jdbcType=VARCHAR}
+			where id = #{id}
+	</update>
+	
+	<delete id="deletePluginCategory" parameterType="PluginCategory">
+		delete from plugincategory where id = #{id}
+	</delete>
+	
+	<select id="findPluginCategory" parameterType="int" resultType="PluginCategory">
+		select m.* from plugincategory m where m.id = #{id}
+	</select>
+	
+</mapper>

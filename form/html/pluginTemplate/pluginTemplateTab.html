@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>插件模版定义</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<link type="text/css" href="../../css/former/choose.css" rel="stylesheet">
+	<link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet">
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery-ui.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.ui.datepicker-zh-CN.js"></script>
+	
+	<script type="text/javascript" src="../../dwr/interface/PluginDS.js"></script>
+	<script type="text/javascript" src="../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../dwr/util.js"></script>
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_pluginTemplate.js"></script>
+	<script type="text/javascript" src="../js/ui.core.js"></script>
+	<script type="text/javascript" src="../js/ui.sortable.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("plugin.list", initPluginTemplateList);
+		});
+	</script>
+	<style>
+		.tab1{
+			padding:0 !important;
+			margin:0 !important;
+		}
+		.tabAdd{
+			width:94% !important;
+			margin:10px 3% !important;
+			padding:0 !important;
+			height:200px !important;
+		}
+	</style>
+</head>
+<body>
+	<div id="tab1" class="tabDiv2">
+		<table width="100%" class="list-data tab1">
+		   	 <thead id="showHead">
+<!--			   	 	<td align="center">编号1</td>-->
+		   	 </thead>
+		     <tbody id="showLists">
+		     </tbody>
+	     </table>
+	     <table width="100%" class="list-data tab1" id="showPages">
+	     	<tr>
+	     		<td colspan="12" align="left">
+					&nbsp;&nbsp;<button type="button" id="hrefInformationAdd" onclick="">新增资讯Tab页</button>
+					&nbsp;&nbsp;<button type="button" id="hrefCollegeAdd">新增院校Tab页</button>
+					&nbsp;&nbsp;<button type="button" onclick="sortInformationSubmit()" id="sortInformationSubmit">保存资讯Tab排序</button>
+					&nbsp;&nbsp;<button type="button" onclick="sortCollegeSubmit()" id="sortCollegeSubmit">保存院校Tab排序</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div id="hiddenParameter">
+		<input type="hidden" name="examType" id="examType" value=""/>
+		<input type="hidden" name="tabId" id="tabId" value=""/>
+		<input type="hidden" name="pluginId" id="pluginId" value=""/>
+	</div>
+	<div id="informationTabAdd" title="&nbsp;" style="display:none;" class="tabAdd">
+		<form id="frmInformationTab">
+			<table width="100%" class="tb-data">
+				<tr>
+					<td align="right" width="180">名称：
+					<label class="isInput30" style="color:red">*</label></td>
+					<td><input type="text" name="txtInfoTabName" id="txtInfoTabName" value="" size="50"/>&nbsp;</td>
+				</tr>
+				<tr>
+					<td align="right" width="180">资讯序列：
+					<label class="isInput250" style="color:red">*</label></td>
+					<td><input type="text" name="txtInfoIds" id="txtInfoIds" value="" size="50"/>&nbsp;</td>
+				</tr>
+			 	<tr valign="top">
+			      	<td class="tb-foot" colspan="2">
+			      		<button type="button" name="btnInformationSubmit" id="btnInformationSubmit" onclick="informationTabAddSubmit()" onsubmit="return false;">添 加</button>&nbsp;&nbsp;
+			      		<button type="button" name="btnInformationUpdate" id="btnInformationUpdate" onclick="informationTabUpdateSubmit(this)">修改</button>&nbsp;&nbsp;
+						<button type="button" id="btnInformationClose" onclick="informationTabClose()">关 闭</button>
+					</td>
+			    </tr>
+			</table>
+		</form>
+	</div>
+	<div id="collegeTabAdd" title="&nbsp;" style="display:none;" class="tabAdd">
+<!--		<form id="frmCollegeTab">-->
+<!--			<input type="hidden" name="txtId" id="txtId" value=""/>-->
+			<table width="100%" class="tb-data">
+<!--				<tr>-->
+<!--					<td align="right" width="180">名称：-->
+<!--					<label class="isInput5" style="color:red">*</label></td>-->
+<!--					<td><input type="text" name="txtCollegeName" id="txtCollegeName" value="" size="60"/>&nbsp;</td>-->
+<!--				</tr>-->
+				<tr>
+					<td align="right" width="180">Tab名称：</td>
+					<td>
+						<select id="collegeTabSelect"></select>
+					</td>
+				</tr>
+			 	<tr valign="top">
+			      	<td class="tb-foot" colspan="2">
+			      		<button type="button" name="btnCollegeSubmit" onclick="collegeTabAddSubmit()" id="btnCollegeSubmit">添 加</button>&nbsp;&nbsp;
+			      		<button type="button" name="btnCollegeUpdate" onclick="collegeTabUpdateSubmit(this)" id="btnCollegeUpdate">修改</button>&nbsp;&nbsp;
+						<button type="button" onclick="collegeTabClose()" id="btnCollegeClose">关 闭</button>
+					</td>
+			    </tr>
+			</table>
+<!--		</form>-->
+	</div>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>修改广告信息</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet">
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery-ui.js"></script>
+	
+	<link type="text/css" href="../../jquery/uploadify/uploadify.css" rel="stylesheet" />
+	<script type="text/javascript" src="../../jquery/uploadify/jquery.uploadify.js"></script>
+	
+	<script type="text/javascript" src="../../dwr/interface/InfoSubjectPictureDS.js"></script>
+	<script type="text/javascript" src="../../dwr/interface/InfoSubjectDS.js"></script>
+	<script type="text/javascript" src="../../dwr/interface/MobileAdNewDS.js"></script>
+	<script type="text/javascript" src="../../dwr/interface/PluginDS.js"></script>
+	<script type="text/javascript" src="../../dwr/engine.js"></script>
+	<script type="text/javascript" src="../../dwr/util.js"></script>
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_mobileadnew.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("mobileadnew.update", initMobileAdNewUpdate);
+		});
+	</script>
+</head>
+	
+<body>
+<p/>
+<table width="700" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#999999">
+	<tr> 
+    	<td class="tb-head">修改广告信息</td>
+    </tr>
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<form id="frmMobileAdNew">
+	<input type="hidden" name="txtId" id="txtId" value=""/>
+<table width="100%" class="tb-data">
+	<tr>
+		<td align="right" width="180">关联插件：</td>
+		<td><select name="selPluginid" id="selPluginid" ref="createSelPluginid" rele="trExamtype" relv="0"></select>
+			<input type="hidden" name="txtPluginid" id="txtPluginid" value=""/>&nbsp;</td>
+	</tr>
+	<tr id="trExamtype">
+		<td align="right" width="180">高考类型：</td>
+		<td><select name="selExamtype" id="selExamtype" ref="createSelObj"></select>
+			<input type="hidden" name="txtExamtype" id="txtExamtype" value=""/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">图片：
+			<label class="isInput255" style="color:red">*</label></td>
+		<td><input type="text" name="txtImg" id="txtImg" value="" size="60"/>&nbsp;</td>
+	</tr>
+	<tr id="trJpg">
+		<td align="right" width="180">上传图片文件：</td>
+		<td><input type="file" name="txtJpg" id="txtJpg" value="" size="30"/>&nbsp;
+			<div id="divJpg"></div></td>
+	</tr>
+	<tr>
+		<td align="right" width="180">类型：</td>
+		<td><select name="selAdtype" id="selAdtype"></select>
+			<input type="hidden" name="txtAdtype" id="txtAdtype" value=""/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">图片内容：
+			<label class="isInput255" style="color:red">*</label></td>
+		<td>
+			<input type="text" name="txtValue" id="txtValue" value="" size="60"/>
+			<select name="txtValue" id="txtValue">&nbsp;
+		</td>
+	</tr>
+</table>
+</form>
+	    	<br>
+      	</td>
+    </tr>
+    <tr valign="top">
+      	<td class="tb-foot">
+      		<button type="button" name="btnSubmit" id="btnSubmit">修 改</button>&nbsp;&nbsp;
+			<button type="button" onclick="parent.removeTab('mobileadnewupdate');">关 闭</button>
+		</td>
+    </tr>
+</table>
+<div id="divInfoSubjectPictureTip" title="&nbsp;" style="display:none;">
+<table width="420" border="0" align="center" cellpadding="1" cellspacing="1" bgcolor="#999999">
+    <tr> 
+    	<td class="tb-head">选择专题图片</td>
+    </tr>
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<form id="frmAddInfoSubjectPicture">
+	<input type="hidden" name="txtId" id="txtId" value=""/>
+	<table id="taInfoSubjectPicture" width="100%" class="tb-data">
+		<thead>
+			<tr bgcolor="#cccccc">
+			    <td align="center">选择</td>
+				<td align="center" width="60%">专题图片</td>
+    	 	</tr>
+		</thead>
+		 <tbody id="showlists">
+	   	 </tbody>
+	</table>
+</form>
+	    	<br>
+      	</td>
+    </tr>
+    <tr valign="top">
+      	<td class="tb-foot">
+			<button type="button" name="btnAddInfoSubjectPic" id="btnAddInfoSubjectPic">确 定</button>&nbsp;&nbsp;
+		</td>
+    </tr>
+</table>
+</div>
+<br id="footer">
+</body>
+</html>

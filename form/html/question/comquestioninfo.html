@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>查看常见问题信息</title>
+	<link type="text/css" href="../../css/former/main.css" rel="stylesheet">
+	<link type="text/css" href="../../jquery/jquery-ui.css" rel="stylesheet">
+	<script type="text/javascript" src="../../jquery/jquery.js"></script>
+	<!--script type="text/javascript" src="../../jquery/jquery-migrate.js"></script-->
+	<script type="text/javascript" src="../../jquery/json2.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery-ui.js"></script>
+	<script type="text/javascript" src="../../jquery/jquery.ui.datepicker-zh-CN.js"></script>
+	
+	<script type="text/javascript" src="../../js/y_func.js"></script>
+	<script type="text/javascript" src="../../js/x_common.js"></script>
+	<script type="text/javascript" src="../../js/x_form.js"></script>
+	<script type="text/javascript" src="../../js/x_comquestion.js"></script>
+	<script>
+		$(document).ready(function(){
+			checkUser("question.info", initQuestionInfo);
+		});
+	</script>
+</head>
+	
+<body>
+<p/>
+<table width="700" border="0" align="center" cellpadding="3" cellspacing="1" bgcolor="#999999">
+    <tr>
+    	<td class="tb-head">查看常见问题信息</td>
+    </tr>
+    <tr valign="top"> 
+      	<td bgcolor="#f0f0f0"><br>
+<form id="frmQuestion">
+	<input type="hidden" name="txtQuestionId" id="txtQuestionId" value=""/>
+<table width="100%" class="tb-data">
+	<tr>
+		<td align="right" width="180">用户手机号码：</td>
+		<td><input type="text" name="txtMobileNo" id="txtMobileNo" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">问题标题：</td>
+		<td><input type="text" name="txtTitle" id="txtTitle" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">考试类型：</td>
+		<td><input type="text" name="txtT" id="txtT" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr id="trType">
+		<td align="right" width="180">类型：</td>
+		<td><input type="text" name="txtType" id="txtType" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">问题内容：</td>
+		<td><textarea name="taContent" id="taContent" rows="3" cols="50"></textarea></td>
+	</tr>
+	<tr>
+		<td align="right" width="180">提问日期：</td>
+		<td><input type="text" name="txtAddTime" id="txtAddTime" value="" size="18"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">问题解答：</td>
+		<td><textarea name="taAnswer" id="taAnswer" rows="3" cols="50"></textarea></td>
+	</tr>
+	<!--tr>
+		<td align="right" width="180">解答老师：</td>
+		<td><input type="text" name="txtAnswererId" id="txtAnswererId" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">解答时间：</td>
+		<td><input type="text" name="txtAnswerTime" id="txtAnswerTime" value="" size="18"/>&nbsp;</td>
+	</tr>
+	<tr id="trReview">
+		<td align="right" width="180">审核内容：</td>
+		<td><textarea name="taReview" id="taReview" rows="3" cols="50"></textarea></td>
+	</tr>
+	<tr>
+		<td align="right" width="180">审核老师：</td>
+		<td><input type="text" name="txtReviewerId" id="txtReviewerId" value="" size="30"/>&nbsp;</td>
+	</tr>
+	<tr>
+		<td align="right" width="180">审核时间：</td>
+		<td><input type="text" name="txtReviewTime" id="txtReviewTime" value="" size="18"/>&nbsp;</td>
+	</tr-->
+</table>
+</form>
+	    	<br>
+      	</td>
+    </tr>
+    <tr valign="top">
+      	<td class="tb-foot">
+			<button type="button" onclick="parent.removeTab('comquestioninfo');">关 闭</button>
+		</td>
+    </tr>
+</table>
+<br id="footer">
+</body>
+</html>

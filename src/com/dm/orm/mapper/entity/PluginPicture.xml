@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.PluginPictureMapper">
+
+	<sql id="selectSQL">
+		id,pluginid,picture
+	</sql>
+	
+	<select id="countPluginPictures" resultType="int" parameterType="PluginPicture">
+		select
+			count(1)
+		from pluginPicture
+		<![CDATA[
+		where pluginid = #{pluginid}
+		]]>
+	</select>
+
+	<select id="findPluginPicturesByPage" resultType="PluginPicture" parameterType="PluginPicture">
+		select
+			<include refid="selectSQL" />
+		from pluginPicture
+		<![CDATA[
+		where pluginid = #{pluginid}
+		]]>
+		order by id
+		limit #{pagestart}, #{pagesize}
+	</select>
+	
+	<select id="findAllPluginPictures" resultType="PluginPicture" parameterType="PluginPicture">
+		select
+			<include refid="selectSQL" />
+		from pluginPicture
+		<![CDATA[
+		where pluginid = #{pluginid}
+		]]>
+		order by id
+	</select>
+
+	<select id="getPluginPicture" resultType="PluginPicture" parameterType="int">
+		select
+			<include refid="selectSQL" />
+		from pluginPicture
+		where id = #{id}
+	</select>
+
+	<insert id="addPluginPicture" parameterType="PluginPicture">
+		insert into pluginPicture(
+			pluginid,picture
+		)
+		values(
+			#{pluginid,jdbcType=INTEGER},
+			#{picture,jdbcType=VARCHAR}
+		)
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+	
+	<update id="updatePluginPicture" parameterType="PluginPicture">
+		update pluginPicture set 
+			picture = #{picture,jdbcType=VARCHAR}
+		where id = #{id}
+	</update>
+	
+	<delete id="deletePluginPicture" parameterType="int">
+		delete from pluginPicture where id = #{id}
+	</delete>
+</mapper>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dm.orm.mapper.CustomPushMapper">
+	
+	<sql id="selectSql">
+		id,title,content,pushTitle,pushType,examType,pushTag,contentAudit,pushTitleAudit,createTime,topStatus,topTime
+	</sql>
+	
+	<select id="findinfoTypeByExam" parameterType="int" resultType="InformationTab">
+		select * from informationtab where type = #{examType}  
+	</select>
+	
+	<select id="countInfomationContentAudit" parameterType="InformationBack" resultType="int">
+		select count(1) from custom_push where 1 = 1
+		<if test="title != null and '' != title">
+            <![CDATA[
+            	and title like concat(concat('%', #{title}),'%')
+            ]]>
+        </if>
+	</select>
+	
+	<select id="findInfomationContentAuditByPage" parameterType="InformationBack" resultType="InformationBack">
+		select * from custom_push where 1 = 1
+		<if test="title != null and '' != title">
+            <![CDATA[
+            	and title like concat(concat('%', #{title}),'%')
+            ]]>
+        </if>
+	</select>
+	
+	<select id="findCustomPushById" parameterType="long" resultType="CustomPush">
+		select * from custom_push where id = #{id}
+	</select>
+	
+	<update id="customPushTitleAudit" parameterType="CustomPush">
+		update custom_push set
+		pushTitleAudit = #{pushTitleAudit}
+		where id = #{id}
+	</update>
+	
+	<!-- 执行插入推送信息 modified by yanfulei 新增推送标签和院校ID -->
+	<insert id="addCustomPush" parameterType="CustomPush">
+		insert into custom_push(
+			title,content,pushTitle,pushType,examType,pushTag,contentAudit,pushTitleAudit,createTime,topStatus,topTime,collegeId,infoType,source
+			)
+		values(
+			#{title,jdbcType=VARCHAR},
+			#{content,jdbcType=LONGVARCHAR},
+			#{pushTitle,jdbcType=VARCHAR},
+			#{pushType,jdbcType=VARCHAR},
+			#{examType,jdbcType=INTEGER},
+			#{pushTag,jdbcType=VARCHAR},
+			#{contentAudit,jdbcType=INTEGER},
+			#{pushTitleAudit,jdbcType=INTEGER},
+			SYSDATE(),
+			#{topStatus,jdbcType=INTEGER},
+			#{topTime,jdbcType=TIMESTAMP},
+			#{collegeId,jdbcType=INTEGER},
+			#{infoType,jdbcType=VARCHAR},
+			#{source,jdbcType=VARCHAR}
+		) 
+	</insert>
+	
+	<select id="findInformationBackById" parameterType="int" resultType="InformationBack">
+		select * from custom_push where id=#{id}
+	</select>
+		
+	<!-- 执行更新推送信息的置顶信息 -->
+	<update id="updateCustomPush" parameterType="CustomPush">
+		update custom_push set
+			topStatus = #{topStatus},
+			topTime = #{topTime}
+		where id = #{id}
+	</update>
+	
+	<!-- 执行更新推送信息 modified by yanfulei 增加修改推送标签和院校ID -->
+	<update id="updateAllCustomPush" parameterType="CustomPush">
+		update custom_push set
+			title = #{title,jdbcType=VARCHAR},
+			content = #{content,jdbcType=LONGVARCHAR},
+			pushTitle = #{pushTitle,jdbcType=VARCHAR},
+			pushType = #{pushType,jdbcType=VARCHAR},
+			examType = #{examType,jdbcType=INTEGER},
+			pushTag = #{pushTag,jdbcType=VARCHAR},
+			contentAudit = #{contentAudit,jdbcType=INTEGER},
+			pushTitleAudit = #{pushTitleAudit,jdbcType=INTEGER},
+			topStatus = #{topStatus,jdbcType=INTEGER},
+			topTime = #{topTime,jdbcType=TIMESTAMP},
+			collegeId = #{collegeId,jdbcType=INTEGER},
+			infoType = #{infoType,jdbcType=VARCHAR},
+			source = #{source,jdbcType=VARCHAR} 
+		where id = #{id}
+	</update>
+	
+	<!-- 执行更新推送信息的标题信息 -->
+	<update id="updatePushTitleAsId" parameterType="CustomPush">
+		update custom_push set
+			pushTitle = #{pushTitle},
+			pushTitleAudit = #{pushTitleAudit}
+		where id = #{id}
+	</update>
+	
+	<select id="findInformationById" parameterType="int" resultType="Information">
+		select * from custom_push where iid = #{id}
+	</select>
+	
+	<select id="countCustomPushs" resultType="int" parameterType="CustomPush">
+		select
+			count(1)
+		from custom_push
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="title != null and '' != title">
+            <![CDATA[
+            	and title like concat(concat('%', #{title}),'%')
+            ]]>
+       </if>
+       <if test="contentAudit ==0">
+            <![CDATA[
+            	and contentAudit = 0
+            ]]>
+       </if>
+	</select>
+	
+	<!-- 执行分页查询推送信息 -->
+	<select id="findCustomPushsByPage" resultType="CustomPush" parameterType="CustomPush">
+		select
+			<include refid="selectSql" />
+		from custom_push
+		<![CDATA[
+		where 1 = 1
+		]]>
+		<if test="title != null and '' != title">
+            <![CDATA[
+            	and title like concat(concat('%', #{title}),'%')
+            ]]>
+        </if>
+       <if test="contentAudit == 0">
+            <![CDATA[
+            	and contentAudit = 0
+            ]]>
+       </if>
+       	<![CDATA[
+			order by topStatus desc
+		]]>
+		<if test="topTime != null and ''!=topTime">
+            <![CDATA[
+            	,topTime desc
+            ]]>
+       </if>
+       <![CDATA[
+            	,id desc
+       ]]>
+		limit #{pagestart}, #{pagesize}
+	</select>
+	<select id="getCustomPushAuditListCount" parameterType="CustomPush" resultType="int">
+	    select count(1) from custom_push 
+	    where 1=1
+	    and contentAudit = 1
+	    and pushTitleAudit = 0
+	    <if test="title != null and '' != title">
+            <![CDATA[
+            	and title like concat(concat('%', #{title}),'%')
+            ]]>
+        </if>
+	</select>
+	
+	<select id="getCustomPushAuditList" parameterType="CustomPush" resultType="CustomPush">
+	    select * from custom_push 
+	    where 1=1
+	    and contentAudit = 1
+	    and pushTitleAudit = 0
+	    <if test="title != null and '' != title">
+            <![CDATA[
+            	and title like concat(concat('%', #{title}),'%')
+            ]]>
+        </if>
+	    ORDER BY createTime desc 
+	    LIMIT #{pagestart},#{pagesize}
+	</select>
+	
+	<update id="pushContentAudit" parameterType="CustomPush">
+		update custom_push set
+		contentAudit = #{contentAudit}
+		where id = #{id}
+	</update>
+	
+</mapper>
